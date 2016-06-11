@@ -1,14 +1,17 @@
 \documentclass{book}
 \author{Sam Nolan}
+\usepackage{minted}
 \title{Programming with ProjectX}
 \begin{document}
 	\maketitle
 	\tableofcontents
 	\chapter{Introduction}
 	\section{What is ProjectX?}
-	ProjectX is both a game and an educational tool for learning the basics of programming. ProjectX can be played without even touching the programming aspects of the game as a social multiplayer game, But becomes much more interesting when you create content of your own through the use of the programming languages Lua and XML.
+	ProjectX is both a game and an educational tool for learning the basics of programming. It can be played without even touching the programming aspects as a social multiplayer game, but it becomes much more interesting when players create content of their own through the use of the programming languages Lua and XML.
 	
-	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels.
+	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels. It comes with many tools that help the beginner programmer both get a feel for professional-like environments while being supported by them along the way.
+	
+	Professionals can also use ProjectX as just a general game. By developing on different parts of the game, every session would be completely different. If teams were to get together to mod this game, or even a classroom, the changes can be updated into one single game and can be played multiplayer by everyone. 
 	
 	\section{Game-Play and Rules}
 	The game itself is an Real Time Strategy multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
@@ -20,14 +23,31 @@
 	
 	To keep things simple, what you can do is fairly limited. A programmer can only add \textit{content} to the game. That is, it is not possible to add anything that does not already exist. For instance, it is possible to create your own creature to be placed into the game, but it is not possible to add UI elements and change the rules of the game around. These are called \textit{features} and are added by the maintaining developers of the game. If you wish to see a feature in the game, you may contact Sam Nolan at NOL0055@bhs.vic.edu.au.
 	
-	All the code that controls how the game runs can be found in the \texttt{scripts} folder of the installation directory, for Windows this is usually  \texttt{C:\textbackslash Program Files(x86)\textbackslash ProjectX}. Most of the code has its own jurisdiction, as in, the code in each folder will control only a certain aspect of the game, and no more. This is in contrast to most languages, where all code does not need to be in separate files to function. We decided to make ProjectX like this as to keep the code simple as possible.
+	Most of the code has its own jurisdiction, as in, the code in each folder will control only a certain aspect of the game, and no more. This is in contrast to most languages, where all code does not need to be in separate files to function. We decided to make ProjectX like this as to keep the code simple as possible.
 	
 	\section{Installation}
 	The installation of ProjectX is reasonably straightforward. Windows is currently the only supported platform. We do have Android versions but the game is still in development and they have not been released yet. In the future, ProjectX should be supported on Linux, OSX, iOS, Android and Windows.
 	
 	Because the game is currently in development, receiving a copy of the game can only be done through directly asking Sam Nolan. His contact details can be found in the Developers section of Notes and Acknowledgments.  
-	\chapter{Notes and Acknowledgments}
-	\section{Developers}
+	
+	Once You have a copy of the installer, the installation is reasonably straightforward. The components that can be installed are explained below
+	
+	\paragraph{ProjectX}
+	ProjectX is the actual game, it is required in the installation.
+	
+	\paragraph{ProjectX Scripting}
+	The official scripting platform for ProjectX, Atom. Comes with auto-complete and error checking for scripting. It is highly recommended if developing with ProjectX.
+	
+	\paragraph{ProjectX Source Control}
+	The Gitkraken source control package. Useful for recording and keeping changes when working in teams, not required.
+	
+	\paragraph{ProjectX Documentation}
+	This book and the ProjectX documentation as a .chm file, which contains an official reference to everything available in ProjectX.
+	
+	\paragraph{ProjectX Sprite Previewer}
+	A Sprite Previewer for ProjectX, This application reads a Sprite XML file  and creates sprites to preview before putting in the application. Not required but may be useful for artists.
+	
+	\section{Acknowledgments}
 	This section concerns the developers of ProjectX, contact details are provided for some.
 	
 	\paragraph{Programming}
@@ -39,12 +59,74 @@
 	\paragraph{Art}
 	\begin{itemize}
 		\item Oscar Taylor
-		\item Codeword Gaming
+		\item Adam Schembri (Codeword Gaming)
 		\item Louis Evans
+		\item Tom Duchemin
+	\end{itemize}
+	
+	\paragraph{Scripting}
+	\begin{itemize}
+		\item Hung Dao
 	\end{itemize}
 	
 	\paragraph{Music}
 	\begin{itemize}
 		\item Louis Evans
 	\end{itemize}
+	
+	\chapter{Developing With ProjectX}
+	This section addresses the structure of ProjectX and how to use some of the tools that come with it.
+	
+	\section{Structure of ProjectX}
+	All the ProjectX source files can be found in Local AppData for Windows, that is, \texttt{C:\textbackslash Users\textbackslash [Username]\textbackslash AppData\textbackslash Local\textbackslash ProjectX} The AppData folder is hidden, so you may need to enable seeing hidden files.
+	
+	This folder can also be accessed by opening it with Atom. The ProjectX Scripting link will automatically direct to the resources folder.
+	
+	\section{Atom}
+	Atom is the official scripting platform for ProjectX. The actual Atom project can be found at \texttt{atom.io}. There is a package (or extension) to Atom which contains error checking and code-completion for ProjectX. The package is installed with Atom from the installer.
+	
+	\chapter{ProjectX XML}
+	\section{Beginning With XML}
+	XML is called a \textbf{markup language}. A markup language has a certain syntax that uses angle brackets and tags. It is nearly identical to HTML in syntax. This is an example of a tag:
+	
+	\begin{center}
+		\texttt{<class>}
+	\end{center}
+	
+	What makes it a tag is the angle brackets around it, "class" is the \textbf{name} of the tag. In ProjectX there are many different tags that are differentiated by name that have a variety of uses. For example the \texttt{<class>} tag is used in the players XML file to specify a character class.
+	
+	Every tag has a matching ending tag. The ending tag is the same as the original (starting) tag except that it starts with a forward slash (/)
+
+	\begin{center}
+		\texttt{</class>}
+	\end{center}
+	
+	Anything between the ending tag and the original starting tag is said to be inside the tag, for example:
+	\begin{minted}[tabsize = 4]{xml}
+<description>
+	This is a description!
+</description>
+	\end{minted}
+	The "This is a description!" is said to be the description tag's value. We can have tags inside tags like so:
+	\begin{minted}[tabsize = 4]{xml}
+<class>
+	<description>
+		This is a description!
+	</description>
+</class>
+	\end{minted}
+	The description is inside the class and the text is inside the description. You can make many different structures using XML.
+	
+	In XML, any tag can have \textbf{attributes} associated with it. An attribute looks like this:
+	\begin{minted}[tabsize = 4]{xml}
+<class name="Rat Man">
+	
+</class>
+	\end{minted}
+	In this case, \texttt{name} is an attribute of the \texttt{class} tag. and the \textbf{value} of the name attribute is \texttt{"Rat Man"}. In ProjectX, all attribute values are surrounded by quotes. The quotes are not part of the value, but just group the text in between them together. This is called a \textbf{string} and comes in various programming languages. For example, the string \texttt{"Hello World!"} represents the literal value of \texttt{Hello World!}.
+	
+	That concludes the basics of XML. The following sections show how XML can be used in different areas of the game. It is in order of the easiest things to learn to the hardest.
+	
+	\section{Sprites}
+	The sprites XML file is not necessarily the easiest to learn but is required by the other scripts.
 \end{document}
