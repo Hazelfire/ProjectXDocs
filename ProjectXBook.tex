@@ -510,12 +510,41 @@ The class tag has 2 children, those being the \texttt{movement} tag and the \tex
 
 The description tag is a written description shown beside the player.
 
-Birdfoot is a good example of a bad character class. This is because all the sprite directions and the same sprite, giving the impression that the player is riding a segway, it may be included in the future that players without animation when moving wil ride segways.
+Birdfoot is a good example of a bad character class. This is because all the sprite directions and the same sprite, giving the impression that the player is riding a segway, it may be included in the future that players without animation when moving will ride segways.
 
 \begin{figure}[ht!]
 		\centering
 		\includegraphics[width=40mm]{Nice_Segway.png}
 		\caption{Future Segway sprite}
 \end{figure}
+
+\section{Creatures}
+The creatures XML file contains creatures that can be spawned into the game, here is an example of the creatures XML file:
+
+\begin{minted}[tabsize = 4]{xml}
+<creature name="Rat" ai="Rat" speed="2">
+	<movement>
+		<left>Rat Left</left>
+		<right>Rat Right</right>
+		<leftIdle>Rat Left Idle</leftIdle>
+		<rightIdle>Rat Right Idle</rightIdle>
+	</movement>
+</creature>
+
+<creature name="Big Rat" ai="Rat" speed="3">
+	<movement>
+		<left>Big Rat Left</left>
+		<right>Big Rat Right</right>
+		<leftIdle>Big Rat Left Idle</leftIdle>
+		<rightIdle>Big Rat Right Idle</rightIdle>
+	</movement>
+</creature>
+\end{minted}
+
+The \texttt{creature} tag has 3 known attributes, the first is the name, which is the name of the creature so that it can be referenced when spawning it in lua. The \texttt{ai} attribute contains the filename of the lua file that will be used to be it's ai, without the \texttt{.lua} extension. These AI scripts can be found in \texttt{script/lua/creatures}. The speed attribute is how fast the creature can move in tiles per second.
+
+The only known child of the creature tag is the movement tag, which is the same as the players XML movement tag, please see that section for a reference on it.
+
+
 
 \end{document}
