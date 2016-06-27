@@ -371,4 +371,66 @@ res/music
 As you can see, you do not need to include the file extension with the source name. Also, there are many tracks that have not been added to the game yet.
 
 The music XML file may be improved on in the future.
+
+\section{Items}
+The Items XML file contains all the things that can be picked up and placed inside your inventory, here is a sample of the Items XML file:
+
+\begin{minted}[tabsize = 4]{xml}
+<item name="Pickaxe">
+	<ingredients>
+	Wood:3;
+	Stone:3;
+	</ingredients>
+	<description>
+	Tired of smashing a rock with wood?
+Now you can do the same... with stone!
+	</description>
+</item>
+
+<item name="Shovel">
+	<ingredients>
+	Wood:3;
+	Stone:1;
+	</ingredients>
+	<description>
+	For when your hands just aren't enough.
+	</description>
+</item>
+
+<item name="Axe">
+	<ingredients>
+	Wood:3;
+	Stone:2;
+	</ingredients>
+	<description>
+	Got wood? Now you do! 
+Well... soon, at least.
+	</description>
+</item>
+
+<item name="Sword">
+	<ingredients>
+	Wood:1;
+	Stone:3;
+	</ingredients>
+	<description>
+	For killing the good... and the bad...
+and the mediocre.
+	</description>
+</item>
+\end{minted}
+
+These are the basic tools found in ProjectX, the Pickaxe, Shovel, Axe and Sword. The name attribute is the display name of the item and also the exact name of the sprite that will be displayed with the item.
+
+The item tag can have 2 children, the first is the ingredients tag, the tag includes what is needed to craft the item. The ingredients tag is not neccesary and the item can be obtained through other ways (like getting it through a lua script). The syntax for the ingredients is simple:
+
+\begin{center}
+		\texttt{[item] : [quantity] ;}
+\end{center}
+
+Make sure to include the semicolon at the end of the ingredient, it seperates them. For example, the statement \texttt{Wood:3;Stone:1;} is perfectly legal, but is not reccomended for legability reasons.
+
+It is possible to have multiple recipies for items, meaning that the item will become craftable when any of the recipies are furfilled.
+
+The other tag inside the item tag is the description, this is text that is shown with the item, there is a theme of sattire with these descriptions.
 \end{document}
