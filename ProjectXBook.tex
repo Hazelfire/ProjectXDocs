@@ -433,4 +433,46 @@ Make sure to include the semicolon at the end of the ingredient, it seperates th
 It is possible to have multiple recipies for items, meaning that the item will become craftable when any of the recipies are furfilled.
 
 The other tag inside the item tag is the description, this is text that is shown with the item, there is a theme of sattire with these descriptions.
+
+\section{Interactions}
+The interactions XML file tells the game what to do when different items are clicked on around the map, here is an example of the interactions XML file:
+
+\begin{minted}[tabsize = 4]{xml}
+<movable>
+	sand;cliff;snow;graveGrass;graveStoneFloor;deadlandsFloor;grass
+</movable>
+<tile name="gold">
+	<action>giveAndDestroy("Gold", 3)</action>
+</tile>
+
+<tile name="coal">
+	<action>giveAndDestroy("Stone", 3)</action>
+</tile>
+
+<tile name="tree">
+	<action>giveAndDestroy("Wood", 3)</action>
+</tile>
+
+<tile name="grave-deadTree">
+	<action>giveAndDestroy("Wood", 3)</action>
+</tile>
+
+<tile name="appleTree">
+	<action name="chop">giveAndDestroy("Wood", 3)</action>
+	<action name="pick">inventory:giveItem("Apple")</action>
+</tile>
+\end{minted}
+
+The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions assosiated with it. The text inside the action tag is Lua code that will be excecuted after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section. If there is more than one action available, the user will be prompted for which action they would like to do.
+
+\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=90mm]{MultipleSelection.jpg}
+		\caption{Selection Wheel}
+\end{figure}
+
+If there is no choice, the \texttt{name} attribute of the action is not needed as it is never shown. The lua code is run in the \textbf{interactions} scope.
+
+The movable tag at the top is for convenience, this tag lists all the tiles, seperated by semicolons, that can be walked on.
+
 \end{document}
