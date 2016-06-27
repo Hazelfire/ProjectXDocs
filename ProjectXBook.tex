@@ -1,6 +1,9 @@
 \documentclass{book}
 \author{Sam Nolan}
 \usepackage{minted}
+\usepackage{graphicx}
+\usepackage{listings}
+\graphicspath{{images/}}
 \title{Programming with ProjectX}
 \begin{document}
 	\maketitle
@@ -129,4 +132,243 @@
 	
 	\section{Sprites}
 	The sprites XML file is not necessarily the easiest to learn but is required by the other scripts.
+
+	The sprites XML file contains all the different sprites that will be used in various other aspects of the game, those aspects being players, tiles, creatures and items. Here is an example of a sprites XML file.
+
+\begin{minted}[tabsize = 4]{xml}
+<items>
+	<spritesheet source = "Resources.png" >
+		<sprite name="Gold" x="0" y="0" />
+		<sprite name="Wood" x="1" y="0" />
+		<sprite name="Stone" x="2" y="0" />
+		<sprite name="Apple" x="3" y="0" />
+	</spritesheet>
+
+	<spritesheet source="StandardTools.png" >
+		<sprite name="Pickaxe" x="0" y="0" />
+		<sprite name="Shovel" x="1" y="0" />
+		<sprite name="Sword" x="0" y="1" />
+		<sprite name="Axe" x="1" y="1" />
+	</spritesheet>
+
+	<spritesheet source="Ultanium.png" >
+		<sprite name="Ultanium" x="0" y="0" />
+	</spritesheet>
+
+	<spritesheet source = "UltaniumGodbladeAni.png">
+		<animate name="Ultanium Godblade" height="6" width = "1" x="0" y="0" speed="0.08" />
+	</spritesheet>
+
+</items>
+
+<tiles>
+	<spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
+		<sprite name="water" x ="0" y="0" />
+		<sprite name="sand" x="1" y="0" />
+		<sprite name="grass" x="2" y="0" />
+		<sprite name="cliff" x ="0" y ="1" />
+		<sprite name="stoneFloor" x ="3" y="0" />
+		<sprite name="snow" x = "1" y="1" />
+		<sprite name="graveStoneFloor" x="2" y="1" />
+		<sprite name="graveGrass" x="3" y="1" />
+	</spritesheet>
+
+	<spritesheet source="graveMisc.png" tileWidth="1" tileHeight="2" >
+		<sprite name="grave-deadTree" x = "0" y = "0" />
+		<sprite name="grave-gravestone" x = "1" y = "0" />
+		<sprite name="grave-spookyStatue" x = "2" y = "0" />
+	</spritesheet>
+
+	<spritesheet source = "tree.png" tileWidth = "1" tileHeight = "3" >
+		<sprite name="tree" x="0" y = "0" />
+	</spritesheet>
+
+	<spritesheet source = "misc.png" tileWidth = "1" tileHeight = "1" >
+		<sprite name="coal" x="0" y = "1" />
+		<sprite name="mudrock" x = "1"  y="1" />
+		<sprite name="coal2" x = "0" y = "0" />
+		<sprite name="gold" x = "1" y = "0" />
+	</spritesheet>
+
+	<spritesheet source="Small Trees.png" tileWidth = "1" tileHeight = "2" >
+		<sprite name="palm" x="0" y="0" />
+		<sprite name="cactus" x="1" y="0" />
+		<sprite name="shrubbery" x="0" y="1" />
+		<sprite name="appleTree" x="1" y="1" />
+	</spritesheet>
+	<spritesheet source="Supertall Tree.png" tileWidth = "1" tileHeight ="4" >
+		<sprite name="SuperTreh" x="0" y="0" />
+	</spritesheet>
+
+	<spritesheet source="Eggstoudanry_Statue.png" tileWidth = "1" tileHeight = "2">
+		<sprite name="eggStatue" x="0" y="0" />
+	</spritesheet>
+	<spritesheet source="deadlands.png" tileWidth = "1" tileHeight = "1">
+		<sprite name="deadlandsFloor" x="0" y="0" />
+	</spritesheet>
+</tiles>
+
+<creatures>
+	<spritesheet source= "Rat anim.png" height= "10" width="16">
+		<animate name="Rat Left" height="6" width= "1" x="0" y="0" speed="0.1" />
+		<animate name="Rat Right" height="6" width= "1" x="1" y="0" speed="0.1" />
+		<sprite name="Rat Left Idle" x="0" y="0" />
+		<sprite name="Rat Right Idle" x="1" y="0" />
+	</spritesheet>
+
+	<spritesheet source= "BigRatAnim.png" height="13" width="17">
+		<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
+		<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
+		<sprite name="Big Rat Left Idle" x="0" y="6" />
+		<sprite name="Big Rat Right Idle" x="1" y="6" />
+	</spritesheet>
+</creatures>
+
+<players>
+	<spritesheet source="Birdfoot.png" height="30" width="15">
+		<sprite name="Birdfoot" x="0" y="0" />
+	</spritesheet>
+	<spritesheet source="Hot Dog Man.png" height="29" width= "20">
+		<sprite name="Hot Dog Man" x="0" y="0" />
+	</spritesheet>
+
+	<spritesheet source = "BigRatAnim.png" height="13" width="17">
+		<animate name="Rat Man Left" height="6" width="1" x="0" y="0" speed="0.1" />
+		<animate name="Rat Man Right" height="6" width="1" x="1" y="0" speed="0.1" />
+		<sprite name="Rat Man Left Idle" x="0" y="6" />
+		<sprite name="Rat Man Right Idle" x="1" y="6" />
+	</spritesheet>
+</players>
+\end{minted}
+	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section seperate the different places where the sprites will be used in the game.
+
+Inside each of these sections are spritesheets, these spritesheets correspond to different files inside the res/sprites folder. Here is a listing of the res/sprites:
+
+\begin{lstlisting}
+res/sprites
+├── creatures
+│   ├── BigRatAnim.png
+│   ├── Rat anim.png
+├── items
+│   ├── Resources.png
+│   ├── UltaniumGodbladeAni.png
+│   ├── Ultanium.png
+├── players
+│   ├── BigRatAnim.png
+│   ├── Birdfoot.png
+│   └── Hot Dog Man.png
+└── tiles
+    ├── deadlands.png
+    ├── Eggstoudanry_Statue.png
+    ├── graveMisc.png
+    ├── misc.png
+    ├── Small Trees.png
+    ├── Supertall Tree.png
+    ├── terrain.png
+    └── tree.png
+\end{lstlisting}
+
+The source attribute of the spritesheet tag tells the game where to find the image file. As the folder struvture suggests, the sections are split up into their own folders, for organisation. Other than the source attribute, the attributes for the spritesheet tag are different for all the different sections, this is because the size of some sprites can be inferred from their context. Items will always be 32x32, while tiles will be in lots of 32 and 24 (width and height respectively). 
+
+Because of this, spritesheets have different attributes for width and height depending on their section, the attributes are as follows:
+
+\paragraph{items} No extra attributes needed, sprites are assumed to be 32x32.
+\paragraph{tiles} \texttt{tileWidth} and \texttt{tileHeight} are measured in tiles and outline the tiles size, for width, it is in lots of 32 pixels, for height, it is in lots of 24 pixels
+\paragraph{creatures and players} \texttt{height} and \texttt{width} attributes are measured in pixels.
+
+The spritesheet contains many sprites within it, each sprite must be the same size inside the spritesheet. The sprites inside the spritesheet can be specified with the \texttt{sprite} or \texttt{animate} tag. The different between the two is that a sprite is a static image whereas the animate moves and flicks through frames and creates an animation. It is highly reccomended that you make animations for players and creatures, tiles and items are acceptable to not be animated.
+
+The sprite tag has a \texttt{name, x} and \texttt{y} attribute. The name is the name of the sprite inside the spritesheet for use later. With items and tiles, this name must correspond with the exact name of the item/tile in the their respective XML files. With creatures and players, it is possible (and reccomended) to have multiple sprites associated with on entity. For example there may be a sprite of the creature going right and another of the creature going left. This means that the name of the sprite does not need to match the name of the creature of player, but it should resemble it in some way for clarity.
+
+The \texttt{x} and \texttt{y} attributes specify where the sprite is found on the tilesheet. They start in the top left and move down to the bottom right. For example, consider the image below:
+
+\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=90mm]{terrain.png}
+		\caption{Sample spritesheet}
+\end{figure}
+
+This image contains various floor types, the corresponding spritesheet tag for this spritesheet is as follows:
+
+\begin{minted}[tabsize = 4]{xml}
+<spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
+		<sprite name="water" x ="0" y="0" />
+		<sprite name="sand" x="1" y="0" />
+		<sprite name="grass" x="2" y="0" />
+		<sprite name="cliff" x ="0" y ="1" />
+		<sprite name="stoneFloor" x ="3" y="0" />
+		<sprite name="snow" x = "1" y="1" />
+		<sprite name="graveStoneFloor" x="2" y="1" />
+		<sprite name="graveGrass" x="3" y="1" />
+</spritesheet>
+\end{minted}
+
+The animate tag has a few more attributes, to illustrate, We will use the example of the Big Rat. This is the xml for the sprite:
+\begin{minted}[tabsize = 4]{xml}
+<spritesheet source= "BigRatAnim.png" height="13" width="17">
+		<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
+		<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
+		<sprite name="Big Rat Left Idle" x="0" y="6" />
+		<sprite name="Big Rat Right Idle" x="1" y="6" />
+</spritesheet>
+\end{minted}
+
+\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=40mm]{BigRatAnim.png}
+		\caption{Big Rat animation}
+\end{figure}
+
+That attributes for tha nimate tag are a bit more complicatated. the x and y attributes are which sprite the animation starts on, the height attribute is how vertically sized the attribute is. In this case the animation is 6 high because there are 6 sprites that are above each other which willbe cycled through. The width is similar. Currently, the animation will run in a top-down left to right order. The speed is how many seconds each sprite should be displayed, in this instance, a sprite is only shown for a tenth of a second.
+
+With this example, there are also normal sprites inside the spritesheet, it is possible to mix animates and sprites in the same spritesheet, it is also possible to have animates and sprites sharing sprites, like the (small) rat example above.
+
+Even though there are no animations for tiles currently, it is entirely possible to do so.
+
+\section{Music}
+The support for the music in XML is trivial, and it may be removed in the future as it can be done through Lua. But nevertheless, the music XML file is one of the simplest XML files to learn, here is an example of the music xml file:
+\begin{minted}[tabsize = 4]{xml}
+<region name="plains">
+	<song source="Ambient Hope" />
+</region>
+<region name="snow">
+	<song source="Chase in the cold" />
+</region>
+<region name="beach">
+	<song source="Seaside" />
+</region>
+<region name="graves">
+    <song source="Ambient Despair" />
+</region>
+<region name="cliffs">
+	<song source="Grind" />
+</region>
+<region name="desert">
+	<song source="A little warm" />
+</region>
+\end{minted}
+
+If you think that you understand how this works, you probably do. The region tag is a region of tiles as specified in the map generation XML file. The \texttt{name} attribute is the name of the region. The song tag is the song to be played in that region, and the source is the name of the song to be played. The music can be found in res/music. The current listing of this file is as below:
+
+\begin{lstlisting}
+res/music
+├── A chase!.wav
+├── A little warm.wav
+├── Ambient Despair.wav
+├── Ambient Hope.wav
+├── Ambient Nostalgia.wav
+├── Chase in the cold.wav
+├── Endgame.wav
+├── Grind.wav
+├── In the grime.wav
+├── My Song 4.wav
+├── Rust.wav
+├── The Vain King.wav
+└── Transformation.wav
+0 directories, 13 files
+\end{lstlisting}
+
+As you can see, you do not need to include the file extension with the source name. Also, there are many tracks that have not been added to the game yet.
+
+The music XML file may be improved on in the future.
 \end{document}
