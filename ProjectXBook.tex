@@ -545,6 +545,89 @@ The \texttt{creature} tag has 3 known attributes, the first is the name, which i
 
 The only known child of the creature tag is the movement tag, which is the same as the players XML movement tag, please see that section for a reference on it.
 
+\section{Map generation}
+Map generation was the first XML file to be added to the game and is by far the most complicated. Here is an example of the Map generation XML file:
+
+\begin{minted}[tabsize = 4]{xml}
+<map width="1500" height="1500" name="standard">
+	<layer name="bottom">
+		<rule type="perlin" scale="0.2">
+			<tile name='water' height="20"/>
+			<tile region='beach' name='sand' height="24" />
+			<area height="70">
+				<tile region='plains' name='grass' />
+				<rule type="perlin" scale="0.5">
+					<tile region='deadlands' name='deadlandsFloor' height="10" />
+				</rule>
+				<rule type="perlin" scale="0.5">
+					<tile region='desert' name="sand" height="10" />
+				</rule>
+				<rule type="perlin" scale="0.5">
+					<rule region='graves' type="random" height="10">
+						<tile name='graveStoneFloor' height="95" />
+						<tile region='graveDirt' name='graveGrass' height="100"/>
+					</rule>
+				</rule>
+			</area>
+			<tile region="cliffs" name='cliff' height="90" />
+			<tile region='snow' name='snow' height="100" />
+		</rule>
+	</layer>
+	<layer name="misc">
+		<rule type="inside" inside="desert" >
+			<rule type="random">
+				<tile name="cactus" height="1" />
+			</rule>
+		</rule>
+		<rule type="inside" inside="plains">
+			<rule type="random">
+				<tile name="SuperTreh" height = "0.1" />
+				<tile name="tree" height = "2" />
+				<tile name="appleTree" height="3" />
+			</rule>
+		</rule>
+		<rule type="inside" inside="cliffs">
+			<rule type="random">
+				<tile name="coal" height ="2"/>
+				<tile name="mudrock" height ="5" />
+				<tile name="coal2" height = "7"  />
+				<tile name="gold" height = "10"  />
+			</rule>
+		</rule>
+		<rule type="inside" inside="beach">
+			<rule type="random">
+				<tile name="palm" height ="2" />
+			</rule>
+		</rule>
+		<rule type="inside" inside="graves">
+			<rule type="random">
+				<tile name="grave-gravestone" height = "2" />
+				<tile name="grave-spookyStatue" height = "2.4" />
+			</rule>
+		</rule>
+		<rule type="inside" inside="graveDirt">
+			<rule type="random">
+				<tile name="grave-deadTree" height = "50"  />
+			</rule>
+		</rule>
+		<rule type="inside" inside="deadlands">
+			<rule type="random">
+				<tile name="eggStatue" height = "4" />
+			</rule>
+		</rule>
+	</layer>
+</map>
+\end{minted}
+
+As you can see, this file is much more complicated than all the other XML files, but is still reasonably easy to learn. Lets start from the top
+
+First of all, there is the \texttt{map} tag. This tag contains the map generation rules. It is possible to have multiple map generation techniques (This one is called "standard") and the player can select what map they would like to play. The \texttt{name} attribute is the display name of the map generation technique. The \texttt{height} and \texttt{width} attributes are how many tiles wide and high the map is, even though there is no performance issues with generating large maps, generating maps larger than 32,000 tiles wide/high will cause issues. The size of 1,500 is rather large and takes about 9 minutes to walk across.
+
+Next up there is the layer tag, there are 2 layers, the bottom layer and the misc layer. The bottom layer contains all the floor tiles, where the top layer contains all the things placed on top of those tiles. The layers do not actually need the name attribute, but is here for illustrative purposes.
+
+Now we get into map generation rules. A map generation rule tells how it's child rules and tiles are placed, there are 2 types of tags for rules, \texttt{rule} and \texttt{area}. They behave differently.
+
+The rule tag gives every tile on the map a value from 0-100, or a \textbf{height}. Then, all of it's children have a hieght also, and the height of the tile is compared with the height of the rule to determine whether it should be placed. There are 3 types of rules, which all give different values for the tiles. 
 
 
 \end{document}
