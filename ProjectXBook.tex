@@ -240,7 +240,7 @@
 	</spritesheet>
 </players>
 \end{minted}
-	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section seperate the different places where the sprites will be used in the game.
+	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section separate the different places where the sprites will be used in the game.
 
 Inside each of these sections are spritesheets, these spritesheets correspond to different files inside the res/sprites folder. Here is a listing of the res/sprites:
 
@@ -268,7 +268,7 @@ res/sprites
     └── tree.png
 \end{lstlisting}
 
-The source attribute of the spritesheet tag tells the game where to find the image file. As the folder struvture suggests, the sections are split up into their own folders, for organisation. Other than the source attribute, the attributes for the spritesheet tag are different for all the different sections, this is because the size of some sprites can be inferred from their context. Items will always be 32x32, while tiles will be in lots of 32 and 24 (width and height respectively). 
+The source attribute of the spritesheet tag tells the game where to find the image file. As the folder structure suggests, the sections are split up into their own folders, for organization. Other than the source attribute, the attributes for the spritesheet tag are different for all the different sections, this is because the size of some sprites can be inferred from their context. Items will always be 32x32, while tiles will be in lots of 32 and 24 (width and height respectively). 
 
 Because of this, spritesheets have different attributes for width and height depending on their section, the attributes are as follows:
 
@@ -276,9 +276,9 @@ Because of this, spritesheets have different attributes for width and height dep
 \paragraph{tiles} \texttt{tileWidth} and \texttt{tileHeight} are measured in tiles and outline the tiles size, for width, it is in lots of 32 pixels, for height, it is in lots of 24 pixels
 \paragraph{creatures and players} \texttt{height} and \texttt{width} attributes are measured in pixels.
 
-The spritesheet contains many sprites within it, each sprite must be the same size inside the spritesheet. The sprites inside the spritesheet can be specified with the \texttt{sprite} or \texttt{animate} tag. The different between the two is that a sprite is a static image whereas the animate moves and flicks through frames and creates an animation. It is highly reccomended that you make animations for players and creatures, tiles and items are acceptable to not be animated.
+The spritesheet contains many sprites within it, each sprite must be the same size inside the spritesheet. The sprites inside the spritesheet can be specified with the \texttt{sprite} or \texttt{animate} tag. The different between the two is that a sprite is a static image whereas the animate moves and flicks through frames and creates an animation. It is highly recommended that you make animations for players and creatures, tiles and items are acceptable to not be animated.
 
-The sprite tag has a \texttt{name, x} and \texttt{y} attribute. The name is the name of the sprite inside the spritesheet for use later. With items and tiles, this name must correspond with the exact name of the item/tile in the their respective XML files. With creatures and players, it is possible (and reccomended) to have multiple sprites associated with on entity. For example there may be a sprite of the creature going right and another of the creature going left. This means that the name of the sprite does not need to match the name of the creature of player, but it should resemble it in some way for clarity.
+The sprite tag has a \texttt{name, x} and \texttt{y} attribute. The name is the name of the sprite inside the spritesheet for use later. With items and tiles, this name must correspond with the exact name of the item/tile in the their respective XML files. With creatures and players, it is possible (and recommended) to have multiple sprites associated with on entity. For example there may be a sprite of the creature going right and another of the creature going left. This means that the name of the sprite does not need to match the name of the creature of player, but it should resemble it in some way for clarity.
 
 The \texttt{x} and \texttt{y} attributes specify where the sprite is found on the tilesheet. They start in the top left and move down to the bottom right. For example, consider the image below:
 
@@ -319,7 +319,7 @@ The animate tag has a few more attributes, to illustrate, We will use the exampl
 		\caption{Big Rat animation}
 \end{figure}
 
-That attributes for tha nimate tag are a bit more complicatated. the x and y attributes are which sprite the animation starts on, the height attribute is how vertically sized the attribute is. In this case the animation is 6 high because there are 6 sprites that are above each other which willbe cycled through. The width is similar. Currently, the animation will run in a top-down left to right order. The speed is how many seconds each sprite should be displayed, in this instance, a sprite is only shown for a tenth of a second.
+That attributes for the animate tag are a bit more complicated. the x and y attributes are which sprite the animation starts on, the height attribute is how vertically sized the attribute is. In this case the animation is 6 high because there are 6 sprites that are above each other which will be cycled through. The width is similar. Currently, the animation will run in a top-down left to right order. The speed is how many seconds each sprite should be displayed, in this instance, a sprite is only shown for a tenth of a second.
 
 With this example, there are also normal sprites inside the spritesheet, it is possible to mix animates and sprites in the same spritesheet, it is also possible to have animates and sprites sharing sprites, like the (small) rat example above.
 
@@ -422,17 +422,17 @@ and the mediocre.
 
 These are the basic tools found in ProjectX, the Pickaxe, Shovel, Axe and Sword. The name attribute is the display name of the item and also the exact name of the sprite that will be displayed with the item.
 
-The item tag can have 2 children, the first is the ingredients tag, the tag includes what is needed to craft the item. The ingredients tag is not neccesary and the item can be obtained through other ways (like getting it through a lua script). The syntax for the ingredients is simple:
+The item tag can have 2 children, the first is the ingredients tag, the tag includes what is needed to craft the item. The ingredients tag is not necessary and the item can be obtained through other ways (like getting it through a lua script). The syntax for the ingredients is simple:
 
 \begin{center}
 		\texttt{[item] : [quantity] ;}
 \end{center}
 
-Make sure to include the semicolon at the end of the ingredient, it seperates them. For example, the statement \texttt{Wood:3;Stone:1;} is perfectly legal, but is not reccomended for legability reasons.
+Make sure to include the semicolon at the end of the ingredient, it separates them. For example, the statement \texttt{Wood:3;Stone:1;} is perfectly legal, but is not recommended for legibility reasons.
 
-It is possible to have multiple recipies for items, meaning that the item will become craftable when any of the recipies are furfilled.
+It is possible to have multiple recipes for items, meaning that the item will become craftable when any of the recipes are fulfilled.
 
-The other tag inside the item tag is the description, this is text that is shown with the item, there is a theme of sattire with these descriptions.
+The other tag inside the item tag is the description, this is text that is shown with the item, there is a theme of satire with these descriptions.
 
 \section{Interactions}
 The interactions XML file tells the game what to do when different items are clicked on around the map, here is an example of the interactions XML file:
@@ -463,7 +463,7 @@ The interactions XML file tells the game what to do when different items are cli
 </tile>
 \end{minted}
 
-The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions assosiated with it. The text inside the action tag is Lua code that will be excecuted after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section. If there is more than one action available, the user will be prompted for which action they would like to do.
+The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section. If there is more than one action available, the user will be prompted for which action they would like to do.
 
 \begin{figure}[ht!]
 		\centering
@@ -627,7 +627,7 @@ Next up there is the layer tag, there are 2 layers, the bottom layer and the mis
 
 Now we get into map generation rules. A map generation rule tells how it's child rules and tiles are placed, there are 2 types of tags for rules, \texttt{rule} and \texttt{area}. They behave differently.
 
-The rule tag gives every tile on the map a value from 0-100, or a \textbf{height}. Then, all of it's children have a hieght also, and the height of the tile is compared with the height of the rule to determine whether it should be placed. There are 3 types of rules, which all give different values for the tiles. 
+The rule tag gives every tile on the map a value from 0-100, or a \textbf{height}. Then, all of it's children have a height also, and the height of the tile is compared with the height of the rule to determine whether it should be placed. There are 3 types of rules, which all give different values for the tiles. 
 
 
 \end{document}
