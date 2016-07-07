@@ -694,6 +694,8 @@ Finally, the tile tag is a single sprite for a tile. The \texttt{name} attribute
 \section{Begginning with Lua}
 Lua is the other language that is used often in the game. Lua differs from XML because it is a \textbf{procedual} language. This means that instead of writing about objects like you would in XML, as it is a \textbf{markup} langauge, you write about procedures, that is, how to do things. Lua controls what happens at the start of the game, how creatures behave and what happens when you interact with tiles.
 
+\subsection{Functions}
+
 A basic Lua program might look like this:
 \begin{minted}[tabsize = 4]{lua}
 Debug.log("Hello world");
@@ -701,5 +703,51 @@ Debug.log("Hello world");
 
 This prints \texttt{Hello world} to the console, and the log file. Lets break this program down.
 
-\texttt{Debug.log} is called a \textbf{function}. A function simply does something, in this case, the function \texttt{Debug.log} logs a message. The matching brackets after the function hold what are called the \textbf{arguments}. \texttt{"Hello world"} is the argument to \texttt{Debug.log}. Arguments are values that are given to the \textbf{function} to tell it how to act. We want \texttt{Debug.log} to print the value \texttt{Hello world} so we gave it the value to print. Arguments appear elsewhere in many other functions. For example, \texttt{Music.playSong} takes an argument which tells it what song to play, for example: \texttt{Music.playSong("Enter the duneon");}. The quotes around \texttt{Hello world} turns the value into a \textbf{string}. A string could be a word, a sentence, or an Epic poem, as long as it contains letters in it. The quotes make it pass the \textbf{literal} Hello world to the function. Finally the semicolon finishes the line. It is worth noting that you do not need to place the semicolon in Lua, although it is good practise because many other languages end there lines with a semicolon.
+\texttt{Debug.log} is called a \textbf{function}. A function simply does something, in this case, the function \texttt{Debug.log} logs a message. The matching brackets after the function hold what are called the \textbf{arguments}. \texttt{"Hello world"} is the argument to \texttt{Debug.log}. Arguments are values that are given to the \textbf{function} to tell it how to act. We want \texttt{Debug.log} to print the value \texttt{Hello world} so we gave it the value to print. Arguments appear elsewhere in many other functions. For example, \texttt{Music.playSong} takes an argument which tells it what song to play, for example: \texttt{Music.playSong("Enter the dungeon");}. The quotes around \texttt{Hello world} turns the value into a \textbf{string}. A string could be a word, a sentence, or an Epic poem, as long as it contains letters in it. The quotes make it pass the \textbf{literal} Hello world to the function. Finally the semicolon finishes the line. It is worth noting that you do not need to place the semicolon in Lua, although it is good practise because many other languages end there lines with a semicolon.
 
+Here are a few other example of function calls:
+\begin{minted}[tabsize = 4]{lua}
+Debug.logWarning("Don't spill the milk");
+Music.playRegionSong("cliff");
+Player.getByIndex(0);
+\end{minted}
+
+Functions can have multiple arguments, those arguments are seperated by semicolons. For example, often it is needed to specify what tile you want the function to affect, so you can supply an x and y value for which tile you are talking about. \texttt{Particles.spawnParticles("fire", 78, 103);} is an example of a function with 3 arguments, a name, an x coordinte, and a y coordinate.
+
+\subsection{Types}
+
+In lua, there are different \textbf{types} of values. We have already seen some of them.
+
+\paragraph{string}
+A very common type is a string, a string is a list of characters, for example "Fire" is a string, or "Enter the Dungeon", or even "4". As you can see, strings are denoted by quotes around the value, the quotes mean "I am talking about the actual text between the quotes", that sentence there could be a string.
+
+\paragraph{number}
+A number is exactly what it sounds like. 2, 8.7, 1089 and -8.9 are all numbers
+
+\paragraph{table}
+A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are bery useful for keeping related information together.
+
+\subsection{Variables}
+A variable is simply a stored piece of information. This information is given a name and it can then be used later in the program and changed. To start with a variable, you must first declare it, for example:
+
+\begin{minted}[tabsize = 4]{lua}
+myDJName = "DJ Steve";
+songCount = 8;
+salary = 0.10;
+phoneNumbers = {5719349537, 724236216};
+\end{minted}
+
+All these values can be used later in the program with the name that you gave them.
+
+\begin{minted}[tabsize = 4]{lua}
+Debug.log(myDJName);
+\end{minted}
+
+Accessing values of tables is an interesting case, for example, if you wanted to get the first value or the phone numbers, you would use:
+
+\begin{minted}[tabsize = 4]{lua}
+phoneNumbers[1]
+\end{minted}
+
+
+\end{document}
