@@ -4,9 +4,14 @@
 \usepackage{graphicx}
 \usepackage{listings}
 
+\newenvironment{ulist}
+	{\begin{itemize}
+			\itemsep0em}
+	{\end{itemize}}
+
 \newenvironment{xml}
 	{\VerbatimEnvironment
-	\begin{minted}[tabsize = 4, breaklines]{xml}}
+	\begin{minted}[tabsize = 2]{xml}}
 	{\end{minted}}
 
 \newenvironment{lua}
@@ -101,28 +106,28 @@
 	This section concerns the developers of ProjectX, contact details are provided for some.
 	
 	\paragraph{Programming}
-	\begin{itemize}
+	\begin{ulist}
 		\item Sam Nolan - NOL0055@bhs.vic.edu.au
 		\item Michael Smith
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Art}
-	\begin{itemize}
+	\begin{ulist}
 		\item Oscar Taylor
 		\item Adam Schembri (Codeword Gaming)
 		\item Louis Evans
 		\item Tom Duchemin
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Scripting}
-	\begin{itemize}
+	\begin{ulist}
 		\item Hung Dao
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Music}
-	\begin{itemize}
+	\begin{ulist}
 		\item Louis Evans
-	\end{itemize}
+	\end{ulist}
 	
 	\chapter{Developing With ProjectX}
 	This section addresses the structure of ProjectX and how to use some of the tools that come with it.
@@ -229,18 +234,10 @@ skipSplashes: true
 		<sprite name="Axe" x="1" y="1" />
 	</spritesheet>
 
-	<spritesheet source="Ultanium.png" >
-		<sprite name="Ultanium" x="0" y="0" />
-	</spritesheet>
-
-	<spritesheet source = "UltaniumGodbladeAni.png">
-		<animate name="Ultanium Godblade" height="6" width = "1" x="0" y="0" speed="0.08" />
-	</spritesheet>
-
 </items>
 
 <tiles>
-	<spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
+	<spritesheet source = "terrain.png" tileWidth = "1" tileHeight = "1" >
 		<sprite name="water" x ="0" y="0" />
 		<sprite name="sand" x="1" y="0" />
 		<sprite name="grass" x="2" y="0" />
@@ -249,12 +246,6 @@ skipSplashes: true
 		<sprite name="snow" x = "1" y="1" />
 		<sprite name="graveStoneFloor" x="2" y="1" />
 		<sprite name="graveGrass" x="3" y="1" />
-	</spritesheet>
-
-	<spritesheet source="graveMisc.png" tileWidth="1" tileHeight="2" >
-		<sprite name="grave-deadTree" x = "0" y = "0" />
-		<sprite name="grave-gravestone" x = "1" y = "0" />
-		<sprite name="grave-spookyStatue" x = "2" y = "0" />
 	</spritesheet>
 
 	<spritesheet source = "tree.png" tileWidth = "1" tileHeight = "3" >
@@ -270,19 +261,11 @@ skipSplashes: true
 
 	<spritesheet source="Small Trees.png" tileWidth = "1" tileHeight = "2" >
 		<sprite name="palm" x="0" y="0" />
-		<sprite name="cactus" x="1" y="0" />
 		<sprite name="shrubbery" x="0" y="1" />
 		<sprite name="appleTree" x="1" y="1" />
 	</spritesheet>
 	<spritesheet source="Supertall Tree.png" tileWidth = "1" tileHeight ="4" >
 		<sprite name="SuperTreh" x="0" y="0" />
-	</spritesheet>
-
-	<spritesheet source="Eggstoudanry_Statue.png" tileWidth = "1" tileHeight = "2">
-		<sprite name="eggStatue" x="0" y="0" />
-	</spritesheet>
-	<spritesheet source="deadlands.png" tileWidth = "1" tileHeight = "1">
-		<sprite name="deadlandsFloor" x="0" y="0" />
 	</spritesheet>
 </tiles>
 
@@ -305,9 +288,6 @@ skipSplashes: true
 <players>
 	<spritesheet source="Birdfoot.png" height="30" width="15">
 		<sprite name="Birdfoot" x="0" y="0" />
-	</spritesheet>
-	<spritesheet source="Hot Dog Man.png" height="29" width= "20">
-		<sprite name="Hot Dog Man" x="0" y="0" />
 	</spritesheet>
 
 	<spritesheet source = "BigRatAnim.png" height="13" width="17">
@@ -367,24 +347,24 @@ This image contains various floor types, the corresponding spritesheet tag for t
 
 \begin{xml}
 <spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
-		<sprite name="water" x ="0" y="0" />
-		<sprite name="sand" x="1" y="0" />
-		<sprite name="grass" x="2" y="0" />
-		<sprite name="cliff" x ="0" y ="1" />
-		<sprite name="stoneFloor" x ="3" y="0" />
-		<sprite name="snow" x = "1" y="1" />
-		<sprite name="graveStoneFloor" x="2" y="1" />
-		<sprite name="graveGrass" x="3" y="1" />
+	<sprite name="water" x ="0" y="0" />
+	<sprite name="sand" x="1" y="0" />
+	<sprite name="grass" x="2" y="0" />
+	<sprite name="cliff" x ="0" y ="1" />
+	<sprite name="stoneFloor" x ="3" y="0" />
+	<sprite name="snow" x = "1" y="1" />
+	<sprite name="graveStoneFloor" x="2" y="1" />
+	<sprite name="graveGrass" x="3" y="1" />
 </spritesheet>
 \end{xml}
 
 The animate tag has a few more attributes, to illustrate, We will use the example of the Big Rat. This is the xml for the sprite:
 \begin{xml}
 <spritesheet source= "BigRatAnim.png" height="13" width="17">
-		<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
-		<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
-		<sprite name="Big Rat Left Idle" x="0" y="6" />
-		<sprite name="Big Rat Right Idle" x="1" y="6" />
+	<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
+	<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
+	<sprite name="Big Rat Left Idle" x="0" y="6" />
+	<sprite name="Big Rat Right Idle" x="1" y="6" />
 </spritesheet>
 \end{xml}
 
@@ -524,10 +504,6 @@ The interactions XML file tells the game what to do when different items are cli
 	<action>giveAndDestroy("Wood", 3)</action>
 </tile>
 
-<tile name="grave-deadTree">
-	<action>giveAndDestroy("Wood", 3)</action>
-</tile>
-
 <tile name="appleTree">
 	<action name="chop">giveAndDestroy("Wood", 3)</action>
 	<action name="pick">inventory:giveItem("Apple")</action>
@@ -617,31 +593,12 @@ Map generation was the first XML file to be added to the game and is by far the 
 		<rule type="perlin" scale="0.2">
 			<tile name='water' height="20"/>
 			<tile region='beach' name='sand' height="24" />
-			<area height="70">
-				<tile region='plains' name='grass' />
-				<rule type="perlin" scale="0.5">
-					<tile region='deadlands' name='deadlandsFloor' height="10" />
-				</rule>
-				<rule type="perlin" scale="0.5">
-					<tile region='desert' name="sand" height="10" />
-				</rule>
-				<rule type="perlin" scale="0.5">
-					<rule region='graves' type="random" height="10">
-						<tile name='graveStoneFloor' height="95" />
-						<tile region='graveDirt' name='graveGrass' height="100"/>
-					</rule>
-				</rule>
-			</area>
+			<tile region='plains' name = 'grass' height= '80' />
 			<tile region="cliffs" name='cliff' height="90" />
 			<tile region='snow' name='snow' height="100" />
 		</rule>
 	</layer>
 	<layer name="misc">
-		<rule type="inside" inside="desert" >
-			<rule type="random">
-				<tile name="cactus" height="1" />
-			</rule>
-		</rule>
 		<rule type="inside" inside="plains">
 			<rule type="random">
 				<tile name="SuperTreh" height = "0.1" />
@@ -660,22 +617,6 @@ Map generation was the first XML file to be added to the game and is by far the 
 		<rule type="inside" inside="beach">
 			<rule type="random">
 				<tile name="palm" height ="2" />
-			</rule>
-		</rule>
-		<rule type="inside" inside="graves">
-			<rule type="random">
-				<tile name="grave-gravestone" height = "2" />
-				<tile name="grave-spookyStatue" height = "2.4" />
-			</rule>
-		</rule>
-		<rule type="inside" inside="graveDirt">
-			<rule type="random">
-				<tile name="grave-deadTree" height = "50"  />
-			</rule>
-		</rule>
-		<rule type="inside" inside="deadlands">
-			<rule type="random">
-				<tile name="eggStatue" height = "4" />
 			</rule>
 		</rule>
 	</layer>
@@ -815,12 +756,107 @@ Now, any future references of \texttt{myDJName} will result to "DJ Deejay".
 \section{Lua Structure}
 The structure of Lua can be defined in various \textbf{scopes}. Scopes are the functions that a certain script has access to. There are several scopes and they can be defined in a heirarchy. The interpreter scope contains utilities that do not control the game, and do not infer that a game is running, this includes the \texttt{Math} class and the \texttt{File} class. The biggest scope is the game scope. This contains all the functions in the interpreter scope plus many other functions used to control various aspects of the game, this include the \texttt{Creatures, Arena, Music, Inventory, Particles} and \texttt{Player} Classes. There are several other scopes.
 
-\fFigure{LuaScopeDiagram.png}{Lua Scopes}
+\hFigure{LuaScopeDiagram.png}{Lua Scopes}
 
 In the diagram, elipses are places where you can write Lua code, the rectangles are scopes, and allow you to access different Classes. For example, it would be a bit crazy of the lua terminal had access to the States class, which controls the various states a creature can be in, because you would not know what creature you are talking about. But when programming creature AI, the state class obviously refers to the creature that the AI has been coded for. This is why we have scopes.
 
 All lua code can be found in \texttt{scripts/lua}. Currently, lua support is avaliable for interactions, creature ai and startup scripts. In the future I am planning to add Game Logic and item functionality in lua scripts.
 
 \section{Interactions}
-Take a look back at the interactions xml file if you haven't yet.
+If you remember XML Interactions, inside the action tags is lua code! This lua code gets excecuted when the player has made it to the item that the interaction is made for (unless \texttt{instant} is set). Here is our XML Interactionsfile.
+
+\begin{xml}
+<movable>
+	sand;cliff;snow;graveGrass;graveStoneFloor;deadlandsFloor;grass
+</movable>
+<tile name="gold">
+	<action>giveAndDestroy("Gold", 3)</action>
+</tile>
+
+<tile name="coal">
+	<action>giveAndDestroy("Stone", 3)</action>
+</tile>
+
+<tile name="tree">
+	<action>giveAndDestroy("Wood", 3)</action>
+</tile>
+
+<tile name="appleTree">
+	<action name="chop">giveAndDestroy("Wood", 3)</action>
+	<action name="pick">inventory:giveItem("Apple")</action>
+</tile>
+\end{xml}
+
+The code inside the action tags look familiar, this is Lua! First, lets take a look at \texttt{inventory:getItem("Apple")}.
+
+This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple.
+
+\part{Appendix}
+\chapter{Appendix A - Lua functions}
+This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organised in Scope -> Classes -> Members
+\section{Interpreter}
+\subsection{Debug}
+\subsubsection{Debug.log}
+Overloads:
+\begin{ulist}
+	\item Debug.log(string message)
+\end{ulist}
+Logs the message to the console and to the log file.
+
+\subsubsection{Debug.logWarning}
+Overloads:
+\begin{ulist}
+	\item Debug.logWarning(string message)
+\end{ulist}
+Logs the warning to the console and to the log file.
+
+\subsubsection{Debug.logError}
+Overloads:
+\begin{ulist}
+	\item Debug.logError(string message)
+\end{ulist}
+Logs the error to the console and to the log file
+
+
+\subsection{File}
+\subsubsection{File.readStringFromFile}
+Overloads
+\begin{ulist}
+	\item File.readStringFromFile(string filePath)
+\end{ulist}
+Returns the string inside the file specified by the filePath. the filePath must be relative to the application excecutable (i.e. res/file/MyFile.txt or the like)
+
+
+\subsection{Math}
+\subsubsection{Math.randomInt}
+Overloads:
+\begin{ulist}
+	\item Math.randomInt(number max)
+	\item Math.randomInt(number min, number max)
+\end{ulist}
+Returns a random integer (whole number) between 0 and max-1.
+If a second argument is used, it will return a number between min and max-1
+
+\subsubsection{Math.randomReal}
+Overloads:
+\begin{ulist}
+	\item Math.randomReal(number max)
+	\item Math.randomReal(number min, number max)
+\end{ulist}
+Returns a random real number (decimal number) between 0 and max.
+If a second argument is used, it will return a number between min amd max
+
+
+
+\section{Game}
+\subsection{Arena}
+\subsubsection{Arena.getTileNameAt}
+Overloads:
+\begin{ulist}
+	\item Arena.getTileNameAt(number x, number y)
+\end{ulist}
+Returns the name of the uppermost tile at a specific location, the location is given by (x, y)
+
+\subsection{}
+
 \end{document}
