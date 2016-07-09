@@ -3,11 +3,61 @@
 \usepackage{minted}
 \usepackage{graphicx}
 \usepackage{listings}
+
+\newenvironment{ulist}
+	{\begin{itemize}
+			\itemsep0em}
+	{\end{itemize}}
+
+\newenvironment{xml}
+	{\VerbatimEnvironment
+	\begin{minted}[tabsize = 2]{xml}}
+	{\end{minted}}
+
+\newenvironment{lua}
+	{\VerbatimEnvironment
+	\begin{minted}[tabsize = 4]{lua}}
+	{\end{minted}}
 \graphicspath{{images/}}
+
+\newenvironment{yaml}
+	{\VerbatimEnvironment
+	\begin{minted}[tabsize = 4]{yaml}}
+	{\end{minted}}
+
+\newcommand{\hFigure}[2]
+	{\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=90mm]{#1}
+		\caption{#2}
+	\end{figure}}
+
+\newcommand{\fFigure}[2]
+	{\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=\textwidth]{#1}
+		\caption{#2}
+	\end{figure}}
+
+\newcommand{\vFigure}[2]
+	{\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=40mm]{#1}
+		\caption{#2}
+	\end{figure}}
 \title{Programming with ProjectX}
 \begin{document}
-	\maketitle
+	\pagenumbering{gobble}
+	\topskip0pt
+	\vspace*{\fill}
+	\begin{center}
+		\centering
+		\includegraphics[width=\textwidth]{ProjectX.png}
+		Sam Nolan
+	\end{center}
+	\vspace*{\fill}
 	\tableofcontents
+	\pagenumbering{arabic}
 	\chapter{Introduction}
 	\section{What is ProjectX?}
 	ProjectX is both a game and an educational tool for learning the basics of programming. It can be played without even touching the programming aspects as a social multiplayer game, but it becomes much more interesting when players create content of their own through the use of the programming languages Lua and XML.
@@ -15,16 +65,18 @@
 	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels. It comes with many tools that help the beginner programmer both get a feel for professional-like environments while being supported by them along the way.
 	
 	Professionals can also use ProjectX as just a general game. By developing on different parts of the game, every session would be completely different. If teams were to get together to mod this game, or even a classroom, the changes can be updated into one single game and can be played multiplayer by everyone. 
-	
+
+	The game is also completely and utterly cross platform. You can run the game on Windows, Mac, Linux, Android and iOS. Games can also be played \textbf{across platforms}, meaning a person could come along with an Android smartphone, link up to a server hosted by a Linux computer, and play with a tonne of Macintosh and Windows Users!
+
 	\section{Game-Play and Rules}
 	The game itself is an Real Time Strategy multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
 	
 	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. Changes that are made to the game on one device can be synced to another simply by playing on the same game.
 	
 	\section{Programming with ProjectX}
-	ProjectX has 2 official languages, Lua and XML. These language are serve different purposes in the game. XML is used to represent objects in the game, whereas with Lua procedures can be specified. XML controls map generation, Items, Sprites and many more, whereas Lua controls Creature AI and interactions. The skills learnt can be applied to other programming languages such as Javascript, HTML or any other language that a person might want to learn.
+	ProjectX has 2 official languages, Lua and XML, as well as YAML in some areas. These language are serve different purposes in the game. XML is used to represent objects in the game, whereas with Lua procedures can be specified. XML controls map generation, Items, Sprites and many more, whereas Lua controls Creature AI and interactions. The skills learnt can be applied to other programming languages such as Javascript, HTML or any other language that a person might want to learn.
 	
-	To keep things simple, what you can do is fairly limited. A programmer can only add \textit{content} to the game. That is, it is not possible to add anything that does not already exist. For instance, it is possible to create your own creature to be placed into the game, but it is not possible to add UI elements and change the rules of the game around. These are called \textit{features} and are added by the maintaining developers of the game. If you wish to see a feature in the game, you may contact Sam Nolan at NOL0055@bhs.vic.edu.au.
+	A programmer can only add \textit{content} to the game. That is, it is not possible to add anything that does not already exist. For instance, it is possible to create your own creature to be placed into the game, but it is not possible to add UI elements and change the rules of the game around. These are called \textit{features} and are added by the maintaining developers of the game. If you wish to see a feature in the game, you may contact Sam Nolan at NOL0055@bhs.vic.edu.au.
 	
 	Most of the code has its own jurisdiction, as in, the code in each folder will control only a certain aspect of the game, and no more. This is in contrast to most languages, where all code does not need to be in separate files to function. We decided to make ProjectX like this as to keep the code simple as possible.
 	
@@ -45,7 +97,7 @@
 	The Gitkraken source control package. Useful for recording and keeping changes when working in teams, not required.
 	
 	\paragraph{ProjectX Documentation}
-	This book and the ProjectX documentation as a .chm file, which contains an official reference to everything available in ProjectX.
+	Contains this book
 	
 	\paragraph{ProjectX Sprite Previewer}
 	A Sprite Previewer for ProjectX, This application reads a Sprite XML file  and creates sprites to preview before putting in the application. Not required but may be useful for artists.
@@ -54,28 +106,28 @@
 	This section concerns the developers of ProjectX, contact details are provided for some.
 	
 	\paragraph{Programming}
-	\begin{itemize}
-		\item Sam "Sparka" Nolan - NOL0055@bhs.vic.edu.au
+	\begin{ulist}
+		\item Sam Nolan - NOL0055@bhs.vic.edu.au
 		\item Michael Smith
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Art}
-	\begin{itemize}
+	\begin{ulist}
 		\item Oscar Taylor
 		\item Adam Schembri (Codeword Gaming)
 		\item Louis Evans
 		\item Tom Duchemin
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Scripting}
-	\begin{itemize}
+	\begin{ulist}
 		\item Hung Dao
-	\end{itemize}
+	\end{ulist}
 	
 	\paragraph{Music}
-	\begin{itemize}
+	\begin{ulist}
 		\item Louis Evans
-	\end{itemize}
+	\end{ulist}
 	
 	\chapter{Developing With ProjectX}
 	This section addresses the structure of ProjectX and how to use some of the tools that come with it.
@@ -85,47 +137,78 @@
 	
 	This folder can also be accessed by opening it with Atom. The ProjectX Scripting link will automatically direct to the resources folder.
 	
+	For linux, you will need to build ProjectX from source, just clone the official repository, use cmake and make to build the Project. Boost is required.
+
+	\paragraph{Log file}
+	In the installation directory, there is a "log" folder, which contains a file named \texttt{current.log}. If anything goes wrong while programming, the first thing you should do is check the log file as it may contain useful information as to how to fix your issue. Any lua and xml errors are logged into this file, along with other helpful information. It is possible to log to this file while debugging to help pinpoint where your code goes wrong.
+
+	\paragraph{Save file}
+	Inside the save directory, there is a file named \texttt{SaveFile.yml}. This contains information that has been saved from the game for later usage, using this file, you can also enable a few hidden features. Here is an example of the save file:
+	
+	In linux, the save file is located at \texttt{~/.config/ProjectX/SaveFile.yml}
+
+
+	\begin{yaml}	
+playerName: Sam Nolan
+fullScreen: false
+skipSplashes: true
+	\end{yaml}
+
+	This file is easy to edit, simply change the values after the colons. Make sure that there is a space after the colon and no space after the propertyName, as shown above.
+
+	You can enable fullscreen by setting \texttt{fullScreen} to \texttt{true} instead of \texttt{false}. The \texttt{skipSplashes} property is not shown by default. If set to true, then the 2 splashes at the start of the game will not show and it will take you directly to the menu page.
+
+	There is also another hidden property, this property is called \texttt{devMode} and if set to true, it will enable the Lua Terminal in game by pressing T.
 	\section{Atom}
 	Atom is the official scripting platform for ProjectX. The actual Atom project can be found at \texttt{atom.io}. There is a package (or extension) to Atom which contains error checking and code-completion for ProjectX. The package is installed with Atom from the installer.
 	
+	\hFigure{Atom.png}{Screenshot of Atom}
+
+	Atom contains a file viewer on the left, you can browse through the entire resources directory and look view images and various other things. Atom is used by many proffesional programmers.
+
+	\section{Lua Terminal}
+	The Lua terminal can excecute lua commands in game and is very helpful starting point for programming in Lua. It is similar to the minecraft terminal except that it will only accept commands and the commands are in lua. The Terminal can be opened with T and will only be available if you enable \texttt{devMode} inside \texttt{SaveFile.yml} (see Save file above). Escape will close the terminal.
+
+	You can excecute commands from here (such as print("Hello world")) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it.
+
 	\chapter{ProjectX XML}
 	\section{Beginning With XML}
 	XML is called a \textbf{markup language}. A markup language has a certain syntax that uses angle brackets and tags. It is nearly identical to HTML in syntax. This is an example of a tag:
 	
-	\begin{center}
-		\texttt{<class>}
-	\end{center}
+	\begin{xml}
+	\texttt{<class>}
+	\end{xml}
 	
 	What makes it a tag is the angle brackets around it, "class" is the \textbf{name} of the tag. In ProjectX there are many different tags that are differentiated by name that have a variety of uses. For example the \texttt{<class>} tag is used in the players XML file to specify a character class.
 	
 	Every tag has a matching ending tag. The ending tag is the same as the original (starting) tag except that it starts with a forward slash (/)
 
-	\begin{center}
+	\begin{xml}
 		\texttt{</class>}
-	\end{center}
+	\end{xml}
 	
 	Anything between the ending tag and the original starting tag is said to be inside the tag, for example:
-	\begin{minted}[tabsize = 4]{xml}
+	\begin{xml}
 <description>
 	This is a description!
 </description>
-	\end{minted}
+	\end{xml}
 	The "This is a description!" is said to be the description tag's value. We can have tags inside tags like so:
-	\begin{minted}[tabsize = 4]{xml}
+	\begin{xml}
 <class>
 	<description>
 		This is a description!
 	</description>
 </class>
-	\end{minted}
+	\end{xml}
 	The description is inside the class and the text is inside the description. You can make many different structures using XML.
 	
 	In XML, any tag can have \textbf{attributes} associated with it. An attribute looks like this:
-	\begin{minted}[tabsize = 4]{xml}
+	\begin{xml}
 <class name="Rat Man">
 	
 </class>
-	\end{minted}
+	\end{xml}
 	In this case, \texttt{name} is an attribute of the \texttt{class} tag. and the \textbf{value} of the name attribute is \texttt{"Rat Man"}. In ProjectX, all attribute values are surrounded by quotes. The quotes are not part of the value, but just group the text in between them together. This is called a \textbf{string} and comes in various programming languages. For example, the string \texttt{"Hello World!"} represents the literal value of \texttt{Hello World!}.
 	
 	That concludes the basics of XML. The following sections show how XML can be used in different areas of the game. It is in order of the easiest things to learn to the hardest.
@@ -135,7 +218,7 @@
 
 	The sprites XML file contains all the different sprites that will be used in various other aspects of the game, those aspects being players, tiles, creatures and items. Here is an example of a sprites XML file.
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <items>
 	<spritesheet source = "Resources.png" >
 		<sprite name="Gold" x="0" y="0" />
@@ -151,18 +234,10 @@
 		<sprite name="Axe" x="1" y="1" />
 	</spritesheet>
 
-	<spritesheet source="Ultanium.png" >
-		<sprite name="Ultanium" x="0" y="0" />
-	</spritesheet>
-
-	<spritesheet source = "UltaniumGodbladeAni.png">
-		<animate name="Ultanium Godblade" height="6" width = "1" x="0" y="0" speed="0.08" />
-	</spritesheet>
-
 </items>
 
 <tiles>
-	<spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
+	<spritesheet source = "terrain.png" tileWidth = "1" tileHeight = "1" >
 		<sprite name="water" x ="0" y="0" />
 		<sprite name="sand" x="1" y="0" />
 		<sprite name="grass" x="2" y="0" />
@@ -171,12 +246,6 @@
 		<sprite name="snow" x = "1" y="1" />
 		<sprite name="graveStoneFloor" x="2" y="1" />
 		<sprite name="graveGrass" x="3" y="1" />
-	</spritesheet>
-
-	<spritesheet source="graveMisc.png" tileWidth="1" tileHeight="2" >
-		<sprite name="grave-deadTree" x = "0" y = "0" />
-		<sprite name="grave-gravestone" x = "1" y = "0" />
-		<sprite name="grave-spookyStatue" x = "2" y = "0" />
 	</spritesheet>
 
 	<spritesheet source = "tree.png" tileWidth = "1" tileHeight = "3" >
@@ -192,19 +261,11 @@
 
 	<spritesheet source="Small Trees.png" tileWidth = "1" tileHeight = "2" >
 		<sprite name="palm" x="0" y="0" />
-		<sprite name="cactus" x="1" y="0" />
 		<sprite name="shrubbery" x="0" y="1" />
 		<sprite name="appleTree" x="1" y="1" />
 	</spritesheet>
 	<spritesheet source="Supertall Tree.png" tileWidth = "1" tileHeight ="4" >
 		<sprite name="SuperTreh" x="0" y="0" />
-	</spritesheet>
-
-	<spritesheet source="Eggstoudanry_Statue.png" tileWidth = "1" tileHeight = "2">
-		<sprite name="eggStatue" x="0" y="0" />
-	</spritesheet>
-	<spritesheet source="deadlands.png" tileWidth = "1" tileHeight = "1">
-		<sprite name="deadlandsFloor" x="0" y="0" />
 	</spritesheet>
 </tiles>
 
@@ -228,9 +289,6 @@
 	<spritesheet source="Birdfoot.png" height="30" width="15">
 		<sprite name="Birdfoot" x="0" y="0" />
 	</spritesheet>
-	<spritesheet source="Hot Dog Man.png" height="29" width= "20">
-		<sprite name="Hot Dog Man" x="0" y="0" />
-	</spritesheet>
 
 	<spritesheet source = "BigRatAnim.png" height="13" width="17">
 		<animate name="Rat Man Left" height="6" width="1" x="0" y="0" speed="0.1" />
@@ -239,8 +297,8 @@
 		<sprite name="Rat Man Right Idle" x="1" y="6" />
 	</spritesheet>
 </players>
-\end{minted}
-	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section separate the different places where the sprites will be used in the game.
+\end{xml}
+	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section seperate the different places where the sprites will be used in the game.
 
 Inside each of these sections are spritesheets, these spritesheets correspond to different files inside the res/sprites folder. Here is a listing of the res/sprites:
 
@@ -282,42 +340,35 @@ The sprite tag has a \texttt{name, x} and \texttt{y} attribute. The name is the 
 
 The \texttt{x} and \texttt{y} attributes specify where the sprite is found on the tilesheet. They start in the top left and move down to the bottom right. For example, consider the image below:
 
-\begin{figure}[ht!]
-		\centering
-		\includegraphics[width=90mm]{terrain.png}
-		\caption{Sample spritesheet}
-\end{figure}
 
 This image contains various floor types, the corresponding spritesheet tag for this spritesheet is as follows:
 
-\begin{minted}[tabsize = 4]{xml}
+\hFigure{terrain.png}{Terrain Spritesheet}
+
+\begin{xml}
 <spritesheet source = "terrain.png" tileWidth= "1" tileHeight = "1" >
-		<sprite name="water" x ="0" y="0" />
-		<sprite name="sand" x="1" y="0" />
-		<sprite name="grass" x="2" y="0" />
-		<sprite name="cliff" x ="0" y ="1" />
-		<sprite name="stoneFloor" x ="3" y="0" />
-		<sprite name="snow" x = "1" y="1" />
-		<sprite name="graveStoneFloor" x="2" y="1" />
-		<sprite name="graveGrass" x="3" y="1" />
+	<sprite name="water" x ="0" y="0" />
+	<sprite name="sand" x="1" y="0" />
+	<sprite name="grass" x="2" y="0" />
+	<sprite name="cliff" x ="0" y ="1" />
+	<sprite name="stoneFloor" x ="3" y="0" />
+	<sprite name="snow" x = "1" y="1" />
+	<sprite name="graveStoneFloor" x="2" y="1" />
+	<sprite name="graveGrass" x="3" y="1" />
 </spritesheet>
-\end{minted}
+\end{xml}
 
 The animate tag has a few more attributes, to illustrate, We will use the example of the Big Rat. This is the xml for the sprite:
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <spritesheet source= "BigRatAnim.png" height="13" width="17">
-		<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
-		<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
-		<sprite name="Big Rat Left Idle" x="0" y="6" />
-		<sprite name="Big Rat Right Idle" x="1" y="6" />
+	<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
+	<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
+	<sprite name="Big Rat Left Idle" x="0" y="6" />
+	<sprite name="Big Rat Right Idle" x="1" y="6" />
 </spritesheet>
-\end{minted}
+\end{xml}
 
-\begin{figure}[ht!]
-		\centering
-		\includegraphics[width=40mm]{BigRatAnim.png}
-		\caption{Big Rat animation}
-\end{figure}
+\vFigure{BigRatAnim.png}{Big Rat animation}
 
 That attributes for the animate tag are a bit more complicated. the x and y attributes are which sprite the animation starts on, the height attribute is how vertically sized the attribute is. In this case the animation is 6 high because there are 6 sprites that are above each other which will be cycled through. The width is similar. Currently, the animation will run in a top-down left to right order. The speed is how many seconds each sprite should be displayed, in this instance, a sprite is only shown for a tenth of a second.
 
@@ -327,7 +378,7 @@ Even though there are no animations for tiles currently, it is entirely possible
 
 \section{Music}
 The support for the music in XML is trivial, and it may be removed in the future as it can be done through Lua. But nevertheless, the music XML file is one of the simplest XML files to learn, here is an example of the music xml file:
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <region name="plains">
 	<song source="Ambient Hope" />
 </region>
@@ -346,7 +397,7 @@ The support for the music in XML is trivial, and it may be removed in the future
 <region name="desert">
 	<song source="A little warm" />
 </region>
-\end{minted}
+\end{xml}
 
 If you think that you understand how this works, you probably do. The region tag is a region of tiles as specified in the map generation XML file. The \texttt{name} attribute is the name of the region. The song tag is the song to be played in that region, and the source is the name of the song to be played. The music can be found in res/music. The current listing of this file is as below:
 
@@ -375,7 +426,7 @@ The music XML file may be improved on in the future.
 \section{Items}
 The Items XML file contains all the things that can be picked up and placed inside your inventory, here is a sample of the Items XML file:
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <item name="Pickaxe">
 	<ingredients>
 	Wood:3;
@@ -418,7 +469,7 @@ Well... soon, at least.
 and the mediocre.
 	</description>
 </item>
-\end{minted}
+\end{xml}
 
 These are the basic tools found in ProjectX, the Pickaxe, Shovel, Axe and Sword. The name attribute is the display name of the item and also the exact name of the sprite that will be displayed with the item.
 
@@ -437,7 +488,7 @@ The other tag inside the item tag is the description, this is text that is shown
 \section{Interactions}
 The interactions XML file tells the game what to do when different items are clicked on around the map, here is an example of the interactions XML file:
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <movable>
 	sand;cliff;snow;graveGrass;graveStoneFloor;deadlandsFloor;grass
 </movable>
@@ -453,23 +504,15 @@ The interactions XML file tells the game what to do when different items are cli
 	<action>giveAndDestroy("Wood", 3)</action>
 </tile>
 
-<tile name="grave-deadTree">
-	<action>giveAndDestroy("Wood", 3)</action>
-</tile>
-
 <tile name="appleTree">
 	<action name="chop">giveAndDestroy("Wood", 3)</action>
 	<action name="pick">inventory:giveItem("Apple")</action>
 </tile>
-\end{minted}
+\end{xml}
 
 The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section. If there is more than one action available, the user will be prompted for which action they would like to do.
 
-\begin{figure}[ht!]
-		\centering
-		\includegraphics[width=90mm]{MultipleSelection.jpg}
-		\caption{Selection Wheel}
-\end{figure}
+\hFigure{MultipleSelection.jpg}{Selection Wheel}
 
 If there is no choice, the \texttt{name} attribute of the action is not needed as it is never shown. The lua code is run in the \textbf{interactions} scope.
 
@@ -478,7 +521,7 @@ The movable tag at the top is for convenience, this tag lists all the tiles, sep
 \section{Players}
 The Players XML file is where all the playable character classes are listed. Here is an example of the file:
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <class name="Birdfoot">
 	<movement>
 		<leftIdle>Birdfoot</leftIdle>
@@ -502,7 +545,7 @@ The Players XML file is where all the playable character classes are listed. Her
 	I do it 4 da cheez
 	</description>
 </class>
-\end{minted}
+\end{xml}
 
 The \texttt{class} tag is a single character class that can be played as. the \texttt{name} attribute is the display name of the class.
 
@@ -510,18 +553,14 @@ The class tag has 2 children, those being the \texttt{movement} tag and the \tex
 
 The description tag is a written description shown beside the player.
 
-Birdfoot is a good example of a bad character class. This is because all the sprite directions and the same sprite, giving the impression that the player is riding a segway, it may be included in the future that players without animation when moving will ride segways.
+Birdfoot is a good example of a bad character class. This is because all the sprite directions and the same sprite, giving the impression that the player is riding a segway. Any character who does not have movement animations will actually ride a segway.
 
-\begin{figure}[ht!]
-		\centering
-		\includegraphics[width=40mm]{Nice_Segway.png}
-		\caption{Future Segway sprite}
-\end{figure}
+\vFigure{Nice_Segway.png}{Segway sprite}
 
 \section{Creatures}
 The creatures XML file contains creatures that can be spawned into the game, here is an example of the creatures XML file:
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <creature name="Rat" ai="Rat" speed="2">
 	<movement>
 		<left>Rat Left</left>
@@ -539,7 +578,7 @@ The creatures XML file contains creatures that can be spawned into the game, her
 		<rightIdle>Big Rat Right Idle</rightIdle>
 	</movement>
 </creature>
-\end{minted}
+\end{xml}
 
 The \texttt{creature} tag has 3 known attributes, the first is the name, which is the name of the creature so that it can be referenced when spawning it in lua. The \texttt{ai} attribute contains the filename of the lua file that will be used to be it's ai, without the \texttt{.lua} extension. These AI scripts can be found in \texttt{script/lua/creatures}. The speed attribute is how fast the creature can move in tiles per second.
 
@@ -548,37 +587,18 @@ The only known child of the creature tag is the movement tag, which is the same 
 \section{Map generation}
 Map generation was the first XML file to be added to the game and is by far the most complicated. Here is an example of the Map generation XML file:
 
-\begin{minted}[tabsize = 4]{xml}
+\begin{xml}
 <map width="1500" height="1500" name="standard">
 	<layer name="bottom">
 		<rule type="perlin" scale="0.2">
 			<tile name='water' height="20"/>
 			<tile region='beach' name='sand' height="24" />
-			<area height="70">
-				<tile region='plains' name='grass' />
-				<rule type="perlin" scale="0.5">
-					<tile region='deadlands' name='deadlandsFloor' height="10" />
-				</rule>
-				<rule type="perlin" scale="0.5">
-					<tile region='desert' name="sand" height="10" />
-				</rule>
-				<rule type="perlin" scale="0.5">
-					<rule region='graves' type="random" height="10">
-						<tile name='graveStoneFloor' height="95" />
-						<tile region='graveDirt' name='graveGrass' height="100"/>
-					</rule>
-				</rule>
-			</area>
+			<tile region='plains' name = 'grass' height= '80' />
 			<tile region="cliffs" name='cliff' height="90" />
 			<tile region='snow' name='snow' height="100" />
 		</rule>
 	</layer>
 	<layer name="misc">
-		<rule type="inside" inside="desert" >
-			<rule type="random">
-				<tile name="cactus" height="1" />
-			</rule>
-		</rule>
 		<rule type="inside" inside="plains">
 			<rule type="random">
 				<tile name="SuperTreh" height = "0.1" />
@@ -599,25 +619,9 @@ Map generation was the first XML file to be added to the game and is by far the 
 				<tile name="palm" height ="2" />
 			</rule>
 		</rule>
-		<rule type="inside" inside="graves">
-			<rule type="random">
-				<tile name="grave-gravestone" height = "2" />
-				<tile name="grave-spookyStatue" height = "2.4" />
-			</rule>
-		</rule>
-		<rule type="inside" inside="graveDirt">
-			<rule type="random">
-				<tile name="grave-deadTree" height = "50"  />
-			</rule>
-		</rule>
-		<rule type="inside" inside="deadlands">
-			<rule type="random">
-				<tile name="eggStatue" height = "4" />
-			</rule>
-		</rule>
 	</layer>
 </map>
-\end{minted}
+\end{xml}
 
 As you can see, this file is much more complicated than all the other XML files, but is still reasonably easy to learn. Lets start from the top
 
@@ -627,7 +631,232 @@ Next up there is the layer tag, there are 2 layers, the bottom layer and the mis
 
 Now we get into map generation rules. A map generation rule tells how it's child rules and tiles are placed, there are 2 types of tags for rules, \texttt{rule} and \texttt{area}. They behave differently.
 
-The rule tag gives every tile on the map a value from 0-100, or a \textbf{height}. Then, all of it's children have a height also, and the height of the tile is compared with the height of the rule to determine whether it should be placed. There are 3 types of rules, which all give different values for the tiles. 
+The rule tag gives every tile on the map a value from 0-100, or a \textbf{height}. Then, all of it's children have a hieght also, and the height of the tile is compared with the height of the rule to determine whether it should be placed. 
 
+\fFigure{MapGenRules.png}{Map rules example}
+
+If the height specified by the tile is higher than the one generated by the rule, the tile will be placed.
+
+The XML for the diagram could be this:
+\begin{xml}
+<rule type="perlin" scale="0.2">
+	<tile name="water" height="20" />
+	<tile name="grass" height="60" />
+	<tile name="cliff" height="80" />
+	<tile name="snow" height="100" />
+</rule>
+\end{xml}
+
+In the example above, lets say that the height generated for a certain tile is 56. Because 20 is smaller than 56, the water tile will not be placed. But grass has a height of 60 and is higher than 56 and therefore will be placed. Notice how 80 and 100 are both higher than 56 but are not placed as grass is a closer match.
+
+These can also be thought of as percentages. This configuration has water appearing 20\% of the time, grass 40\%, cliff 20\% and snow 20\%.
+
+The value that the rule gives can vary to acheive different effects. The example above uses a "perlin" rule as the values smoothly change, making the possibility for hills and valleys and similar tiles to be placed together. 
+
+These different rules are \textbf{types} of rules. There are 3 types of rules, perlin, random and inside. The examples below show how the rule choses it's heights.
+
+\hFigure{PerlinNoiseExample.png}{Perlin Noise}
+
+\hFigure{WhiteNoiseExample.png}{Random Noise}
+
+Perlin noise's size can be changed with a \texttt{scale} attribute. The smaller the scale, the more zoomed out. The larger the scale, the closer it comes to white noise.
+
+The final rule type is inside, which will always place it's children if it inside a certain \textbf{region}. These may only be used on the second layer (misc).
+
+All tiles and rules can have regions associated with them. A region is a group of tiles that are singled out for any particular reason. Regions can be used to play music when a player moves into them, or they may have things placed in the second layer that only appear \textit{inside} a certain region. Regions can also be found through Lua.
+
+Many examples of the inside rule can be found in the large example above.
+
+The area tag behaves a bit differently to the rule tag, it places tiles by putting the tiles in layers. The first child inside the area tag is placed first, then the second child will be placed in top, and so on. This means that the layer above the first should have places where there are no tags placed. For example:
+
+\begin{xml}
+<rule type="perlin" scale="0.2">
+	<tile name="water" height="20" />
+	<tile name="grass" height="60" />
+</rule>
+\end{xml}
+
+Here, no tiles will be placed if the height generated by the rule is larger than 60, leaving holes in this layer so the layer below can be shown. This is useful for adding biomes, anything you can do with the area tag is possible with the rule tag, it is only there for convenience.
+
+Finally, the tile tag is a single sprite for a tile. The \texttt{name} attribute of the tile is the name of the sprite in the sprites XML.
+
+\chapter{ProjectX Lua}
+\section{Begginning with Lua}
+Lua is the other language that is used often in the game. Lua differs from XML because it is a \textbf{procedual} language. This means that instead of writing about objects like you would in XML, as it is a \textbf{markup} langauge, you write about procedures, that is, how to do things. Lua controls what happens at the start of the game, how creatures behave and what happens when you interact with tiles.
+
+A great way to start with lua is using the Lua Terminal, instructions to how to enable and use the lua terminal are found in the "Developing with ProjectX" chapter. Try these code samples inside your lua terminal and find out what they do!
+
+If you can learn by exaple, take a look at a few simple scripts found in the scripts folder inside the installation directory, they are all relatively simple. If you have already worked with Lua before, you can skip onto the Lua structure section.  
+
+\subsection{Functions}
+
+Your first Lua program might look like this (try it in the Lua Terminal):
+\begin{lua}
+Debug.log("Hello world");
+\end{lua}
+
+This prints \texttt{Hello world} to the console, and the log file. Lets break this program down.
+
+\texttt{Debug.log} is called a \textbf{function}. A function simply does something, in this case, the function \texttt{Debug.log} logs a message. The matching brackets after the function hold what are called the \textbf{arguments}. \texttt{"Hello world"} is the argument to \texttt{Debug.log}. Arguments are values that are given to the \textbf{function} to tell it how to act. We want \texttt{Debug.log} to print the value \texttt{Hello world} so we gave it the value to print. Arguments appear elsewhere in many other functions. For example, \texttt{Music.playSong} takes an argument which tells it what song to play, for example: \texttt{Music.playSong("Enter the dungeon");}. The quotes around \texttt{Hello world} turns the value into a \textbf{string}. A string could be a word, a sentence, or an Epic poem, as long as it contains letters in it. The quotes make it pass the \textbf{literal} Hello world to the function. Finally the semicolon finishes the line. It is worth noting that you do not need to place the semicolon in Lua, although it is good practise because many other languages end there lines with a semicolon.
+
+Here are a few other example of function calls:
+\begin{lua}
+Debug.logWarning("Don't spill the milk");
+Music.playRegionSong("cliff");
+Player.getByIndex(0);
+\end{lua}
+
+Functions can have multiple arguments, those arguments are seperated by commas. For example, often it is needed to specify what tile you want the function to affect, so you can supply an x and y value for which tile you are talking about. \texttt{Particles.spawnParticles("fire", 78, 103);} is an example of a function with 3 arguments, a name, an x coordinte, and a y coordinate.
+
+\subsection{Types}
+
+In lua, there are different \textbf{types} of values. We have already seen some of them.
+
+\paragraph{string}
+A very common type is a string, a string is a list of characters, for example "Fire" is a string, or "Enter the Dungeon", or even "4". As you can see, strings are denoted by quotes around the value, the quotes mean "I am talking about the actual text between the quotes", that sentence there could be a string.
+
+\paragraph{number}
+A number is exactly what it sounds like. 2, 8.7, 1089 and -8.9 are all numbers
+
+\paragraph{table}
+A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are bery useful for keeping related information together.
+
+\subsection{Variables}
+A variable is simply a stored piece of information. This information is given a name and it can then be used later in the program and changed. To start with a variable, you must first declare it, for example:
+
+\begin{lua}
+myDJName = "DJ Steve";
+songCount = 8;
+salary = 0.10;
+phoneNumbers = {5719349537, 724236216};
+\end{lua}
+
+All these values can be used later in the program with the name that you gave them.
+
+\begin{lua}
+Debug.log(myDJName);
+\end{lua}
+
+Accessing values of tables is an interesting case, for example, if you wanted to get the first value or the phone numbers, you would use:
+
+\begin{lua}
+phoneNumbers[1]
+\end{lua}
+
+This is the same as the first element of the table, for example, phoneNumbers[1] is the same as 5719349537 in this case.
+
+If later on, you with to change your DJ name, then you can \textbf{re-assign} the variable.
+
+\begin{lua}
+myDJName = "DJ Deejay";
+\end{lua}
+
+Now, any future references of \texttt{myDJName} will result to "DJ Deejay".
+
+\section{Lua Structure}
+The structure of Lua can be defined in various \textbf{scopes}. Scopes are the functions that a certain script has access to. There are several scopes and they can be defined in a heirarchy. The interpreter scope contains utilities that do not control the game, and do not infer that a game is running, this includes the \texttt{Math} class and the \texttt{File} class. The biggest scope is the game scope. This contains all the functions in the interpreter scope plus many other functions used to control various aspects of the game, this include the \texttt{Creatures, Arena, Music, Inventory, Particles} and \texttt{Player} Classes. There are several other scopes.
+
+\hFigure{LuaScopeDiagram.png}{Lua Scopes}
+
+In the diagram, elipses are places where you can write Lua code, the rectangles are scopes, and allow you to access different Classes. For example, it would be a bit crazy of the lua terminal had access to the States class, which controls the various states a creature can be in, because you would not know what creature you are talking about. But when programming creature AI, the state class obviously refers to the creature that the AI has been coded for. This is why we have scopes.
+
+All lua code can be found in \texttt{scripts/lua}. Currently, lua support is avaliable for interactions, creature ai and startup scripts. In the future I am planning to add Game Logic and item functionality in lua scripts.
+
+\section{Interactions}
+If you remember XML Interactions, inside the action tags is lua code! This lua code gets excecuted when the player has made it to the item that the interaction is made for (unless \texttt{instant} is set). Here is our XML Interactionsfile.
+
+\begin{xml}
+<movable>
+	sand;cliff;snow;graveGrass;graveStoneFloor;deadlandsFloor;grass
+</movable>
+<tile name="gold">
+	<action>giveAndDestroy("Gold", 3)</action>
+</tile>
+
+<tile name="coal">
+	<action>giveAndDestroy("Stone", 3)</action>
+</tile>
+
+<tile name="tree">
+	<action>giveAndDestroy("Wood", 3)</action>
+</tile>
+
+<tile name="appleTree">
+	<action name="chop">giveAndDestroy("Wood", 3)</action>
+	<action name="pick">inventory:giveItem("Apple")</action>
+</tile>
+\end{xml}
+
+The code inside the action tags look familiar, this is Lua! First, lets take a look at \texttt{inventory:getItem("Apple")}.
+
+This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple.
+
+\part{Appendix}
+\chapter{Appendix A - Lua functions}
+This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organised in Scope -> Classes -> Members
+\section{Interpreter}
+\subsection{Debug}
+\subsubsection{Debug.log}
+Overloads:
+\begin{ulist}
+	\item Debug.log(string message)
+\end{ulist}
+Logs the message to the console and to the log file.
+
+\subsubsection{Debug.logWarning}
+Overloads:
+\begin{ulist}
+	\item Debug.logWarning(string message)
+\end{ulist}
+Logs the warning to the console and to the log file.
+
+\subsubsection{Debug.logError}
+Overloads:
+\begin{ulist}
+	\item Debug.logError(string message)
+\end{ulist}
+Logs the error to the console and to the log file
+
+
+\subsection{File}
+\subsubsection{File.readStringFromFile}
+Overloads
+\begin{ulist}
+	\item File.readStringFromFile(string filePath)
+\end{ulist}
+Returns the string inside the file specified by the filePath. the filePath must be relative to the application excecutable (i.e. res/file/MyFile.txt or the like)
+
+
+\subsection{Math}
+\subsubsection{Math.randomInt}
+Overloads:
+\begin{ulist}
+	\item Math.randomInt(number max)
+	\item Math.randomInt(number min, number max)
+\end{ulist}
+Returns a random integer (whole number) between 0 and max-1.
+If a second argument is used, it will return a number between min and max-1
+
+\subsubsection{Math.randomReal}
+Overloads:
+\begin{ulist}
+	\item Math.randomReal(number max)
+	\item Math.randomReal(number min, number max)
+\end{ulist}
+Returns a random real number (decimal number) between 0 and max.
+If a second argument is used, it will return a number between min amd max
+
+
+
+\section{Game}
+\subsection{Arena}
+\subsubsection{Arena.getTileNameAt}
+Overloads:
+\begin{ulist}
+	\item Arena.getTileNameAt(number x, number y)
+\end{ulist}
+Returns the name of the uppermost tile at a specific location, the location is given by (x, y)
+
+\subsection{}
 
 \end{document}
