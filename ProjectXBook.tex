@@ -793,27 +793,27 @@ This code gets called if the player has chosen to \textit{pick} from the tree, a
 
 \part{Appendix}
 \chapter{Appendix A - Lua functions}
-This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organised in Scope -> Classes -> Members
+This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organised in Scope - Classes - Members
 \section{Interpreter}
 \subsection{Debug}
 \subsubsection{Debug.log}
 Overloads:
 \begin{ulist}
-	\item Debug.log(string message)
+	\item nil Debug.log(string message)
 \end{ulist}
 Logs the message to the console and to the log file.
 
 \subsubsection{Debug.logWarning}
 Overloads:
 \begin{ulist}
-	\item Debug.logWarning(string message)
+	\item nil Debug.logWarning(string message)
 \end{ulist}
 Logs the warning to the console and to the log file.
 
 \subsubsection{Debug.logError}
 Overloads:
 \begin{ulist}
-	\item Debug.logError(string message)
+	\item nil Debug.logError(string message)
 \end{ulist}
 Logs the error to the console and to the log file
 
@@ -822,7 +822,7 @@ Logs the error to the console and to the log file
 \subsubsection{File.readStringFromFile}
 Overloads
 \begin{ulist}
-	\item File.readStringFromFile(string filePath)
+	\item string File.readStringFromFile(string filePath)
 \end{ulist}
 Returns the string inside the file specified by the filePath. the filePath must be relative to the application excecutable (i.e. res/file/MyFile.txt or the like)
 
@@ -831,8 +831,8 @@ Returns the string inside the file specified by the filePath. the filePath must 
 \subsubsection{Math.randomInt}
 Overloads:
 \begin{ulist}
-	\item Math.randomInt(number max)
-	\item Math.randomInt(number min, number max)
+	\item number Math.randomInt(number max)
+	\item number Math.randomInt(number min, number max)
 \end{ulist}
 Returns a random integer (whole number) between 0 and max-1.
 If a second argument is used, it will return a number between min and max-1
@@ -840,8 +840,8 @@ If a second argument is used, it will return a number between min and max-1
 \subsubsection{Math.randomReal}
 Overloads:
 \begin{ulist}
-	\item Math.randomReal(number max)
-	\item Math.randomReal(number min, number max)
+	\item number Math.randomReal(number max)
+	\item number Math.randomReal(number min, number max)
 \end{ulist}
 Returns a random real number (decimal number) between 0 and max.
 If a second argument is used, it will return a number between min amd max
@@ -853,10 +853,331 @@ If a second argument is used, it will return a number between min amd max
 \subsubsection{Arena.getTileNameAt}
 Overloads:
 \begin{ulist}
-	\item Arena.getTileNameAt(number x, number y)
+	\item string Arena.getTileNameAt(number x, number y)
 \end{ulist}
 Returns the name of the uppermost tile at a specific location, the location is given by (x, y)
 
-\subsection{}
+\subsubsection{Arena.getTileRegionAt}
+Overloads:
+\begin{ulist}
+	\item string Arena.getTileRegionAt(number x, number y)
+\end{ulist}
+Gets the region of the tile at a certain position, given by (x, y)
+
+\subsubsection{Arena.destroyTile}
+Overloads:
+\begin{ulist}
+	\item nil Arena.destroyTile(number x, number y)
+\end{ulist}
+Destroys the tile at the specified position. Only the tile on the top layer is destroyed. If there was no tile, nothing happens, same as \texttt{Arena.setTileState(x,y, DESTROYED)}.
+
+\subsubsection{Arena.setTileState}
+Overloads:
+\begin{ulist}
+	\item nil Arena.setTileState(number x, number y, number state)
+\end{ulist}
+Sets the state of the tile at (x, y).
+
+\subsubsection{Arena.getTileState}
+Overloads:
+\begin{ulist}
+	\item number Arena.getTileState(number x, number y)
+\end{ulist}
+Returns the state of the tile at (x, y)
+
+\subsubsection{Arena.getTileProperties}
+Overloads:
+\begin{ulist}
+	\item table Arena.getTileProperties(number x, number y)
+\end{ulist}
+Returns the table of properties of a tile given by (x, y)
+
+\subsubsection{Arena.setTileProperties}
+Overloads:
+\begin{ulist}
+	\item nil Arena.setTileProperties(number x, number y, table propertiesTable)
+\end{ulist}
+Sets the property table of a tile given by (x, y)
+
+\subsection{Creature}
+\subsubsection{Creature.spawnCreature}
+Overloads:
+\begin{ulist}
+	\item Creature Creature.spawnCreature(string creatureName, int x, int y)
+\end{ulist}
+Spawns the creature named creatureName at (x, y). Returns the creature.
+
+\subsubsection{Creature:moveTo}
+Overloads:
+\begin{ulist}
+	\item nil Creature:moveTo(number x, number y)
+	\item nil Creature:moveTo(number x, number y, number distance)
+	\item nil Creature:moveTo(number x, number y, number distance, number speed)
+\end{ulist}
+In the first overload, moves the creature towards the tile at (x, y) and stops the creature one tile away from it. In the second overload, moves the creature towards the tile and stops distance tiles away from it. If the third overload, moves the creature towards a tile at speed tiles per second and stops distance tiles away.
+
+\subsubsection{Creature:moveOn}
+Overloads:
+\begin{ulist}
+	\item nil Creature:moveOn(number x, number y)
+	\item nil Creature:moveOn(number x, number y, number speed)
+\end{ulist}
+Moves the creature onto the tile specified, if a speed is given, they will move at speed tiles per second.
+
+\subsubsection{Creature:getPosition}
+Overloads:
+\begin{ulist}
+	\item number number Creature:getPosition()
+\end{ulist}
+Returns the integer x and y coordinates of the creature.
+
+\subsubsection{Creature:getRealPosition}
+Overloads:
+\begin{ulist}
+	\item number number Creature:getRealPosition()
+\end{ulist}
+Returns the real (decimal) x and y coordinates of the creature.
+
+\subsubsection{Creature:setMovementSpeed}
+Overloads:
+\begin{ulist}
+	\item nil Creature:setMovementSpeed(number speed)
+\end{ulist}
+Sets the default movement speed of the creature in tiles per second.
+
+\subsubsection{Creature:getMovementSpeed}
+Overloads:
+\begin{ulist}
+	\item number Creature:getMovementSpeed()
+\end{ulist}
+Returns the default movement speed of the creature.
+
+\subsubsection{Creature:getName}
+Overloads:
+\begin{ulist}
+	\item string Creature:getName()
+\end{ulist}
+Returns the name of the creature.
+
+\subsubsection{Creature:getAI}
+Overloads:
+\begin{ulist}
+	\item string Creature:getAI()
+\end{ulist}
+Returns the AI used to control the creature
+
+\subsubsection{Creature:hasTag}
+Overloads:
+\begin{ulist}
+	\item boolean Creature:hasTag(string tag)
+\end{ulist}
+Returns if the creature has a certain tag
+
+\subsubsection{Creature:getProperties}
+Overloads:
+\begin{ulist}
+	\item table Creature:getProperties()
+\end{ulist}
+Returns the property table of the creature.
+
+\subsubsection{Creature:setProperties}
+Overloads:
+\begin{ulist}
+	\item nil Creature:setProperties(table propertiesTable)
+\end{ulist}
+Sets the property table of the creature.
+
+\subsection{Inventory}
+\subsubsection{Inventory:giveItem}
+Overloads:
+\begin{ulist}
+	\item nil Inventory:giveItem(string itemName)
+	\item nil Inventory:giveItem(string itemName, number quantity)
+\end{ulist}
+Places an item in the inventory object, if no quantity is given, one item is given.
+
+\subsubsection{Inventory:getQuantityOf}
+Overloads:
+\begin{ulist}
+	\item number Inventory:getQuantityOf(string itemName)
+\end{ulist}
+Returns the quantity owned of the item given by itemName
+
+\subsubsection{Inventory:takeItem}
+Overloads:
+\begin{ulist}
+	\item nil Inventory:takeItem(string itemName)
+	\item nil Inventory:takeItem(string itemName, number quantity)
+\end{ulist}
+Takes items off the inventory object. If no quantity is given, one is assumed
+
+\subsubsection{Inventory:canCraftItem}
+Overloads:
+\begin{ulist}
+	\item boolean Inventory:canCraftItem(string itemName)
+\end{ulist}
+Returns true if the player has the resources to craft the item given.
+
+\subsubsection{Inventory:hasItemWithTag}
+Overloads:
+\begin{ulist}
+	\item boolean Inventory:hasItemWithTag(string tag)
+\end{ulist}
+Returns true if the player has an item with the tag given.
+
+\subsection{Music}
+\subsubsection{Music.playSong}
+Overloads:
+\begin{ulist}
+	\item nil Music.playSong(string songName)
+\end{ulist}
+Plays the song called songName
+
+\subsubsection{Music.playRegionSong}
+Overloads:
+\begin{ulist}
+	\item nil Music.playRegionSong(string regionName)
+\end{ulist}
+Plays the song that has been set for the region called regionName.
+
+
+\subsection{Particles}
+\subsubsection{Particles.spawnParticles}
+Overloads:
+\begin{ulist}
+	\item nil Particles.spawnParticles(string particlesName, number x, number y)
+\end{ulist}
+Spawns the Particles system particlesName at (x, y)
+
+\subsection{Player}
+\subsubsection{Player.getByIndex}
+Overloads:
+\begin{ulist}
+	\item Player Player.getByIndex(number index)
+\end{ulist}
+Returns the player who was assigned the index, 0 is always host or player in singleplayer.
+
+\subsubsection{Player:getPosition}
+Overloads:
+\begin{ulist}
+	\item number number Player:getPosition()
+\end{ulist}
+Returns the integer coordinates of the player.
+
+\subsubsection{Player:getRealPosition}
+Overloads:
+\begin{ulist}
+	\item number number Player:getRealPosition()
+\end{ulist}
+Returns the real (decimal) coordinates of the player.
+
+\subsubsection{Player:getPlayerName}
+Overloads:
+\begin{ulist}
+	\item string Player:getPlayerName()
+\end{ulist}
+Returns the chosen name of the player.
+
+\subsubsection{Player:getClassName}
+Overloads:
+\begin{ulist}
+	\item string Player:getClassName()
+\end{ulist}
+Returns the name of the chosen class of the player.
+
+\subsubsection{Player:getMovementSpeed}
+Overloads:
+\begin{ulist}
+	\item number Player:getMovmementSpeed()
+\end{ulist}
+Returns the movement speed of the player in tiles per second.
+
+\subsubsection{Player:getInventory}
+Overloads:
+\begin{ulist}
+	\item Inventory Player:getInventory()
+\end{ulist}
+Returns the Inventory object of the player.
+
+
+\subsection{Other}
+\subsubsection{States}
+In the game scope, you have access to the constants \texttt{UNTOUCHED, DESTROYED} and \texttt{DEPLETED} which are official states that can be held by tiles.
+
+
+
+\section{Creature}
+\subsection{States}
+\subsubsection{States.newProximityState}
+Overloads:
+\begin{ulist}
+	\item nil States.newProximityState(string stateName, number distance)
+\end{ulist}
+Creates a new proximity state.
+
+\subsubsection{States.newUpdateState}
+Overloads:
+\begin{ulist}
+	\item nil States.newUpdateState(string stateName)
+\end{ulist}
+Creates a new update state.
+
+\subsubsection{States.newClockState}
+Overloads:
+\begin{ulist}
+	\item nil States.newClockState(string stateName, number interval)
+\end{ulist}
+Creatures a new clock state
+
+\subsubsection{States.deleteState}
+Overloads:
+\begin{ulist}
+	\item nil States.deleteState(string stateName)
+\end{ulist}
+Deletes the state named stateName.
+
+\section{Functions}
+\subsubsection{getPosition}
+Overloads:
+\begin{ulist}
+	\item number number getPosition()
+\end{ulist}
+Returns the integer position of the creature.
+
+\subsubsection{moveOn}
+Overloads:
+\begin{ulist}
+	\item nil moveOn(number x, number y)
+\end{ulist}
+Moves the creature onto the tile
+
+\subsubsection{setMovementSpeed}
+Overloads:
+\begin{ulist}
+	\item nil setMovementSpeed(number speed)
+\end{ulist}
+Sets the movement speed of the creature in tiles per second.
+
+\subsubsection{getMovementSpeed}
+Overloads:
+\begin{ulist}
+	\item number getMovementSpeed()
+\end{ulist}
+Returns the default movement speed of the creature.
+
+\subsubsection{moveTo}
+Overloads:
+\begin{ulist}
+	\item nil moveTo(number x, number y, number distance)
+	\item nil moveTo(number x, number y, number distance, number speed)
+\end{ulist}
+Moves the creature towards the tile and stops distance tiles away from it at speed tiles per second.
+
+\subsubsection{despawn}
+Overloads:
+\begin{ulist}
+	\item nil despawn()
+\end{ulist}
+Despawns the creature.
 
 \end{document}
