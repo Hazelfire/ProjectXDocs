@@ -45,6 +45,7 @@
 		\includegraphics[width=40mm]{#1}
 		\caption{#2}
 	\end{figure}}
+
 \title{Programming with ProjectX}
 \begin{document}
 	\pagenumbering{gobble}
@@ -58,15 +59,20 @@
 	\vspace*{\fill}
 	\tableofcontents
 	\pagenumbering{arabic}
+
+	\part{Introduction to ProjectX}
+
 	\chapter{Introduction}
 	\section{What is ProjectX?}
 	ProjectX is both a game and an educational tool for learning the basics of programming. It can be played without even touching the programming aspects as a social multiplayer game, but it becomes much more interesting when players create content of their own through the use of the programming languages Lua and XML.
 	
-	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels. It comes with many tools that help the beginner programmer both get a feel for professional-like environments while being supported by them along the way.
+	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels. It comes with many tools that help the beginner programmer both get a feel for professional-like environments while being supported by them along the way. Lua is a great programming language to learn how to code in, because it does not require the programmer to follow the things that gets them off everytime.
 	
 	Professionals can also use ProjectX as just a general game. By developing on different parts of the game, every session would be completely different. If teams were to get together to mod this game, or even a classroom, the changes can be updated into one single game and can be played multiplayer by everyone. 
 
 	The game is also completely and utterly cross platform. You can run the game on Windows, Mac, Linux, Android and iOS. Games can also be played \textbf{across platforms}, meaning a person could come along with an Android smartphone, link up to a server hosted by a Linux computer, and play with a tonne of Macintosh and Windows Users!
+
+	\hFigure{CrossPlatform.png}{Cross Platform}
 
 	\section{Game-Play and Rules}
 	The game itself is an Real Time Strategy multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
@@ -128,8 +134,28 @@
 	\begin{ulist}
 		\item Louis Evans
 	\end{ulist}
+
+	\chapter{Systems}
+	There are a few systems in ProjectX that should be understood before developing. This chapter is not too important, but does come in handy as a reference for how the game works.
 	
-	\chapter{Developing With ProjectX}
+	\section{The Arena}
+	The Arena is the map and tiles that you can interact with in the game. The arena currently stands at 1500x1500 tiles and takes about 9 minutes to walk across. The map is randomly generated everytime you play the game, and the way it is generated can be coded in XML.
+
+	The Arena refers to each of it's tiles using coordinates, the tile (0, 0) is at the very top of the map, whereas the tile (1499, 1499) is the very bottom, x increases in the right direction, and y increased to the left.
+
+	\subsection{Tile states}
+	Every single tile can have a state associated with it, a state is actually a number, but it is used to find out what has happened to the tile and some of it's properties. So far, there are 3 offial states, those states are untouched (0), Destroyed (1), Depleted(2). Any tile with a state of 1 (destoyed) will not be shown on the map.
+	
+	You can invent your own states and use the however you wish, for example, you may have 4: hanuted, which means that a ghost will spawn if the player tries to break it.
+
+	\subsection{Tile properties}
+	You can associate a table of properties with every tile, this is VERY useful. For example, you might have an apple tree with only a certain amount of apples on it, so you store the amount of apples it has left inside the properties table. Then the player cannot pick apples if there are none left. 
+	
+	In the same way, you could keep other values in the properties table, for example, the tree might need to be hit a few times with the axe, so it could store how weak it is and fall down when the player has had a certain amount of swings at it.
+
+	\part{Developing with ProjectX}
+	
+	\chapter{Getting started with Developing}
 	This section addresses the structure of ProjectX and how to use some of the tools that come with it.
 	
 	\section{Structure of ProjectX}
@@ -139,10 +165,10 @@
 	
 	For linux, you will need to build ProjectX from source, just clone the official repository, use cmake and make to build the Project. Boost is required.
 
-	\paragraph{Log file}
+	\subsubsection{Log file}
 	In the installation directory, there is a "log" folder, which contains a file named \texttt{current.log}. If anything goes wrong while programming, the first thing you should do is check the log file as it may contain useful information as to how to fix your issue. Any lua and xml errors are logged into this file, along with other helpful information. It is possible to log to this file while debugging to help pinpoint where your code goes wrong.
 
-	\paragraph{Save file}
+	\subsubsection{Save file}
 	Inside the save directory, there is a file named \texttt{SaveFile.yml}. This contains information that has been saved from the game for later usage, using this file, you can also enable a few hidden features. Here is an example of the save file:
 	
 	In linux, the save file is located at \texttt{~/.config/ProjectX/SaveFile.yml}
@@ -176,7 +202,7 @@ skipSplashes: true
 	XML is called a \textbf{markup language}. A markup language has a certain syntax that uses angle brackets and tags. It is nearly identical to HTML in syntax. This is an example of a tag:
 	
 	\begin{xml}
-	\texttt{<class>}
+<class>
 	\end{xml}
 	
 	What makes it a tag is the angle brackets around it, "class" is the \textbf{name} of the tag. In ProjectX there are many different tags that are differentiated by name that have a variety of uses. For example the \texttt{<class>} tag is used in the players XML file to specify a character class.
@@ -184,7 +210,7 @@ skipSplashes: true
 	Every tag has a matching ending tag. The ending tag is the same as the original (starting) tag except that it starts with a forward slash (/)
 
 	\begin{xml}
-		\texttt{</class>}
+</class>
 	\end{xml}
 	
 	Anything between the ending tag and the original starting tag is said to be inside the tag, for example:
@@ -712,14 +738,25 @@ Functions can have multiple arguments, those arguments are seperated by commas. 
 
 In lua, there are different \textbf{types} of values. We have already seen some of them.
 
-\paragraph{string}
+\subsubsection{string}
 A very common type is a string, a string is a list of characters, for example "Fire" is a string, or "Enter the Dungeon", or even "4". As you can see, strings are denoted by quotes around the value, the quotes mean "I am talking about the actual text between the quotes", that sentence there could be a string.
 
-\paragraph{number}
+\subsubsection{number}
 A number is exactly what it sounds like. 2, 8.7, 1089 and -8.9 are all numbers
 
-\paragraph{table}
+\subsubsection{boolean}
+Either true or false, you can compare different values to get booleans, for example \texttt{myWage > 0} will return true or false
+
+\subsubsection{nil}
+nil means nothing, the only thing special about nil is that it is different from all the other types. There is no purpose of using or holding a variable that is nil.
+
+\subsubsection{table}
 A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are bery useful for keeping related information together.
+
+\subsubsection{object}
+Objects are abstract programming entities that are very useful in programming, for example, \texttt{myPlayer = Player.getByIndex(0)} stores a player object in myPlayer. You can then call functions that are members of the myPlayer like \texttt{myPlayer:getPosition()}. Notice the colon instead of the period. Colons are used when it matters what object you are reffering to. In this case, it matters what player we are trying to get the position of, but in \texttt{Debug.log("Hello world")} there is no specific "Debug" that we are talking about, because there is only one.
+
+In Appendix A, any function that uses the colon refers needs to have an object, for example, if a function returns a \texttt{Creature}, like \texttt{rat = Creature.spawnCreature("Rat", 27, 10)} then with that creature you can call all the functions in the appendix with colons, like \texttt{rat:getPosition()} or \texttt{rat:moveOn(108,178)}. 
 
 \subsection{Variables}
 A variable is simply a stored piece of information. This information is given a name and it can then be used later in the program and changed. To start with a variable, you must first declare it, for example:
@@ -1100,7 +1137,7 @@ Overloads:
 Returns the Inventory object of the player.
 
 
-\subsection{Other}
+\subsection{Variables}
 \subsubsection{States}
 In the game scope, you have access to the constants \texttt{UNTOUCHED, DESTROYED} and \texttt{DEPLETED} which are official states that can be held by tiles.
 
@@ -1135,6 +1172,7 @@ Overloads:
 	\item nil States.deleteState(string stateName)
 \end{ulist}
 Deletes the state named stateName.
+
 
 \section{Functions}
 \subsubsection{getPosition}
@@ -1179,5 +1217,36 @@ Overloads:
 	\item nil despawn()
 \end{ulist}
 Despawns the creature.
+
+
+
+\section{Interactions}
+\subsection{Functions}
+\subsubsection{moveOn}
+Overloads:
+\begin{ulist}
+	\item nil moveOn(number x, number y)
+	\item nil moveOn(number x, number y, number speed)	
+\end{ulist}
+Moves the player onto the tile given, if there a speed is given, they will move towards it at [speed] tiles per second
+
+\subsubsection{moveTo}
+Overloads:
+\begin{ulist}
+	\item nil moveTo(number x, number y)
+	\item nil moveTo(number x, number y, number distance)
+	\item nil moveTo(number x, number y, number distance, number speed)
+\end{ulist}
+Moves the player towards a tile and stops [distance] tiles away. If no distance is given, it will assume 1. If a speed is given, it will move at [speed] tiles per second
+
+\subsection{Variables}
+\subsubsection{x and y}
+x and y are coordinates of the tile that is being clicked on.
+
+\subsubsection{player}
+The player object that is interacting with the tile.
+
+\subsubsection{inventory}
+The inventory object of th player, same as player:getInventory()
 
 \end{document}
