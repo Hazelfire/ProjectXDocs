@@ -75,7 +75,7 @@
 	\hFigure{CrossPlatform.png}{Cross Platform}
 
 	\section{Game-Play and Rules}
-	The game itself is an Real Time Strategy multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
+	The game itself is an Role Playing multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
 	
 	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. Changes that are made to the game on one device can be synced to another simply by playing on the same game.
 	
@@ -144,9 +144,9 @@
 	The Arena refers to each of it's tiles using coordinates, the tile (0, 0) is at the very top of the map, whereas the tile (1499, 1499) is the very bottom, x increases in the right direction, and y increased to the left.
 
 	\subsection{Tile states}
-	Every single tile can have a state associated with it, a state is actually a number, but it is used to find out what has happened to the tile and some of it's properties. So far, there are 3 offial states, those states are untouched (0), Destroyed (1), Depleted(2). Any tile with a state of 1 (destoyed) will not be shown on the map.
+	Every single tile can have a state associated with it, a state is actually a number, but it is used to find out what has happened to the tile and some of it's properties. So far, there are 3 official states, those states are untouched (0), Destroyed (1), Depleted(2). Any tile with a state of 1 (destoyed) will not be shown on the map.
 	
-	You can invent your own states and use the however you wish, for example, you may have 4: hanuted, which means that a ghost will spawn if the player tries to break it.
+	You can invent your own states and use the however you wish, for example, you may have 4: haunted, which means that a ghost will spawn if the player tries to break it.
 
 	\subsection{Tile properties}
 	You can associate a table of properties with every tile, this is VERY useful. For example, you might have an apple tree with only a certain amount of apples on it, so you store the amount of apples it has left inside the properties table. Then the player cannot pick apples if there are none left. 
@@ -188,14 +188,16 @@ skipSplashes: true
 	\section{Atom}
 	Atom is the official scripting platform for ProjectX. The actual Atom project can be found at \texttt{atom.io}. There is a package (or extension) to Atom which contains error checking and code-completion for ProjectX. The package is installed with Atom from the installer.
 	
-	\hFigure{Atom.png}{Screenshot of Atom}
+	\fFigure{Atom.png}{Screenshot of Atom}
 
 	Atom contains a file viewer on the left, you can browse through the entire resources directory and look view images and various other things. Atom is used by many proffesional programmers.
 
 	\section{Lua Terminal}
-	The Lua terminal can excecute lua commands in game and is very helpful starting point for programming in Lua. It is similar to the minecraft terminal except that it will only accept commands and the commands are in lua. The Terminal can be opened with T and will only be available if you enable \texttt{devMode} inside \texttt{SaveFile.yml} (see Save file above). Escape will close the terminal.
+	The Lua terminal can execute lua commands in game and is very helpful starting point for programming in Lua. It is similar to the minecraft terminal except that it will only accept commands and the commands are in lua. The Terminal can be opened with T and will only be available if you enable \texttt{devMode} inside \texttt{SaveFile.yml} (see Save file above). Escape will close the terminal.
 
-	You can excecute commands from here (such as print("Hello world")) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it.
+	You can execute commands from here (such as print("Hello world")) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it.
+	
+	You can also view and run previous commands by using the up and down arrow keys.
 
 	\chapter{ProjectX XML}
 	\section{Beginning With XML}
@@ -219,7 +221,7 @@ skipSplashes: true
 	This is a description!
 </description>
 	\end{xml}
-	The "This is a description!" is said to be the description tag's value. We can have tags inside tags like so:
+	The "This is a description!" is said to be inside the tag or the description tag's \textbf{value}. We can have tags inside tags like so:
 	\begin{xml}
 <class>
 	<description>
@@ -511,6 +513,29 @@ It is possible to have multiple recipes for items, meaning that the item will be
 
 The other tag inside the item tag is the description, this is text that is shown with the item, there is a theme of satire with these descriptions.
 
+\subsection{Item usage}
+You can add uses to items. These uses appear inside the inventory when displayed and can bee run by clicking on them.
+
+\hFigure{ItemUses.png}{Item Uses}
+
+This is the xml for the Apple item:
+
+\begin{xml}
+<item name="Apple">
+	<description>
+	The early bird gets the worm getting the apple...
+	I think...
+	</description>
+	<uses>
+		<action name="eat">removeItem()</action>
+	</uses>
+</item>
+\end{xml}
+
+The apple has an extra \texttt{uses} tag, inside this tag you can have up to 3 actions that will be shown in the inventory.
+
+The action tag has the \texttt{name} attribute which is the display name of the action. The value of the action is what will happen when the item has been clicked on. There is more information on this in Lua items.
+
 \section{Interactions}
 The interactions XML file tells the game what to do when different items are clicked on around the map, here is an example of the interactions XML file:
 
@@ -536,11 +561,23 @@ The interactions XML file tells the game what to do when different items are cli
 </tile>
 \end{xml}
 
-The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section. If there is more than one action available, the user will be prompted for which action they would like to do.
+The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section.
+
+If there is more than one action available, the user will be prompted for which action they would like to do.
 
 \hFigure{MultipleSelection.jpg}{Selection Wheel}
 
 If there is no choice, the \texttt{name} attribute of the action is not needed as it is never shown. The lua code is run in the \textbf{interactions} scope.
+
+Another trick that you can use with interactions is the use of conditionals, when there are multiple interactions, you can create an expression that, if true, the option will appear. This is done with the \texttt{if} attribute.
+
+\begin{xml}
+<tile name="appleTree">
+	<action name="chop">giveAndDestroy("Wood", 3)</action>
+	<action name="pick">inventory:giveItem("Apple")</action>
+	<action name="smash" if="player:getClass() == 'Hulk'">Arena:destroyTile(x, y)</action>
+</tile>
+\end{xml}
 
 The movable tag at the top is for convenience, this tag lists all the tiles, seperated by semicolons, that can be walked on.
 
@@ -706,6 +743,30 @@ Here, no tiles will be placed if the height generated by the rule is larger than
 
 Finally, the tile tag is a single sprite for a tile. The \texttt{name} attribute of the tile is the name of the sprite in the sprites XML.
 
+
+\section{Schematics}
+Schematics are a feature in map generation. It is possible to create a pre-defined structure that can be placed many times throughout the map. These structures are called schematics. For example, this is the Apple Circle schematic found in the game:
+
+\begin{xml}
+<schem name="Apple Circle" width = "3" height="3">
+	<top>
+		appleTree,appleTree,appleTree,
+		appleTree,		   ,appleTree,
+		appleTree,appleTree,appleTree
+	</top>
+</schem>
+\end{xml}
+
+The \texttt{schem} tag makes a single schematic, the name attribute is the name of the schematic to be defined.
+
+The schematic can be made in 2 layers, top and bottom. This is so a schematic can influence both layers or map generation in the right areas. i.e. on top of each other. In this example, the apple circle needs only to be on the top layer, so the \texttt{top} tag is used. The \texttt{bottom} tag is used in a similar fashion.
+
+The text inside the \texttt{top} tag are the comma separated tiles that will be placed in the schematic, in this case, the xml has been graphically set out to show that a square of 8 \texttt{appleTree} will be placed with a hole in the middle of them.
+
+You can then place your schematic into the map generation folder with the \texttt{schem} tag, who's only attribute is the \texttt{name} tag which is the name of the schematic as defined in the Schematics XML file.
+
+If you wish to use the bottom layer in the schematic then it is recommended that you place the schematic in the bottom layer in map generation. This is because the bottom layer is placed first, you may have missing tiles from your schematic if placed in the top layer.
+
 \chapter{ProjectX Lua}
 \section{Begginning with Lua}
 Lua is the other language that is used often in the game. Lua differs from XML because it is a \textbf{procedual} language. This means that instead of writing about objects like you would in XML, as it is a \textbf{markup} langauge, you write about procedures, that is, how to do things. Lua controls what happens at the start of the game, how creatures behave and what happens when you interact with tiles.
@@ -753,6 +814,9 @@ nil means nothing, the only thing special about nil is that it is different from
 \subsubsection{table}
 A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are bery useful for keeping related information together.
 
+\subsection{vector}
+A vector is a special type of table. It includes an x and a y coordinate which makes a position, for example (46, 98) is a vector. Vectors can be made with the \texttt{vector(number x, number y)} function, and can be added, subtracted, multiplied and the lot.
+
 \subsubsection{object}
 Objects are abstract programming entities that are very useful in programming, for example, \texttt{myPlayer = Player.getByIndex(0)} stores a player object in myPlayer. You can then call functions that are members of the myPlayer like \texttt{myPlayer:getPosition()}. Notice the colon instead of the period. Colons are used when it matters what object you are reffering to. In this case, it matters what player we are trying to get the position of, but in \texttt{Debug.log("Hello world")} there is no specific "Debug" that we are talking about, because there is only one.
 
@@ -793,7 +857,7 @@ Now, any future references of \texttt{myDJName} will result to "DJ Deejay".
 \section{Lua Structure}
 The structure of Lua can be defined in various \textbf{scopes}. Scopes are the functions that a certain script has access to. There are several scopes and they can be defined in a heirarchy. The interpreter scope contains utilities that do not control the game, and do not infer that a game is running, this includes the \texttt{Math} class and the \texttt{File} class. The biggest scope is the game scope. This contains all the functions in the interpreter scope plus many other functions used to control various aspects of the game, this include the \texttt{Creatures, Arena, Music, Inventory, Particles} and \texttt{Player} Classes. There are several other scopes.
 
-\hFigure{LuaScopeDiagram.png}{Lua Scopes}
+\fFigure{LuaScopeDiagram.png}{Lua Scopes}
 
 In the diagram, elipses are places where you can write Lua code, the rectangles are scopes, and allow you to access different Classes. For example, it would be a bit crazy of the lua terminal had access to the States class, which controls the various states a creature can be in, because you would not know what creature you are talking about. But when programming creature AI, the state class obviously refers to the creature that the AI has been coded for. This is why we have scopes.
 
@@ -826,11 +890,134 @@ If you remember XML Interactions, inside the action tags is lua code! This lua c
 
 The code inside the action tags look familiar, this is Lua! First, lets take a look at \texttt{inventory:getItem("Apple")}.
 
-This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple.
+This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple, more specifically, it adds an apple to the inventory of the player who clicked on the appleTree, you can see \texttt{inventory:giveItem} in the appendix.
+
+More interestingly though, are the giveAndDestroy functions, these are not defined inside the API provided but are instead a custom function. Here it is:
+
+\begin{lua}
+function giveAndDestroy(itemName, quantity)
+	inventory:giveItem(itemName, quantity);
+	Arena.destroyTile(tilePos);
+end
+\end{lua}
+
+This function is found in  a script inside the interactions lua folder. The function does exactly what the name suggests, gives the player an item then destroys the tile so that it cannot be used again. If you wanted to, you could define what all actions do inside the xml interactions file, but sometimes, like this giveAndDestroy, it is more practical to write a function for it then to write the code 4 times.
+
+The interactions lua file has a few new variables that can be used, namely, \texttt{inventory}, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player object interacting with the object, \texttt{inventory} is the inventory of said player, and is the same as \texttt{player:getInventory()}, finally, \texttt{tilePos} is the name of the tile.
+
+
+\section{Creatures}
+Creatures can be used with the corresponding XML file to create creature AI. Here is the creatures XML file:
+
+\begin{xml}
+<creature name="Rat" ai="Rat" speed="2">
+	<movement>
+		<left>Rat Left</left>
+		<right>Rat Right</right>
+		<leftIdle>Rat Left Idle</leftIdle>
+		<rightIdle>Rat Right Idle</rightIdle>
+		</movement>
+</creature>
+	
+<creature name="Big Rat" ai="Rat" speed="3">
+	<movement>
+		<left>Big Rat Left</left>
+		<right>Big Rat Right</right>
+		<leftIdle>Big Rat Left Idle</leftIdle>
+		<rightIdle>Big Rat Right Idle</rightIdle>
+	</movement>
+</creature>
+\end{xml}
+
+Our attribute of interest is the \texttt{ai} attribute. This attribute tells the game what lua file to use to control the creature. In this instance, the file \texttt{Rat.lua} is found inside script/lua/creatures. Here it is:
+
+\begin{lua}
+States.newProximityState("Close", 4);
+
+function isClose(target)
+	playerPos = target:getPosition();
+	ratPos = getPosition();
+	move = (ratPos - playerPos) * 2;
+	moveOn(move + ratPos);
+end
+\end{lua}
+
+This is a simple AI that whenever the player is 4 tiles away from the rat, it will run away from the player. Lets dissect this.
+
+First of all, the creatures in the game are based on \textbf{state based AI}. This is a common technique used in games where the creature can be in several states, and it will behave differently in these states. For example, an ogre may be in a sleeping state, until you make a noise, then it goes into an angry state.
+
+In the lua creatures file, you can create and manage states using the \texttt{States} object. This object can create various types of states, the 3 that we have in the game currently are the Proximity state, the Update state, and the Clock state.
+
+\paragraph{Proximity State} This state is activated when the player comes close to the creature, you can specify how close the player needs to be to activate the state
+
+\paragraph{Update State} Calls every frame, \textbf{MAY HAVE SERIOUS PERFORMANCE PENALTIES}.
+
+\paragraph{Clock State} Calls one every certain amount of time.
+
+Realistically, the Proximity State is the only real state, this is because the creature goes into and out of the state, instead of it being instantaneous.
+
+You can create a proximity state using \texttt{State.newProximityState}. The first argument is the name of the state, the second is how far away (in tiles) the state activates.
+
+The Proximity state called \texttt{Close} will call functions \texttt{beginClose}, \texttt{isClose} and \texttt{endClose} at different times.
+
+\paragraph{begin[state]} Called for the one frame that the state starts, for example, when the player first comes close to the creature
+
+\paragraph{is[state]} Called every frame the creature is inside the state
+
+\paragraph{end[state]} Called once after the state has ended, for example, when the player walks away from the creature.
+
+The proximity state calls these functions with an argument which is the player object that is coming close to the creature.
+
+The code inside the function gets the path from the player to the rat and times it's length by 2, then moves in that direction.
+
+
+\section{Items}
+Items can have uses. Uses appear inside the inventory menu and are run when the player clicks on them. An infinite amount of effects can be achieved with item uses, you could have a magic potion that makes you twice as fast, or a pokeball that spawns rats. Lets take a look back at the items xml file for the apple.
+
+\begin{xml}
+<item name="Apple">
+	<description>
+	The early bird gets the worm getting the apple...
+	I think...
+	</description>
+	<uses>
+		<action name="eat">removeItem()</action>
+	</uses>
+</item>
+\end{xml}
+
+The text inside the \texttt{action} tag is lua code! This works very similar to interactions, \texttt{removeItem} is not a function available from the standard library, it's a custom designed function. This is the lua file (inside the \texttt{script/lua/items} folder) that is responsible for this function:
+
+\begin{lua}
+function removeItem()
+	inventory:takeItem(itemName);
+end
+\end{lua}
+
+This is a very simple function which removes the item the use is associated with. The \texttt{itemName} variable is available to item use files and is exactly what it sounds like.
+
+Function defined in the \texttt{script/lua/items} folder can be called within the items xml, and exists mostly for convenience.
+\chapter{Other Features}
+There are various features in ProjectX that do not use XML or Lua to function. All these features are listed here.
+
+\section{Script Indexes}
+Script indexes are found around the project, currently there are 2 of them. Found at \texttt{script/lua/lua\_index.yml} and \texttt{script/xml/xml\_index.yml}.
+
+These files list all the script files that are inside their directories, They are automatically generated so any changes you make to them will be overridden. They exist because in Android and iOS, the game can't list files in a directory. So this file lists them for it.
+
+In the future, I may introduce more control with these files, especially in regards to lua, where it is likely that you may not want to index some lua file but instead include it with \texttt{loadstring()}.
+
+\section{Particles}
+Particle systems exist in cocos2d-x, and can be spawned with the \texttt{Particles.spawnParticles} function. But to make a particle system, you must create a plist file which has the system in it. The file can be created with \texttt{particle2dx.com}.
+
+\hFigure{ParticleCreator.png}{particle2dx.com}
+
+Design your particle system and then select Realtime plist at the very bottom, you will then be displayed the plist files text, copy that text into a file named \texttt{[Particle System Name].plist} and place it in the res/particles folder. You can then spawn the particle system with \texttt{Particles.spawnParticles("[Particle System Name]", [particle position])}.
+
 
 \part{Appendix}
 \chapter{Appendix A - Lua functions}
-This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organised in Scope - Classes - Members
+This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organized in Scope - Classes - Members
 \section{Interpreter}
 \subsection{Debug}
 \subsubsection{Debug.log}
@@ -890,90 +1077,90 @@ If a second argument is used, it will return a number between min amd max
 \subsubsection{Arena.getTileNameAt}
 Overloads:
 \begin{ulist}
-	\item string Arena.getTileNameAt(number x, number y)
+	\item string Arena.getTileNameAt(vector position)
 \end{ulist}
-Returns the name of the uppermost tile at a specific location, the location is given by (x, y)
+Returns the name of the uppermost tile at the specified position.
 
 \subsubsection{Arena.getTileRegionAt}
 Overloads:
 \begin{ulist}
-	\item string Arena.getTileRegionAt(number x, number y)
+	\item string Arena.getTileRegionAt(vector position)
 \end{ulist}
-Gets the region of the tile at a certain position, given by (x, y)
+Gets the region of the tile at the position.
 
 \subsubsection{Arena.destroyTile}
 Overloads:
 \begin{ulist}
-	\item nil Arena.destroyTile(number x, number y)
+	\item nil Arena.destroyTile(vector position)
 \end{ulist}
-Destroys the tile at the specified position. Only the tile on the top layer is destroyed. If there was no tile, nothing happens, same as \texttt{Arena.setTileState(x,y, DESTROYED)}.
+Destroys the tile at the specified position. Only the tile on the top layer is destroyed. If there was no tile, nothing happens, same as \texttt{Arena.setTileState(vector position, DESTROYED)}.
 
 \subsubsection{Arena.setTileState}
 Overloads:
 \begin{ulist}
-	\item nil Arena.setTileState(number x, number y, number state)
+	\item nil Arena.setTileState(vector position, number state)
 \end{ulist}
-Sets the state of the tile at (x, y).
+Sets the state of the tile at the position.
 
 \subsubsection{Arena.getTileState}
 Overloads:
 \begin{ulist}
-	\item number Arena.getTileState(number x, number y)
+	\item number Arena.getTileState(vector position)
 \end{ulist}
-Returns the state of the tile at (x, y)
+Returns the state of the tile at the position.
 
 \subsubsection{Arena.getTileProperties}
 Overloads:
 \begin{ulist}
-	\item table Arena.getTileProperties(number x, number y)
+	\item table Arena.getTileProperties(vector position)
 \end{ulist}
-Returns the table of properties of a tile given by (x, y)
+Returns the table of properties of a tile at the position.
 
 \subsubsection{Arena.setTileProperties}
 Overloads:
 \begin{ulist}
-	\item nil Arena.setTileProperties(number x, number y, table propertiesTable)
+	\item nil Arena.setTileProperties(vector position, table propertiesTable)
 \end{ulist}
-Sets the property table of a tile given by (x, y)
+Sets the property table of a tile at the position.
 
 \subsection{Creature}
 \subsubsection{Creature.spawnCreature}
 Overloads:
 \begin{ulist}
-	\item Creature Creature.spawnCreature(string creatureName, int x, int y)
+	\item Creature Creature.spawnCreature(string creatureName, vector position)
 \end{ulist}
-Spawns the creature named creatureName at (x, y). Returns the creature.
+Spawns the creature named creatureName at the position. Returns the creature.
 
 \subsubsection{Creature:moveTo}
 Overloads:
 \begin{ulist}
-	\item nil Creature:moveTo(number x, number y)
-	\item nil Creature:moveTo(number x, number y, number distance)
-	\item nil Creature:moveTo(number x, number y, number distance, number speed)
+	\item nil Creature:moveTo(vector position)
+	\item nil Creature:moveTo(vector position, number distance)
+	\item nil Creature:moveTo(vector position, number distance, number speed)
 \end{ulist}
-In the first overload, moves the creature towards the tile at (x, y) and stops the creature one tile away from it. In the second overload, moves the creature towards the tile and stops distance tiles away from it. If the third overload, moves the creature towards a tile at speed tiles per second and stops distance tiles away.
+In the first overload, moves the creature towards the tile at the position and stops the creature one tile away from it. In the second overload, moves the creature towards the tile and stops distance tiles away from it. If the third overload, moves the creature towards a tile at speed tiles per second and stops distance tiles away.
 
 \subsubsection{Creature:moveOn}
 Overloads:
 \begin{ulist}
-	\item nil Creature:moveOn(number x, number y)
-	\item nil Creature:moveOn(number x, number y, number speed)
+	\item nil Creature:moveOn(vector position)
+	\item nil Creature:moveOn(vector position, number speed)
 \end{ulist}
 Moves the creature onto the tile specified, if a speed is given, they will move at speed tiles per second.
 
 \subsubsection{Creature:getPosition}
 Overloads:
 \begin{ulist}
-	\item number number Creature:getPosition()
+	\item vector Creature:getPosition()
 \end{ulist}
-Returns the integer x and y coordinates of the creature.
+Returns the integer position of the creature.
 
 \subsubsection{Creature:getRealPosition}
 Overloads:
 \begin{ulist}
-	\item number number Creature:getRealPosition()
+	\item vector Creature:getRealPosition()
 \end{ulist}
-Returns the real (decimal) x and y coordinates of the creature.
+Returns the real (decimal) position of the creature.
 
 \subsubsection{Creature:setMovementSpeed}
 Overloads:
@@ -1082,9 +1269,9 @@ Plays the song that has been set for the region called regionName.
 \subsubsection{Particles.spawnParticles}
 Overloads:
 \begin{ulist}
-	\item nil Particles.spawnParticles(string particlesName, number x, number y)
+	\item nil Particles.spawnParticles(string particlesName, vector position)
 \end{ulist}
-Spawns the Particles system particlesName at (x, y)
+Spawns the Particles system particlesName at the position.
 
 \subsection{Player}
 \subsubsection{Player.getByIndex}
@@ -1097,14 +1284,14 @@ Returns the player who was assigned the index, 0 is always host or player in sin
 \subsubsection{Player:getPosition}
 Overloads:
 \begin{ulist}
-	\item number number Player:getPosition()
+	\item vector Player:getPosition()
 \end{ulist}
 Returns the integer coordinates of the player.
 
 \subsubsection{Player:getRealPosition}
 Overloads:
 \begin{ulist}
-	\item number number Player:getRealPosition()
+	\item position Player:getRealPosition()
 \end{ulist}
 Returns the real (decimal) coordinates of the player.
 
@@ -1174,20 +1361,21 @@ Overloads:
 Deletes the state named stateName.
 
 
-\section{Functions}
+\subsection{Functions}
 \subsubsection{getPosition}
 Overloads:
 \begin{ulist}
-	\item number number getPosition()
+	\item vector getPosition()
 \end{ulist}
 Returns the integer position of the creature.
 
 \subsubsection{moveOn}
 Overloads:
 \begin{ulist}
-	\item nil moveOn(number x, number y)
+	\item nil moveOn(vector position)
+	\item nil moveOn(vector position, number speed)
 \end{ulist}
-Moves the creature onto the tile
+Moves the creature onto the tile. If a speed is given, the creature will move at [speed] tiles per second.
 
 \subsubsection{setMovementSpeed}
 Overloads:
@@ -1206,10 +1394,11 @@ Returns the default movement speed of the creature.
 \subsubsection{moveTo}
 Overloads:
 \begin{ulist}
-	\item nil moveTo(number x, number y, number distance)
-	\item nil moveTo(number x, number y, number distance, number speed)
+	\item nil moveTo(vector position)
+	\item nil moveTo(vector position, number distance)
+	\item nil moveTo(vector position, number distance, number speed)
 \end{ulist}
-Moves the creature towards the tile and stops distance tiles away from it at speed tiles per second.
+Moves the creature towards the tile and stops [distance] tiles away from it at [speed] tiles per second. Distance can be assumed to be 1 if not given, and if no speed is give it is assumed to be the creature's default movement speed.
 
 \subsubsection{despawn}
 Overloads:
@@ -1225,23 +1414,23 @@ Despawns the creature.
 \subsubsection{moveOn}
 Overloads:
 \begin{ulist}
-	\item nil moveOn(number x, number y)
-	\item nil moveOn(number x, number y, number speed)	
+	\item nil moveOn(vector position)
+	\item nil moveOn(vector position, number speed)	
 \end{ulist}
 Moves the player onto the tile given, if there a speed is given, they will move towards it at [speed] tiles per second
 
 \subsubsection{moveTo}
 Overloads:
 \begin{ulist}
-	\item nil moveTo(number x, number y)
-	\item nil moveTo(number x, number y, number distance)
-	\item nil moveTo(number x, number y, number distance, number speed)
+	\item nil moveTo(vector position)
+	\item nil moveTo(vector position, number distance)
+	\item nil moveTo(vector position, number distance, number speed)
 \end{ulist}
 Moves the player towards a tile and stops [distance] tiles away. If no distance is given, it will assume 1. If a speed is given, it will move at [speed] tiles per second
 
 \subsection{Variables}
-\subsubsection{x and y}
-x and y are coordinates of the tile that is being clicked on.
+\subsubsection{tilePos}
+\texttt{tilePos} is the coordinates of the tile that is being clicked on.
 
 \subsubsection{player}
 The player object that is interacting with the tile.
