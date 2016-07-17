@@ -195,7 +195,7 @@ skipSplashes: true
 	\section{Lua Terminal}
 	The Lua terminal can execute lua commands in game and is very helpful starting point for programming in Lua. It is similar to the minecraft terminal except that it will only accept commands and the commands are in lua. The Terminal can be opened with T and will only be available if you enable \texttt{devMode} inside \texttt{SaveFile.yml} (see Save file above). Escape will close the terminal.
 
-	You can execute commands from here (such as print("Hello world")) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it.
+	You can execute commands from here (such as \texttt{print("Hello world")}) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it. the \texttt{clear()} function will clear the terminal if it gets clogged up.
 	
 	You can also view and run previous commands by using the up and down arrow keys.
 
@@ -1322,6 +1322,27 @@ Overloads:
 	\item Inventory Player:getInventory()
 \end{ulist}
 Returns the Inventory object of the player.
+
+\subsubsection{Player:getHealth}
+Overloads:
+\begin{ulist}
+	\item double Player:getHealth()
+\end{ulist}
+Returns how much health the player has.
+
+\subsubsection{Player:heal}
+Overloads:
+\begin{ulist}
+	\item nil Player:heal(number amount)
+\end{ulist}
+Heals the player by a certain amount.
+
+\subsubsection{Player:damage}
+Overloads:
+\begin{ulist}
+	\item nil Player:damage(number amount)
+\end{ulist}
+Damages the player by a certain amount.
 
 
 \subsection{Variables}
