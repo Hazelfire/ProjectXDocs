@@ -197,7 +197,9 @@ skipSplashes: true
 
 	You can execute commands from here (such as \texttt{print("Hello world")}) and the output (if there is any) will show above where you typed it. It will also show any lua errors that happened in the game, so you do not have to check your log file for errors, you can just press T to view it. the \texttt{clear()} function will clear the terminal if it gets clogged up.
 	
-	You can also view and run previous commands by using the up and down arrow keys.
+	You can also view and run previous commands by using the up and down arrow keys. If you wish to perform a multi-line command, you can end the command with the backslash character. This will wait until you input a command that does not end in a backslash to execute the multi-line command.
+	
+	Another very useful function is the \texttt{help} function, which prints help information about any other function. For example \texttt{help(print)} will return information about the print function, or \texttt{help(player.getPosition)} returns help information about the getPosition function of the player object.
 
 	\chapter{ProjectX XML}
 	\section{Beginning With XML}
@@ -896,14 +898,14 @@ More interestingly though, are the giveAndDestroy functions, these are not defin
 
 \begin{lua}
 function giveAndDestroy(itemName, quantity)
-	inventory:giveItem(itemName, quantity);
-	Arena.destroyTile(tilePos);
+	player.giveItem(itemName, quantity);
+	tile(tilePos).destroy();
 end
 \end{lua}
 
 This function is found in  a script inside the interactions lua folder. The function does exactly what the name suggests, gives the player an item then destroys the tile so that it cannot be used again. If you wanted to, you could define what all actions do inside the xml interactions file, but sometimes, like this giveAndDestroy, it is more practical to write a function for it then to write the code 4 times.
 
-The interactions lua file has a few new variables that can be used, namely, \texttt{inventory}, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player object interacting with the object, \texttt{inventory} is the inventory of said player, and is the same as \texttt{player:getInventory()}, finally, \texttt{tilePos} is the name of the tile.
+The interactions lua file has a few new variables that can be used, namely, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player object interacting with the object and \texttt{tilePos} is the name of the tile.
 
 
 \section{Creatures}
@@ -935,7 +937,7 @@ Our attribute of interest is the \texttt{ai} attribute. This attribute tells the
 States.newProximityState("Close", 4);
 
 function isClose(target)
-	playerPos = target:getPosition();
+	playerPos = target.getPosition();
 	ratPos = getPosition();
 	move = (ratPos - playerPos) * 2;
 	moveOn(move + ratPos);
@@ -1323,24 +1325,24 @@ Overloads:
 \end{ulist}
 Returns the Inventory object of the player.
 
-\subsubsection{Player:getHealth}
+\subsubsection{Player.getHealth}
 Overloads:
 \begin{ulist}
-	\item double Player:getHealth()
+	\item double Player.getHealth()
 \end{ulist}
 Returns how much health the player has.
 
-\subsubsection{Player:heal}
+\subsubsection{Player.heal}
 Overloads:
 \begin{ulist}
-	\item nil Player:heal(number amount)
+	\item nil Player.heal(number amount)
 \end{ulist}
 Heals the player by a certain amount.
 
-\subsubsection{Player:damage}
+\subsubsection{Player.damage}
 Overloads:
 \begin{ulist}
-	\item nil Player:damage(number amount)
+	\item nil Player.damage(number amount)
 \end{ulist}
 Damages the player by a certain amount.
 
@@ -1353,31 +1355,31 @@ In the game scope, you have access to the constants \texttt{UNTOUCHED, DESTROYED
 
 \section{Creature}
 \subsection{States}
-\subsubsection{States.newProximityState}
+\subsubsection{newProximityState}
 Overloads:
 \begin{ulist}
 	\item nil States.newProximityState(string stateName, number distance)
 \end{ulist}
 Creates a new proximity state.
 
-\subsubsection{States.newUpdateState}
+\subsubsection{newUpdateState}
 Overloads:
 \begin{ulist}
-	\item nil States.newUpdateState(string stateName)
+	\item nil newUpdateState(string stateName)
 \end{ulist}
 Creates a new update state.
 
-\subsubsection{States.newClockState}
+\subsubsection{newClockState}
 Overloads:
 \begin{ulist}
-	\item nil States.newClockState(string stateName, number interval)
+	\item nil newClockState(string stateName, number interval)
 \end{ulist}
 Creatures a new clock state
 
-\subsubsection{States.deleteState}
+\subsubsection{deleteState}
 Overloads:
 \begin{ulist}
-	\item nil States.deleteState(string stateName)
+	\item nil deleteState(string stateName)
 \end{ulist}
 Deletes the state named stateName.
 
