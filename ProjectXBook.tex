@@ -75,9 +75,9 @@
 	\hFigure{CrossPlatform.png}{Cross Platform}
 
 	\section{Game-Play and Rules}
-	The game itself is an Role Playing multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to \underline{survive} the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can \underline{choose to team up or to fight, last player or team alive wins.}
+	The game itself is an Role Playing multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to \underline{survive} the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can \underline{choose to team up or to fight,} \underline{last player or team alive wins.}
 	
-	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. \underline{Changes that are made to the game on one device can be synced to another simply by playing on the same game.}
+	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. \underline{Changes that are made to the game} \underline{on one device can be synced} \underline{to another simply by} \underline{on the same game.}
 	
 	\section{Programming with ProjectX}
 	ProjectX has 2 official languages, Lua and XML, as well as YAML in some areas. These languages serve different purposes in the game. XML is used to represent objects in the game, whereas in Lua, actions and procedures can be specified. XML controls map generation, Items, Sprites and many more, whereas Lua controls Creature AI, interactions and Item usage. The skills learnt can be applied to other programming languages such as Javascript, HTML or any other language that a person might want to learn.
@@ -135,8 +135,8 @@
 		\item Louis Evans
 	\end{ulist}
 
-	\chapter{Systems}
-	There are a few systems in ProjectX that should be understood before developing. This chapter is not too important, but does come in handy as a reference for how the game works.
+	\chapter{Features}
+	There are a few feature in ProjectX that should be understood before developing. This chapter is not too important, but does come in handy as a reference for how the game works.
 	
 	\section{The Arena}
 	The Arena is the map and tiles that you can interact with in the game. The arena currently stands at 1500x1500 tiles and takes about 9 minutes to walk across. The map is randomly generated everytime you play the game, and the way it is generated can be coded in XML.
@@ -152,7 +152,29 @@
 	You can associate a table of properties with every tile, this is VERY useful. For example, you might have an apple tree with only a certain amount of apples on it, so you store the amount of apples it has left inside the properties table. Then the player cannot pick apples if there are none left. 
 	
 	In the same way, you could keep other values in the properties table, for example, the tree might need to be hit a few times with the axe, so it could store how weak it is and fall down when the player has had a certain amount of swings at it.
+	
+	\subsection{Regions}
+	Regions are collections of tiles that are usually geographically close. These can be used to make different biomes, differentiate between areas in lua code and to play music in different regions. For example, in the "standard" map, there is a beach, cliff and snow biome. 
+	
+	\section{Creatures}
+	Creatures can be spawned into the game, and AIs can be made for each creature, all creature AIs are coded in Lua and animations can be made for the creature's movement.
+	
+	Creatures can represent any entity that is not the player, despite the name, a creature can be also be an NPC along with monsters and other things.
+	
+	Similar to tiles, creatures can also have a properties table associated with them, creatures have a powerful state-based ai system that can be customized to do a lot of different things.
 
+	Creatures can also have tags associated with them to categorize them. These can be used for any purpose.
+	
+	\section{Items}
+	Items can be given to players, used and crafted. Items are made using the Items XML file.
+	
+	Inside the Items XML crafting recipes along with item descriptions can be given, multiple crafting recipes can be given to each item.
+	
+	Items can also execute Lua code with in-inventory uses, these appear as buttons inside the inventory. What happens can be coded using Lua so it again makes items infinitely customizable.
+	
+	\section{Players}
+	You can create players that can be played inside the game.
+	
 	\part{Developing with ProjectX}
 	
 	\chapter{Getting started with Developing}
@@ -719,13 +741,13 @@ These can also be thought of as percentages. This configuration has water appear
 The value that the rule gives can vary to acheive different effects. The example above uses a "perlin" rule as the values smoothly change, making the possibility for hills and valleys and similar tiles to be placed together. 
 
 \subsection{Rule types}
-These different rules are \textbf{types} of rules. There are 3 types of rules, perlin, random and inside. The examples below show how the rule choses it's heights.
+These different rules are \textbf{types} of rules. There are 4 types of rules, perlin, fractal, random and inside. The examples below show how the rule choses it's heights.
 
 \hFigure{PerlinNoiseExample.png}{Perlin Noise}
 
 \hFigure{WhiteNoiseExample.png}{Random Noise}
 
-\hFigure{FractalNoise.png}{Fractal Noise}
+\hFigure{FractalNoise.jpg}{Fractal Noise}
 
 \subsubsection{Random Noise}
 The most simple type of rule is the random rule. This rule choses a completely random value for each and every tile, and does not respect the tiles around it. This is usually used to place things that appear on their own, such as trees and rocks.
@@ -742,16 +764,30 @@ Fractal Noise is very similar to Perlin Noise. In fact, fractal noise is many pe
 
 Think of fractal noise in different layers, all of the layers are perlin noise, but they are at different scales to each other and blend differently. Often the ones with a larger scale (looks more like random noise) are blended in less, this makes sure that small regions do not appear all over the place.
 
-The first layer will be at the original scale, specified by the \texttt{scale}
+The first layer will be at the original scale, specified by the \texttt{scale}. The second layer will be at a larger scale, then the third will be even larger, this increase can be tweaked with the \texttt{scaleBase} attribute. Having this value at 1 will mean that the scale will not change for every layer, making this value higher will make the difference in scales between layers larger. For math nerds, the scale over different layers is given by:
 
-Perlin noise's size can be changed with a \texttt{scale} attribute. The smaller the scale, the more zoomed out. The larger the scale, the closer it comes to white noise.
+\begin{center}
+	\begin{math}
+		s.a^{l}
+	\end{math}
+\end{center}
 
+Where \textit{s} is the starting scale, \textit{a} is the scaleBase and \textit{l} is the layer number, starting at 0 (this is why it is called the scale \textbf{base}).
+
+This same sort off falloff can be done with the blending, where the layers slowly become less influential. This is done with the \texttt{suppBase} attribute. supp means suppression. It is given by the same formula as above.
+
+Finally, the amount of layers is given by the \texttt{iter} attribute, which stands for iterations.
+
+You do not need to supply \texttt{suppBase}, \texttt{scaleBase} and \texttt{itter} if you do not wish to, and they default to the values 3, 3, and 10 respectively.
+
+\subsubsection{Inside}
 The final rule type is inside, which will always place it's children if it inside a certain \textbf{region}. These may only be used on the second layer (misc).
 
 All tiles and rules can have regions associated with them. A region is a group of tiles that are singled out for any particular reason. Regions can be used to play music when a player moves into them, or they may have things placed in the second layer that only appear \textit{inside} a certain region. Regions can also be found through Lua.
 
 Many examples of the inside rule can be found in the large example above.
 
+\subsection{Area tag}
 The area tag behaves a bit differently to the rule tag, it places tiles by putting the tiles in layers. The first child inside the area tag is placed first, then the second child will be placed in top, and so on. This means that the layer above the first should have places where there are no tags placed. For example:
 
 \begin{xml}
@@ -790,32 +826,80 @@ You can then place your schematic into the map generation folder with the \textt
 If you wish to use the bottom layer in the schematic then it is recommended that you place the schematic in the bottom layer in map generation. This is because the bottom layer is placed first, you may have missing tiles from your schematic if placed in the top layer.
 
 \chapter{ProjectX Lua}
-\section{Begginning with Lua}
+\section{Beginning with Lua}
 Lua is the other language that is used often in the game. Lua differs from XML because it is a \textbf{procedual} language. This means that instead of writing about objects like you would in XML, as it is a \textbf{markup} langauge, you write about procedures, that is, how to do things. Lua controls what happens at the start of the game, how creatures behave and what happens when you interact with tiles.
 
 A great way to start with lua is using the Lua Terminal, instructions to how to enable and use the lua terminal are found in the "Developing with ProjectX" chapter. Try these code samples inside your lua terminal and find out what they do!
 
-If you can learn by exaple, take a look at a few simple scripts found in the scripts folder inside the installation directory, they are all relatively simple. If you have already worked with Lua before, you can skip onto the Lua structure section.  
+If forget what a certain function does, or forgot what arguments it takes and in what order, call \texttt{help([function])} in the Lua Terminal to get information about the function. This will only work with ProjectX functions, and not lua functions. 
+
+If you can learn by example, take a look at a few simple scripts found in the scripts folder inside the installation directory, they are all relatively simple. If you have already worked with Lua before, you can skip onto the Lua structure section.  
+
+\subsection{Basics}
+Lets start out by doing a bit of math. After enabling developer mode, press T to open the Lua Terminal.
+
+Try each of the below line by line.
+
+\begin{lua}
+	1 + 1
+	6 - 3
+	7 * 8
+	6 / 2
+\end{lua}
+
+From looking at the results, the asterix character (*) refers to multiplication, and the forward-slash (/) is division. These are called \textbf{operators}
+
+Try the following.
+
+\begin{lua}
+	1 + 1 == 2
+	10 + 9 == 21
+	1 > 8
+	4 != 4
+	8 + 5 <= 13
+\end{lua}
+
+Now we are comparing numbers. These use \textbf{comparison operators}, which compare 2 values. Comparing 2 values is very useful in programming. Notice how the equality operator (==) has 2 equals signs, and not 1. This is important, because the (=) sign is used for something else.
+
+Now we can get onto the fun stuff, try this in the terminal.
+
+\begin{lua}
+	me
+\end{lua}
+
+This will print the player to the console, we can do a lot with the player, through the use of \textbf{functions}.
 
 \subsection{Functions}
 
-Your first Lua program might look like this (try it in the Lua Terminal):
+Your first proper Lua program might look like this (try it in the Lua Terminal):
 \begin{lua}
-Debug.log("Hello world");
+print("Hello world")
 \end{lua}
 
-This prints \texttt{Hello world} to the console, and the log file. Lets break this program down.
+This prints \texttt{Hello world} to the console. Lets break this program down.
 
-\texttt{Debug.log} is called a \textbf{function}. A function simply does something, in this case, the function \texttt{Debug.log} logs a message. The matching brackets after the function hold what are called the \textbf{arguments}. \texttt{"Hello world"} is the argument to \texttt{Debug.log}. Arguments are values that are given to the \textbf{function} to tell it how to act. We want \texttt{Debug.log} to print the value \texttt{Hello world} so we gave it the value to print. Arguments appear elsewhere in many other functions. For example, \texttt{Music.playSong} takes an argument which tells it what song to play, for example: \texttt{Music.playSong("Enter the dungeon");}. The quotes around \texttt{Hello world} turns the value into a \textbf{string}. A string could be a word, a sentence, or an Epic poem, as long as it contains letters in it. The quotes make it pass the \textbf{literal} Hello world to the function. Finally the semicolon finishes the line. It is worth noting that you do not need to place the semicolon in Lua, although it is good practise because many other languages end there lines with a semicolon.
+\texttt{print} is called a \textbf{function}. A function simply does something, in this case, the function \texttt{print} prints a message to the console.
 
-Here are a few other example of function calls:
+The matching brackets after the function hold what are called the \textbf{arguments}. \texttt{"Hello world"} is the argument to \texttt{print}. Arguments are values that are given to the \textbf{function} to tell it how to act. We want \texttt{print} to print the value \texttt{Hello world} so we gave it the value to print.
+
+Arguments appear elsewhere in many other functions. For example, \texttt{playSong} takes an argument which tells it what song to play, for example: \texttt{playSong("Enter the dungeon")}. The quotes around \texttt{Hello world} turns the value into a \textbf{string}. A string could be a word, a sentence, or an Epic poem, as long as it contains letters in it. The quotes make it pass the \texttt{Hello World}to the function.
+
+These are called \textbf{function calls}, here are a few other example of function calls, try them in your lua terminal.
 \begin{lua}
-Debug.logWarning("Don't spill the milk");
-Music.playRegionSong("cliff");
-Player.getByIndex(0);
+logWarning("Don't spill the milk")
+me.giveItem("Ultanium")
+me.getName()
 \end{lua}
 
-Functions can have multiple arguments, those arguments are seperated by commas. For example, often it is needed to specify what tile you want the function to affect, so you can supply an x and y value for which tile you are talking about. \texttt{Particles.spawnParticles("fire", 78, 103);} is an example of a function with 3 arguments, a name, an x coordinte, and a y coordinate.
+Now we are getting interesting. We are calling functions that belong to the \texttt{me} object. \texttt{me} is a player, you can confirm this by trying
+
+\begin{lua}
+	type(me)
+\end{lua}
+
+The player object has many functions that can be called off it. The dot notation used in lua means \textit{inside}. In this case, I am calling the \texttt{giveItem} function that is inside the \texttt{me} object.
+
+Functions can have multiple arguments, those arguments are separated by commas. For example, If you wanted to craft the Ultanium Godblade, you need 3 Ultaniums. Luckily, me.giveItem takes another \textit{optional} argument, which is the amount you want to give. \texttt{me.giveItem("Ultanium", 3)} is an example of a function with 2 arguments, a name, and a quantity.
 
 \subsection{Types}
 
@@ -825,24 +909,28 @@ In lua, there are different \textbf{types} of values. We have already seen some 
 A very common type is a string, a string is a list of characters, for example "Fire" is a string, or "Enter the Dungeon", or even "4". As you can see, strings are denoted by quotes around the value, the quotes mean "I am talking about the actual text between the quotes", that sentence there could be a string.
 
 \subsubsection{number}
-A number is exactly what it sounds like. 2, 8.7, 1089 and -8.9 are all numbers
+A number is exactly what it sounds like. 2, 8.7, 1089 and -8.9 are all numbers.
 
 \subsubsection{boolean}
-Either true or false, you can compare different values to get booleans, for example \texttt{myWage > 0} will return true or false
+Either true or false, you can compare different values to get booleans, for example \texttt{1 > 0} will return true.
 
 \subsubsection{nil}
 nil means nothing, the only thing special about nil is that it is different from all the other types. There is no purpose of using or holding a variable that is nil.
 
 \subsubsection{table}
-A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are bery useful for keeping related information together.
+A table is another very useful type. A table is a collection of things, if you have worked in other languages, the table is similar to an \textit{array} or \textit{list}. For example, you can have a table of lottery numbers, if your lottery number are 12, 35 and 62, then the table would be written like \texttt{\{12,35,62\}}. Tables are very useful for keeping related information together.
 
-\subsection{vector}
-A vector is a special type of table. It includes an x and a y coordinate which makes a position, for example (46, 98) is a vector. Vectors can be made with the \texttt{vector(number x, number y)} function, and can be added, subtracted, multiplied and the lot.
+\subsubsection{vector}
+A vector is a object that represents a position. It includes an x and a y coordinate, for example (46, 98) is a vector. Vectors can be made with the \texttt{vector(number x, number y)} function, and can be added, subtracted and multiplied.
 
-\subsubsection{object}
-Objects are abstract programming entities that are very useful in programming, for example, \texttt{myPlayer = Player.getByIndex(0)} stores a player object in myPlayer. You can then call functions that are members of the myPlayer like \texttt{myPlayer:getPosition()}. Notice the colon instead of the period. Colons are used when it matters what object you are reffering to. In this case, it matters what player we are trying to get the position of, but in \texttt{Debug.log("Hello world")} there is no specific "Debug" that we are talking about, because there is only one.
+\subsubsection{player}
+A player object is a single player in the game, with the object, you can do various things with the player, for example, \texttt{player.teleport(0,0)} will teleport the player to the very top of  the map.
 
-In Appendix A, any function that uses the colon refers needs to have an object, for example, if a function returns a \texttt{Creature}, like \texttt{rat = Creature.spawnCreature("Rat", 27, 10)} then with that creature you can call all the functions in the appendix with colons, like \texttt{rat:getPosition()} or \texttt{rat:moveOn(108,178)}. 
+\subsubsection{creature}
+A creature is a living entity that is not the player. It can be an NPC, an enemy, or whatever you with. They can be created with \texttt{creature(string creatureName, vector position)}.
+
+\subsubsection{tile}
+A tile represents a single tile on the map. You can set states and properties on every tile, and use this object to gather the name and region the tile belongs to. They are created with \texttt{tile(vector position)} or \texttt{tile(number x, number y)}.
 
 \subsection{Variables}
 A variable is simply a stored piece of information. This information is given a name and it can then be used later in the program and changed. To start with a variable, you must first declare it, for example:
@@ -876,17 +964,46 @@ myDJName = "DJ Deejay";
 
 Now, any future references of \texttt{myDJName} will result to "DJ Deejay".
 
+\subsection{Flow Control}
+These will not be able to be tested within the Lua Terminal, because they require multiple lines, and are not suited to the command-line nature of the terminal.
+
+Flow control directs what code gets executed. From now on, the examples are not line-by-line, and are single lua scripts.
+
+One example of a dodgy piece of lua code could be the following.
+
+\begin{lua}
+if me.getName() == "Sam Nolan" then
+	me.giveItem("Ultanium", 100)
+end
+\end{lua}
+
+This is called an \textbf{if} statement. It takes an expression (that is in-between if and then) and if the expression evaluates to \texttt{true}, then it will call the code inside (between then and end). If not, it will skip it. This dodgy piece of code will give 100 Ultaniums if the player's name is \texttt{Sam Nolan}.
+
+Continuing on, we have the \textbf{if-then-else} statement. This looks very familiar.
+
+\begin{lua}
+if me.getName() == "Sam Nolan" then
+	me.giveItem("Ultanium", 100)
+else
+	me.damage(100)
+end
+\end{lua}
+
+The code between else and end will only be called if the players name is NOT \texttt{"Sam Nolan"}. So if the player's name is Sam Nolan, it will give the player 100 Ultaniums, otherwise, it will kill the player.
+
 \section{Lua Structure}
-The structure of Lua can be defined in various \textbf{scopes}. Scopes are the functions that a certain script has access to. There are several scopes and they can be defined in a heirarchy. The interpreter scope contains utilities that do not control the game, and do not infer that a game is running, this includes the \texttt{Math} class and the \texttt{File} class. The biggest scope is the game scope. This contains all the functions in the interpreter scope plus many other functions used to control various aspects of the game, this include the \texttt{Creatures, Arena, Music, Inventory, Particles} and \texttt{Player} Classes. There are several other scopes.
+The structure of Lua can be defined in various \textbf{scopes}. Scopes are the functions and variables that a certain script has access to.
+
+There are several scopes and they can be defined in the hierarchy. First there is the Game Scope, this contains many functions used to control various aspects of the game, this include the \texttt{Creatures, Arena, Music, Inventory, Particles} and \texttt{Player}. There are several other scopes.
 
 \fFigure{LuaScopeDiagram.png}{Lua Scopes}
 
-In the diagram, elipses are places where you can write Lua code, the rectangles are scopes, and allow you to access different Classes. For example, it would be a bit crazy of the lua terminal had access to the States class, which controls the various states a creature can be in, because you would not know what creature you are talking about. But when programming creature AI, the state class obviously refers to the creature that the AI has been coded for. This is why we have scopes.
+It would be a bit crazy of the lua terminal had access to the States class, which controls the various states a creature can be in, because you would not know what creature you are talking about. But when programming creature AI, the state class obviously refers to the creature that the AI has been coded for. This is why we have scopes.
 
-All lua code can be found in \texttt{scripts/lua}. Currently, lua support is avaliable for interactions, creature ai and startup scripts. In the future I am planning to add Game Logic and item functionality in lua scripts.
+All lua code can be found in \texttt{scripts/lua}. Currently, lua support is avaliable for interactions, creature ai, startup scripts and item uses. In the future I am planning to add Game Logic and much more into lua scripts.
 
 \section{Interactions}
-If you remember XML Interactions, inside the action tags is lua code! This lua code gets excecuted when the player has made it to the item that the interaction is made for (unless \texttt{instant} is set). Here is our XML Interactionsfile.
+If you remember XML Interactions, inside the action tags is lua code! This lua code gets executed when the player has made it to the item that the interaction is made for (unless \texttt{instant} is set). Here is our XML Interactions file.
 
 \begin{xml}
 <movable>
@@ -906,26 +1023,26 @@ If you remember XML Interactions, inside the action tags is lua code! This lua c
 
 <tile name="appleTree">
 	<action name="chop">giveAndDestroy("Wood", 3)</action>
-	<action name="pick">inventory:giveItem("Apple")</action>
+	<action name="pick">player.giveItem("Apple")</action>
 </tile>
 \end{xml}
 
-The code inside the action tags look familiar, this is Lua! First, lets take a look at \texttt{inventory:getItem("Apple")}.
+The code inside the action tags look familiar, this is Lua! First, lets take a look at \texttt{player.giveItem("Apple")}.
 
-This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple, more specifically, it adds an apple to the inventory of the player who clicked on the appleTree, you can see \texttt{inventory:giveItem} in the appendix.
+This code gets called if the player has chosen to \textit{pick} from the tree, and the player has walked up to it. Simply, it just gives the player an Apple, more specifically, it adds an apple to the inventory of the player who clicked on the appleTree, you can see \texttt{player.giveItem} in the appendix, or by calling \texttt{help(player.giveItem)}.
 
 More interestingly though, are the giveAndDestroy functions, these are not defined inside the API provided but are instead a custom function. Here it is:
 
 \begin{lua}
 function giveAndDestroy(itemName, quantity)
-	player.giveItem(itemName, quantity);
+	me.giveItem(itemName, quantity);
 	tile(tilePos).destroy();
 end
 \end{lua}
 
 This function is found in  a script inside the interactions lua folder. The function does exactly what the name suggests, gives the player an item then destroys the tile so that it cannot be used again. If you wanted to, you could define what all actions do inside the xml interactions file, but sometimes, like this giveAndDestroy, it is more practical to write a function for it then to write the code 4 times.
 
-The interactions lua file has a few new variables that can be used, namely, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player object interacting with the object and \texttt{tilePos} is the name of the tile.
+The interactions lua file has a few new variables that can be used, namely, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player interacting with the tile and \texttt{tilePos} is the coordinates of the tile of the tile.
 
 
 \section{Creatures}
@@ -954,7 +1071,7 @@ Creatures can be used with the corresponding XML file to create creature AI. Her
 Our attribute of interest is the \texttt{ai} attribute. This attribute tells the game what lua file to use to control the creature. In this instance, the file \texttt{Rat.lua} is found inside script/lua/creatures. Here it is:
 
 \begin{lua}
-States.newProximityState("Close", 4);
+newProximityState("Close", 4);
 
 function isClose(target)
 	playerPos = target.getPosition();
@@ -968,7 +1085,7 @@ This is a simple AI that whenever the player is 4 tiles away from the rat, it wi
 
 First of all, the creatures in the game are based on \textbf{state based AI}. This is a common technique used in games where the creature can be in several states, and it will behave differently in these states. For example, an ogre may be in a sleeping state, until you make a noise, then it goes into an angry state.
 
-In the lua creatures file, you can create and manage states using the \texttt{States} object. This object can create various types of states, the 3 that we have in the game currently are the Proximity state, the Update state, and the Clock state.
+In the lua creatures file, you can create and manage states using various functions. you can create various types of states, the 3 that we have in the game currently are the Proximity state, the Update state, and the Clock state.
 
 \paragraph{Proximity State} This state is activated when the player comes close to the creature, you can specify how close the player needs to be to activate the state
 
@@ -978,7 +1095,7 @@ In the lua creatures file, you can create and manage states using the \texttt{St
 
 Realistically, the Proximity State is the only real state, this is because the creature goes into and out of the state, instead of it being instantaneous.
 
-You can create a proximity state using \texttt{State.newProximityState}. The first argument is the name of the state, the second is how far away (in tiles) the state activates.
+You can create a proximity state using \texttt{newProximityState}. The first argument is the name of the state, the second is how far away (in tiles) the state activates.
 
 The Proximity state called \texttt{Close} will call functions \texttt{beginClose}, \texttt{isClose} and \texttt{endClose} at different times.
 
@@ -1012,13 +1129,17 @@ The text inside the \texttt{action} tag is lua code! This works very similar to 
 
 \begin{lua}
 function removeItem()
-	inventory:takeItem(itemName);
+	player.takeItem(itemName);
 end
 \end{lua}
 
 This is a very simple function which removes the item the use is associated with. The \texttt{itemName} variable is available to item use files and is exactly what it sounds like.
 
 Function defined in the \texttt{script/lua/items} folder can be called within the items xml, and exists mostly for convenience.
+
+\section{Startup}
+Finally, code can be run at startup. This is mainly for debugging purposes, the code is run inside the Game Scope, which means that you do not have access to the \texttt{me} object. Any scripts that you place inside \texttt{script/lua/startup} will be run at startup. This feature has become a bit redundant due to the lua terminal.
+
 \chapter{Other Features}
 There are various features in ProjectX that do not use XML or Lua to function. All these features are listed here.
 
@@ -1034,344 +1155,405 @@ Particle systems exist in cocos2d-x, and can be spawned with the \texttt{Particl
 
 \hFigure{ParticleCreator.png}{particle2dx.com}
 
-Design your particle system and then select Realtime plist at the very bottom, you will then be displayed the plist files text, copy that text into a file named \texttt{[Particle System Name].plist} and place it in the res/particles folder. You can then spawn the particle system with \texttt{Particles.spawnParticles("[Particle System Name]", [particle position])}.
-
+Design your particle system and then select Realtime plist at the very bottom, you will then be displayed the plist files text, copy that text into a file named \texttt{[Particle System Name].plist} and place it in the res/particles folder. You can then spawn the particle system with \texttt{spawnParticles("[Particle System Name]", [particle position])}.
 
 \part{Appendix}
 \chapter{Appendix A - Lua functions}
-This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organized in Scope - Classes - Members
-\section{Interpreter}
+This chapter outlines all the available Lua functions in a reference style manner, this is handy for knowing how to use a specific function. It is organized in Scope - Classes - Members.
+
+If a function's name has a period in it, this means that it is a function that is called off an object. For example, this chapter will state that \texttt{player.teleport(number x, number y)} will teleport the player to the given position. But copying \texttt{player.teleport(0,0)} will not work, because you need a player object, for example, me. \texttt{me.teleport} will work.
+
+\section{Game}
+
+\subsection{Generic}
+\subsubsection{print}
+Prints anything to the terminal, accepts an unlimited amount of arguments, and will print them one after the other. Attempts to print any object.
+
+\subsubsection{type}
+Returns a string that is the type of the object.
+
+\subsubsection{clear}
+Clears the Terminal window.
+
+\subsubsection{help}
+Prints help information regarding the function, for example \texttt{help(print)} returns help information about the print function.
+
 \subsection{Debug}
-\subsubsection{Debug.log}
+\subsubsection{log}
 Overloads:
 \begin{ulist}
-	\item nil Debug.log(string message)
+	\item nil log(string message)
 \end{ulist}
 Logs the message to the console and to the log file.
 
-\subsubsection{Debug.logWarning}
+\subsubsection{logWarning}
 Overloads:
 \begin{ulist}
-	\item nil Debug.logWarning(string message)
+	\item nil logWarning(string message)
 \end{ulist}
 Logs the warning to the console and to the log file.
 
-\subsubsection{Debug.logError}
+\subsubsection{logError}
 Overloads:
 \begin{ulist}
-	\item nil Debug.logError(string message)
+	\item nil logError(string message)
 \end{ulist}
 Logs the error to the console and to the log file
 
-
-\subsection{File}
-\subsubsection{File.readStringFromFile}
-Overloads
-\begin{ulist}
-	\item string File.readStringFromFile(string filePath)
-\end{ulist}
-Returns the string inside the file specified by the filePath. the filePath must be relative to the application excecutable (i.e. res/file/MyFile.txt or the like)
-
-
-\subsection{Math}
-\subsubsection{Math.randomInt}
+\subsection{Vector}
+\subsubsection{vector}
 Overloads:
 \begin{ulist}
-	\item number Math.randomInt(number max)
-	\item number Math.randomInt(number min, number max)
+	\item vector vector(number x, number y)
 \end{ulist}
-Returns a random integer (whole number) between 0 and max-1.
-If a second argument is used, it will return a number between min and max-1
+Returns the vector (x,y).
 
-\subsubsection{Math.randomReal}
+\subsubsection{vector.toString}
 Overloads:
 \begin{ulist}
-	\item number Math.randomReal(number max)
-	\item number Math.randomReal(number min, number max)
+	\item string vector.toString()
 \end{ulist}
-Returns a random real number (decimal number) between 0 and max.
-If a second argument is used, it will return a number between min amd max
+Returns a string representation of the creature.
 
-
-
-\section{Game}
-\subsection{Arena}
-\subsubsection{Arena.getTileNameAt}
+\subsubsection{vector.dot}
 Overloads:
 \begin{ulist}
-	\item string Arena.getTileNameAt(vector position)
+	\item number vector.dot(vector other)
 \end{ulist}
-Returns the name of the uppermost tile at the specified position.
+Returns the dot product of the two vectors.
 
-\subsubsection{Arena.getTileRegionAt}
+\subsubsection{vector.length}
 Overloads:
 \begin{ulist}
-	\item string Arena.getTileRegionAt(vector position)
+	\item number vector.length()
 \end{ulist}
-Gets the region of the tile at the position.
+Returns the length of the vector.
 
-\subsubsection{Arena.destroyTile}
+\subsubsection{vector.distance}
 Overloads:
 \begin{ulist}
-	\item nil Arena.destroyTile(vector position)
+	\item number vector.distance(other)
 \end{ulist}
-Destroys the tile at the specified position. Only the tile on the top layer is destroyed. If there was no tile, nothing happens, same as \texttt{Arena.setTileState(vector position, DESTROYED)}.
+Returns the distance between the vectors.
 
-\subsubsection{Arena.setTileState}
+\subsubsection{vector.absAngle}
 Overloads:
 \begin{ulist}
-	\item nil Arena.setTileState(vector position, number state)
+	\item number vector.absAngle()
 \end{ulist}
-Sets the state of the tile at the position.
+Returns the angle from the x axis of the vector.
 
-\subsubsection{Arena.getTileState}
+\subsubsection{vector.normalized}
 Overloads:
 \begin{ulist}
-	\item number Arena.getTileState(vector position)
+	\item vector vector.normalized()
 \end{ulist}
-Returns the state of the tile at the position.
+Returns the normalized vector.
 
-\subsubsection{Arena.getTileProperties}
+\subsection{Tile}
+\subsubsection{tile}
 Overloads:
 \begin{ulist}
-	\item table Arena.getTileProperties(vector position)
+	\item tile tile(number x, number y)
+	\item tile tile(vector pos)
 \end{ulist}
-Returns the table of properties of a tile at the position.
+Returns the tile at the given position.
 
-\subsubsection{Arena.setTileProperties}
+\subsubsection{tile.toString}
 Overloads:
 \begin{ulist}
-	\item nil Arena.setTileProperties(vector position, table propertiesTable)
+	\item string tile.toString()
 \end{ulist}
-Sets the property table of a tile at the position.
+Returns a string representation of the tile.
+
+\subsubsection{tile.getName}
+Overloads:
+\begin{ulist}
+	\item string tile.getName()
+	\item string tile.getName(int layerIndex)
+\end{ulist}
+Returns the name of the tile at the given layer index. If no layer index is given, it will return the name of the uppermost tile.
+
+\subsubsection{tile.getRegion}
+Overloads:
+\begin{ulist}
+	\item string tile.getRegion()
+\end{ulist}
+Returns the region of the tile.
+
+\subsubsection{tile.destroy}
+Overloads:
+\begin{ulist}
+	\item nil tile.destroy()
+\end{ulist}
+Destroys the tile at the specified position. Only the tile on the top layer is destroyed. If there was no tile, nothing happens, same as \texttt{tile.setState(DESTROYED)}.
+
+\subsubsection{tile.setState}
+Overloads:
+\begin{ulist}
+	\item nil tile.setState(number state)
+\end{ulist}
+Sets the state of the tile.
+
+\subsubsection{tile.getState}
+Overloads:
+\begin{ulist}
+	\item number tile.getState()
+\end{ulist}
+Returns the state of the tile.
+
+\subsubsection{tile.getProperties}
+Overloads:
+\begin{ulist}
+	\item table tile.getProperties()
+\end{ulist}
+Returns the table of properties for the tile.
+
+\subsubsection{tile.setProperties}
+Overloads:
+\begin{ulist}
+	\item nil tile.setProperties(table propertiesTable)
+\end{ulist}
+Sets the property table of the tile.
 
 \subsection{Creature}
-\subsubsection{Creature.spawnCreature}
+\subsubsection{creature}
 Overloads:
 \begin{ulist}
-	\item Creature Creature.spawnCreature(string creatureName, vector position)
+	\item creature creature(string creatureName, vector position)
 \end{ulist}
 Spawns the creature named creatureName at the position. Returns the creature.
 
-\subsubsection{Creature:moveTo}
+\subsubsection{creature.toString}
 Overloads:
 \begin{ulist}
-	\item nil Creature:moveTo(vector position)
-	\item nil Creature:moveTo(vector position, number distance)
-	\item nil Creature:moveTo(vector position, number distance, number speed)
+	\item string creature.toString()
+\end{ulist}
+Returns a string representation of the creature.
+
+\subsubsection{creature.moveTo}
+Overloads:
+\begin{ulist}
+	\item nil creature.moveTo(vector position)
+	\item nil creature.moveTo(vector position, number distance)
+	\item nil creature.moveTo(vector position, number distance, number speed)
 \end{ulist}
 In the first overload, moves the creature towards the tile at the position and stops the creature one tile away from it. In the second overload, moves the creature towards the tile and stops distance tiles away from it. If the third overload, moves the creature towards a tile at speed tiles per second and stops distance tiles away.
 
-\subsubsection{Creature:moveOn}
+\subsubsection{creature.moveOn}
 Overloads:
 \begin{ulist}
-	\item nil Creature:moveOn(vector position)
-	\item nil Creature:moveOn(vector position, number speed)
+	\item nil creature.moveOn(vector position)
+	\item nil creature.moveOn(vector position, number speed)
 \end{ulist}
 Moves the creature onto the tile specified, if a speed is given, they will move at speed tiles per second.
 
-\subsubsection{Creature:getPosition}
+\subsubsection{creature.getPosition}
 Overloads:
 \begin{ulist}
-	\item vector Creature:getPosition()
+	\item vector creature.getPosition()
 \end{ulist}
 Returns the integer position of the creature.
 
-\subsubsection{Creature:getRealPosition}
+\subsubsection{creature.setSpeed}
 Overloads:
 \begin{ulist}
-	\item vector Creature:getRealPosition()
-\end{ulist}
-Returns the real (decimal) position of the creature.
-
-\subsubsection{Creature:setMovementSpeed}
-Overloads:
-\begin{ulist}
-	\item nil Creature:setMovementSpeed(number speed)
+	\item nil creature.setSpeed(number speed)
 \end{ulist}
 Sets the default movement speed of the creature in tiles per second.
 
-\subsubsection{Creature:getMovementSpeed}
+\subsubsection{creature.getSpeed}
 Overloads:
 \begin{ulist}
-	\item number Creature:getMovementSpeed()
+	\item number creature.getSpeed()
 \end{ulist}
-Returns the default movement speed of the creature.
+Returns the default movement speed of the creature in tiles per second.
 
-\subsubsection{Creature:getName}
+\subsubsection{creature.getName}
 Overloads:
 \begin{ulist}
-	\item string Creature:getName()
+	\item string creature.getName()
 \end{ulist}
 Returns the name of the creature.
 
-\subsubsection{Creature:getAI}
+\subsubsection{creature.getAI}
 Overloads:
 \begin{ulist}
-	\item string Creature:getAI()
+	\item string creature.getAI()
 \end{ulist}
-Returns the AI used to control the creature
+Returns the AI used to control the creature.
 
-\subsubsection{Creature:hasTag}
+\subsubsection{creature.hasTag}
 Overloads:
 \begin{ulist}
-	\item boolean Creature:hasTag(string tag)
+	\item boolean creature.hasTag(string tag)
 \end{ulist}
-Returns if the creature has a certain tag
+Returns if the creature has a certain tag.
 
-\subsubsection{Creature:getProperties}
+\subsubsection{creature.getProperties}
 Overloads:
 \begin{ulist}
-	\item table Creature:getProperties()
+	\item table creature.getProperties()
 \end{ulist}
 Returns the property table of the creature.
 
-\subsubsection{Creature:setProperties}
+\subsubsection{creature.setProperties}
 Overloads:
 \begin{ulist}
-	\item nil Creature:setProperties(table propertiesTable)
+	\item nil creature.setProperties(table propertiesTable)
 \end{ulist}
 Sets the property table of the creature.
 
-\subsection{Inventory}
-\subsubsection{Inventory:giveItem}
+\subsubsection{creature.despawn}
 Overloads:
 \begin{ulist}
-	\item nil Inventory:giveItem(string itemName)
-	\item nil Inventory:giveItem(string itemName, number quantity)
+	\item nil creature.despawn()
 \end{ulist}
-Places an item in the inventory object, if no quantity is given, one item is given.
-
-\subsubsection{Inventory:getQuantityOf}
-Overloads:
-\begin{ulist}
-	\item number Inventory:getQuantityOf(string itemName)
-\end{ulist}
-Returns the quantity owned of the item given by itemName
-
-\subsubsection{Inventory:takeItem}
-Overloads:
-\begin{ulist}
-	\item nil Inventory:takeItem(string itemName)
-	\item nil Inventory:takeItem(string itemName, number quantity)
-\end{ulist}
-Takes items off the inventory object. If no quantity is given, one is assumed
-
-\subsubsection{Inventory:canCraftItem}
-Overloads:
-\begin{ulist}
-	\item boolean Inventory:canCraftItem(string itemName)
-\end{ulist}
-Returns true if the player has the resources to craft the item given.
-
-\subsubsection{Inventory:hasItemWithTag}
-Overloads:
-\begin{ulist}
-	\item boolean Inventory:hasItemWithTag(string tag)
-\end{ulist}
-Returns true if the player has an item with the tag given.
+Despawns the creature.
 
 \subsection{Music}
-\subsubsection{Music.playSong}
+\subsubsection{playSong}
 Overloads:
 \begin{ulist}
-	\item nil Music.playSong(string songName)
+	\item nil playSong(string songName)
 \end{ulist}
-Plays the song called songName
-
-\subsubsection{Music.playRegionSong}
-Overloads:
-\begin{ulist}
-	\item nil Music.playRegionSong(string regionName)
-\end{ulist}
-Plays the song that has been set for the region called regionName.
+Plays the song called songName.
 
 
 \subsection{Particles}
-\subsubsection{Particles.spawnParticles}
+\subsubsection{spawnParticles}
 Overloads:
 \begin{ulist}
-	\item nil Particles.spawnParticles(string particlesName, vector position)
+	\item nil spawnParticles(string particlesName, vector position)
 \end{ulist}
 Spawns the Particles system particlesName at the position.
 
 \subsection{Player}
-\subsubsection{Player.getByIndex}
+\subsubsection{player}
 Overloads:
 \begin{ulist}
-	\item Player Player.getByIndex(number index)
+	\item player player(number index)
 \end{ulist}
-Returns the player who was assigned the index, 0 is always host or player in singleplayer.
+Returns the player with the given index.
 
-\subsubsection{Player:getPosition}
+\subsubsection{player.toString}
 Overloads:
 \begin{ulist}
-	\item vector Player:getPosition()
+	\item string player.toString()
 \end{ulist}
-Returns the integer coordinates of the player.
+Returns a string representation of the player.
 
-\subsubsection{Player:getRealPosition}
+\subsubsection{player.getPosition}
 Overloads:
 \begin{ulist}
-	\item position Player:getRealPosition()
+	\item vector player.getPosition()
 \end{ulist}
-Returns the real (decimal) coordinates of the player.
+Returns the tile coordinates of the player.
 
-\subsubsection{Player:getPlayerName}
+\subsubsection{player.getName}
 Overloads:
 \begin{ulist}
-	\item string Player:getPlayerName()
+	\item string player.getName()
 \end{ulist}
 Returns the chosen name of the player.
 
-\subsubsection{Player:getClassName}
+\subsubsection{player.getClass}
 Overloads:
 \begin{ulist}
-	\item string Player:getClassName()
+	\item string player.getClass()
 \end{ulist}
 Returns the name of the chosen class of the player.
 
-\subsubsection{Player:getMovementSpeed}
+\subsubsection{player.getSpeed}
 Overloads:
 \begin{ulist}
-	\item number Player:getMovmementSpeed()
+	\item number player.getSpeed()
 \end{ulist}
 Returns the movement speed of the player in tiles per second.
 
-\subsubsection{Player:getInventory}
+\subsubsection{player.setSpeed}
 Overloads:
 \begin{ulist}
-	\item Inventory Player:getInventory()
+	\item nil player.setSpeed(number speed)
 \end{ulist}
-Returns the Inventory object of the player.
+Sets the speed of the player in tiles per second.
 
-\subsubsection{Player.getHealth}
+\subsubsection{player.getHealth}
 Overloads:
 \begin{ulist}
-	\item double Player.getHealth()
+	\item number player.getHealth()
 \end{ulist}
 Returns how much health the player has.
 
-\subsubsection{Player.heal}
+\subsubsection{player.setHealth}
 Overloads:
 \begin{ulist}
-	\item nil Player.heal(number amount)
+	\item nil player.setHealth(number health)
+\end{ulist}
+Sets the health of the player.
+
+\subsubsection{player.heal}
+Overloads:
+\begin{ulist}
+	\item nil player.heal(number amount)
 \end{ulist}
 Heals the player by a certain amount.
 
-\subsubsection{Player.damage}
+\subsubsection{player.damage}
 Overloads:
 \begin{ulist}
-	\item nil Player.damage(number amount)
+	\item nil player.damage(number amount)
 \end{ulist}
 Damages the player by a certain amount.
 
+\subsubsection{player.teleport}
+Overloads:
+\begin{ulist}
+	\item nil player.teleport(number x, number y)
+	\item nil player.teleport(vector position)
+\end{ulist}
+Teleports the player to the position.
+
+\subsubsection{player.giveItem}
+Overloads:
+\begin{ulist}
+	\item nil player.giveItem(string itemName)
+	\item nil player.giveItem(string itemName, number quantity)
+\end{ulist}
+Gives an item to the player, if no quantity is given, one item is given.
+
+\subsubsection{player.getItemQuantity}
+Overloads:
+\begin{ulist}
+	\item number player.getQuantityOf(string itemName)
+\end{ulist}
+Returns the quantity owned of the item given by itemName
+
+\subsubsection{player.takeItem}
+Overloads:
+\begin{ulist}
+	\item nil player.takeItem(string itemName)
+	\item nil player.takeItem(string itemName, number quantity)
+\end{ulist}
+Takes items off the player. If no quantity is given, one is assumed
+
+\subsubsection{player.canCraftItem}
+Overloads:
+\begin{ulist}
+	\item boolean player.canCraftItem(string itemName)
+\end{ulist}
+Returns true if the player has the resources to craft the item given.
+
+\subsubsection{player.hasItemWithTag}
+Overloads:
+\begin{ulist}
+	\item boolean player.hasItemWithTag(string tag)
+\end{ulist}
+Returns true if the player has an item with the tag given.
 
 \subsection{Variables}
 \subsubsection{States}
 In the game scope, you have access to the constants \texttt{UNTOUCHED, DESTROYED} and \texttt{DEPLETED} which are official states that can be held by tiles.
-
-
 
 \section{Creature}
 \subsection{States}
@@ -1403,7 +1585,6 @@ Overloads:
 \end{ulist}
 Deletes the state named stateName.
 
-
 \subsection{Functions}
 \subsubsection{getPosition}
 Overloads:
@@ -1420,14 +1601,14 @@ Overloads:
 \end{ulist}
 Moves the creature onto the tile. If a speed is given, the creature will move at [speed] tiles per second.
 
-\subsubsection{setMovementSpeed}
+\subsubsection{setSpeed}
 Overloads:
 \begin{ulist}
-	\item nil setMovementSpeed(number speed)
+	\item nil setSpeed(number speed)
 \end{ulist}
 Sets the movement speed of the creature in tiles per second.
 
-\subsubsection{getMovementSpeed}
+\subsubsection{getSpeed}
 Overloads:
 \begin{ulist}
 	\item number getMovementSpeed()
@@ -1450,35 +1631,13 @@ Overloads:
 \end{ulist}
 Despawns the creature.
 
+\section{Personal}
+\texttt{me} is the current player.
 
-
-\section{Interactions}
-\subsection{Functions}
-\subsubsection{moveOn}
-Overloads:
-\begin{ulist}
-	\item nil moveOn(vector position)
-	\item nil moveOn(vector position, number speed)	
-\end{ulist}
-Moves the player onto the tile given, if there a speed is given, they will move towards it at [speed] tiles per second
-
-\subsubsection{moveTo}
-Overloads:
-\begin{ulist}
-	\item nil moveTo(vector position)
-	\item nil moveTo(vector position, number distance)
-	\item nil moveTo(vector position, number distance, number speed)
-\end{ulist}
-Moves the player towards a tile and stops [distance] tiles away. If no distance is given, it will assume 1. If a speed is given, it will move at [speed] tiles per second
-
-\subsection{Variables}
-\subsubsection{tilePos}
+\section{Tile Actions}
 \texttt{tilePos} is the coordinates of the tile that is being clicked on.
 
-\subsubsection{player}
-The player object that is interacting with the tile.
-
-\subsubsection{inventory}
-The inventory object of th player, same as player:getInventory()
+\section{Item Uses}
+\texttt{itemName} is the name of the item that is being used.
 
 \end{document}
