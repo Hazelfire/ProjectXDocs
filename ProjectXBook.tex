@@ -68,16 +68,16 @@
 	
 	ProjectX is a great tool for learning programming for the first time, as it covers a wide range of skill levels. It comes with many tools that help the beginner programmer both get a feel for professional-like environments while being supported along the way. Lua is a great programming language to learn how to code in, because it does not require the programmer to follow strict syntax.
 	
-	Professionals can also use ProjectX as just a general game. By developing on different parts of the game, every session would be completely different. If teams were to get together to mod this game, or even a classroom, \underline{the changes can be updated into one single game} and can be played multiplayer by everyone. 
+	Professionals can also use ProjectX as just a general game. By developing on different parts of the game, every session would be completely different. If teams were to get together to mod this game, or even a classroom the changes can be updated into one single game and can be played multiplayer by everyone. 
 
-	The game is also completely and utterly cross platform. You can run the game on Windows, \underline{Mac}, Linux, Android and \underline{iOS}. Games can also be played \textbf{across platforms}, meaning a person could come along with an Android smartphone, link up to a server hosted by a Linux computer, and play with a tonne of Macintosh and Windows Users!
+	The game is also completely and utterly cross platform. You can run the game on Windows, Mac, Linux, Android and iOS. Games can also be played \textbf{across platforms}, meaning a person could come along with an Android smartphone, link up to a server hosted by a Linux computer, and play with a tonne of Macintosh and Windows Users!
 
 	\hFigure{CrossPlatform.png}{Cross Platform}
 
 	\section{Game-Play and Rules}
-	The game itself is an Role Playing multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to \underline{survive} the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can \underline{choose to team up or to fight,} \underline{last player or team alive wins.}
+	The game itself is an Role Playing multiplayer game where the objective is to be the last man standing. Players connect to a server, and are spawned into an Arena. The controls are mainly touch based as the game also ports the Android and iOS platforms. Players can roam around a map with the objective of collecting resources to survive the harsh environment that they find themselves in. Players will find creatures and other features that can be interacted with. Other players can also be found and they can choose to team up or to fight, last player or team alive wins.
 	
-	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. \underline{Changes that are made to the game} \underline{on one device can be synced} \underline{to another simply by} \underline{on the same game.}
+	The game imposes very few constraints about what content can be added to the game. Creature, tiles, interactions, items and much more can be added to the game to make the experience completely different. Changes that are made to the game on one device can be synced to another simply by on the same game.
 	
 	\section{Programming with ProjectX}
 	ProjectX has 2 official languages, Lua and XML, as well as YAML in some areas. These languages serve different purposes in the game. XML is used to represent objects in the game, whereas in Lua, actions and procedures can be specified. XML controls map generation, Items, Sprites and many more, whereas Lua controls Creature AI, interactions and Item usage. The skills learnt can be applied to other programming languages such as Javascript, HTML or any other language that a person might want to learn.
@@ -220,7 +220,7 @@ skipSplashes: true
 	You can also view and run previous commands by using the up and down arrow keys. If you wish to perform a multi-line command, you can end the command with the backslash character. This will wait until you input a command that does not end in a backslash to execute the multi-line command.
 	
 	Another very useful function is the \texttt{help} function, which prints help information about any other function. For example \texttt{help(print)} will return information about the print function, or \texttt{help(player.getPosition)} returns help information about the getPosition function of the player object.
-
+	
 	\chapter{ProjectX XML}
 	\section{Beginning With XML}
 	XML is called a \textbf{markup language}. A markup language is used to represent objects. It has a certain syntax that uses angle brackets and tags and is nearly identical to HTML in syntax. This is an example of a tag:
@@ -261,92 +261,107 @@ skipSplashes: true
 	\end{xml}
 	In this case, \texttt{name} is an attribute of the \texttt{class} tag. and the \textbf{value} of the name attribute is \texttt{"Rat Man"}. In ProjectX, all attribute values are surrounded by quotes. The quotes are not part of the value, but just group the text in between them together. This is called a \textbf{string} and comes in various programming languages. For example, the string \texttt{"Hello World!"} represents the literal value of \texttt{Hello World!}.
 	
+	In XML you can also have \textbf{comments}. Comments are pieces of code that are ignored, and are there to make it easier for people to read. A comment starts with \texttt{<!--} and ends with \texttt{-->}.
+	
+	\begin{xml}
+		<!-- Hello, I am a comment and will be ignored! -->
+	\end{xml}
+	
+	Usually, in well formatted XML, there is only one tag per file, for example, having these two items in the same file is considered bad practice, and they should be split across files.
+	
+	\begin{xml}
+<item name="Pickaxe">
+	<ingredients>
+		Wood:3;
+		Stone:3;
+	</ingredients>
+	<description>
+		Tired of smashing a rock with wood?
+		Now you can do the same... with stone!
+	</description>
+</item>
+
+<item name="Axe">
+	<ingredients>
+		Wood:3;
+		Stone:2;
+	</ingredients>
+	<description>
+		Got wood? Now you do! 
+		Well... soon, at least.
+	</description>
+</item>
+	\end{xml}	
+	
 	That concludes the basics of XML. The following sections show how XML can be used in different areas of the game. It is in order of the easiest things to learn to the hardest.
 	
 	\section{Sprites}
 	The sprites XML file is not necessarily the easiest to learn but is required by the other scripts.
 
 	The sprites XML file contains all the different sprites that will be used in various other aspects of the game, those aspects being players, tiles, creatures and items.
+	
+	Inside \texttt{script/xml/sprites} there are 4 subdirectories which split up the different kinds of sprites. 
+	\begin{lstlisting}
+	script/xml/sprites
+	├───creatures
+	├───items
+	├───players
+	└───tiles
+	\end{lstlisting}
+	
+	Here are examples of sprite xml files:
+	
+	\subsubsection{Items spritesheet}
+	In the items spritesheets, the size is assumed to be 32x32, so it does not need to be specified.
+	
+	\texttt{Base/script/xml/sprites/items/Resources.xml}
+	\begin{xml}
+<spritesheet source = "Resources.png" >
+	<sprite name="Gold" x="0" y="0" />
+	<sprite name="Wood" x="1" y="0" />
+	<sprite name="Stone" x="2" y="0" />
+	<sprite name="Apple" x="3" y="0" />
+</spritesheet>
+	\end{xml}
+	
+	\subsubsection{Tiles spritesheet}
+	In the tiles spritesheet, the tiles are assumed to be in multiples of 32 wide and 24 tall. So we specify their height and width in terms of tiles instead of pixels.
+	
+	\texttt{Base/script/xml/sprites/tiles/Terrain.xml}
+	\begin{xml}
+<spritesheet source = "terrain.png" tileWidth = "1" tileHeight = "1" >
+	<sprite name="water" x ="0" y="0" />
+	<sprite name="sand" x="1" y="0" />
+	<sprite name="grass" x="2" y="0" />
+	<sprite name="cliff" x ="0" y ="1" />
+	<sprite name="stoneFloor" x ="3" y="0" />
+	<sprite name="snow" x = "1" y="1" />
+	<sprite name="graveStoneFloor" x="2" y="1" />
+	<sprite name="graveGrass" x="3" y="1" />
+</spritesheet>
+	\end{xml}
 
+	\subsubsection{Creatures spritesheet}
+	In the creatures spritesheet, the height and width must be specified in pixels.
+	
+	\texttt{Base/script/xml/sprites/creatures/RatAnim.xml}
+	\begin{xml}
+<spritesheet source= "Rat anim.png" height= "10" width="16">
+	<animate name="Rat Left" height="6" width= "1" x="0" y="0" speed="0.1" />
+	<animate name="Rat Right" height="6" width= "1" x="1" y="0" speed="0.1" />
+	<sprite name="Rat Left Idle" x="0" y="0" />
+	<sprite name="Rat Right Idle" x="1" y="0" />
+</spritesheet>
+	\end{xml}
+	
+	\subsubsection{Players spritesheet}
+	The players spritesheet is similar to the creatures one. You need to give the height and width in pixels
+	
+	\texttt{Base/script/xml/sprites/player/Birdfoot.xml}
 \begin{xml}
-<items>
-	<spritesheet source = "Resources.png" >
-		<sprite name="Gold" x="0" y="0" />
-		<sprite name="Wood" x="1" y="0" />
-		<sprite name="Stone" x="2" y="0" />
-		<sprite name="Apple" x="3" y="0" />
-	</spritesheet>
-
-	<spritesheet source="StandardTools.png" >
-		<sprite name="Pickaxe" x="0" y="0" />
-		<sprite name="Shovel" x="1" y="0" />
-		<sprite name="Sword" x="0" y="1" />
-		<sprite name="Axe" x="1" y="1" />
-	</spritesheet>
-
-</items>
-
-<tiles>
-	<spritesheet source = "terrain.png" tileWidth = "1" tileHeight = "1" >
-		<sprite name="water" x ="0" y="0" />
-		<sprite name="sand" x="1" y="0" />
-		<sprite name="grass" x="2" y="0" />
-		<sprite name="cliff" x ="0" y ="1" />
-		<sprite name="stoneFloor" x ="3" y="0" />
-		<sprite name="snow" x = "1" y="1" />
-		<sprite name="graveStoneFloor" x="2" y="1" />
-		<sprite name="graveGrass" x="3" y="1" />
-	</spritesheet>
-
-	<spritesheet source = "tree.png" tileWidth = "1" tileHeight = "3" >
-		<sprite name="tree" x="0" y = "0" />
-	</spritesheet>
-
-	<spritesheet source = "misc.png" tileWidth = "1" tileHeight = "1" >
-		<sprite name="coal" x="0" y = "1" />
-		<sprite name="mudrock" x = "1"  y="1" />
-		<sprite name="coal2" x = "0" y = "0" />
-		<sprite name="gold" x = "1" y = "0" />
-	</spritesheet>
-
-	<spritesheet source="Small Trees.png" tileWidth = "1" tileHeight = "2" >
-		<sprite name="palm" x="0" y="0" />
-		<sprite name="shrubbery" x="0" y="1" />
-		<sprite name="appleTree" x="1" y="1" />
-	</spritesheet>
-	<spritesheet source="Supertall Tree.png" tileWidth = "1" tileHeight ="4" >
-		<sprite name="SuperTreh" x="0" y="0" />
-	</spritesheet>
-</tiles>
-
-<creatures>
-	<spritesheet source= "Rat anim.png" height= "10" width="16">
-		<animate name="Rat Left" height="6" width= "1" x="0" y="0" speed="0.1" />
-		<animate name="Rat Right" height="6" width= "1" x="1" y="0" speed="0.1" />
-		<sprite name="Rat Left Idle" x="0" y="0" />
-		<sprite name="Rat Right Idle" x="1" y="0" />
-	</spritesheet>
-
-	<spritesheet source= "BigRatAnim.png" height="13" width="17">
-		<animate name="Big Rat Left" height="6" width="1" x="0" y="0" speed="0.1" />
-		<animate name="Big Rat Right" height="6" width="1" x="1" y="0" speed="0.1" />
-		<sprite name="Big Rat Left Idle" x="0" y="6" />
-		<sprite name="Big Rat Right Idle" x="1" y="6" />
-	</spritesheet>
-</creatures>
-
-<players>
 	<spritesheet source="Birdfoot.png" height="30" width="15">
 		<sprite name="Birdfoot" x="0" y="0" />
 	</spritesheet>
-
-	<spritesheet source = "BigRatAnim.png" height="13" width="17">
-		<animate name="Rat Man Left" height="6" width="1" x="0" y="0" speed="0.1" />
-		<animate name="Rat Man Right" height="6" width="1" x="1" y="0" speed="0.1" />
-		<sprite name="Rat Man Left Idle" x="0" y="6" />
-		<sprite name="Rat Man Right Idle" x="1" y="6" />
-	</spritesheet>
-</players>
 \end{xml}
 	As you can see, the sprites XML file is split up into sections, those sections being \texttt{<creatures> <players> <tiles>} and \texttt{<items>}. This section seperate the different places where the sprites will be used in the game.
 
@@ -428,24 +443,11 @@ Even though there are no animations for tiles currently, it is entirely possible
 
 \section{Music}
 The support for the music in XML is trivial, and it may be removed in the future as it can be done through Lua. But nevertheless, the music XML file is one of the simplest XML files to learn, here is an example of the music xml file:
+
+\texttt{Base/script/xml/music/Plains.xml}
 \begin{xml}
 <region name="plains">
 	<song source="Ambient Hope" />
-</region>
-<region name="snow">
-	<song source="Chase in the cold" />
-</region>
-<region name="beach">
-	<song source="Seaside" />
-</region>
-<region name="graves">
-    <song source="Ambient Despair" />
-</region>
-<region name="cliffs">
-	<song source="Grind" />
-</region>
-<region name="desert">
-	<song source="A little warm" />
 </region>
 \end{xml}
 
@@ -476,39 +478,8 @@ The music XML file may be improved on in the future.
 \section{Items}
 The Items XML file contains all the things that can be picked up and placed inside your inventory, here is a sample of the Items XML file:
 
+\texttt{Base/script/xml/items/tools/Sword.xml}
 \begin{xml}
-<item name="Pickaxe">
-	<ingredients>
-	Wood:3;
-	Stone:3;
-	</ingredients>
-	<description>
-	Tired of smashing a rock with wood?
-Now you can do the same... with stone!
-	</description>
-</item>
-
-<item name="Shovel">
-	<ingredients>
-	Wood:3;
-	Stone:1;
-	</ingredients>
-	<description>
-	For when your hands just aren't enough.
-	</description>
-</item>
-
-<item name="Axe">
-	<ingredients>
-	Wood:3;
-	Stone:2;
-	</ingredients>
-	<description>
-	Got wood? Now you do! 
-Well... soon, at least.
-	</description>
-</item>
-
 <item name="Sword">
 	<ingredients>
 	Wood:1;
@@ -542,6 +513,7 @@ You can add uses to items. These uses appear inside the inventory when displayed
 
 This is the xml for the Apple item:
 
+\texttt{Base/script/xml/items/resources/Apple.xml}
 \begin{xml}
 <item name="Apple">
 	<description>
@@ -559,53 +531,49 @@ The apple has an extra \texttt{uses} tag, inside this tag you can have up to 3 a
 The action tag has the \texttt{name} attribute which is the display name of the action. The value of the action is what will happen when the item has been clicked on. There is more information on this in Lua items.
 
 \section{Interactions}
-The interactions XML file tells the game what to do when different items are clicked on around the map, here is an example of the interactions XML file:
+The interactions XML file tells the game what to do when different items are clicked on around the map.
 
+All items that are on the bottom layer are assumed to be walkable unless specified. All items on the top layer are considered solid unless specified otherwise.
+
+Here is a couple of examples:
+
+\texttt{Base/script/xml/interactions/Water.xml}
 \begin{xml}
-<movable>
-	sand;cliff;snow;graveGrass;graveStoneFloor;deadlandsFloor;grass
-</movable>
-<tile name="gold">
-	<action>giveAndDestroy("Gold", 3)</action>
-</tile>
+<tile name="water" impassable="true" />
+\end{xml}
 
-<tile name="coal">
-	<action>giveAndDestroy("Stone", 3)</action>
-</tile>
-
-<tile name="tree">
-	<action>giveAndDestroy("Wood", 3)</action>
-</tile>
-
+\texttt{Base/script/xml/interactions/AppleTree.xml}
+\begin{xml}
 <tile name="appleTree">
 	<action name="chop">giveAndDestroy("Wood", 3)</action>
-	<action name="pick">inventory:giveItem("Apple")</action>
+	<action name="pick">me.giveItem("Apple")</action>
 </tile>
 \end{xml}
 
-The file consists of \texttt{tile} tags. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the gold tile will cause the player to walk up to the gold tile and destroy it, giving is 3 gold in the process. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section.
-
-If there is more than one action available, the user will be prompted for which action they would like to do.
+The file consists of a \texttt{tile} tag. Each tag represents an tile specified in the map generation XML file. The name attribute is the exact name of the tile. In the example of the Apple Tree. Each tile can have one or more actions associated with it. The text inside the action tag is Lua code that will be executed after the player has clicked and walked to the tile. In this case, clicking on the apple tree will ask the player which action they would like to do, and will give the player an apple if desired, or collect wood from the tree. The function \texttt{giveAndDestroy} is a custom one and not part of the standard functions, more information on this can be found at the Lua interactions section.
 
 \hFigure{MultipleSelection.jpg}{Selection Wheel}
 
-If there is no choice, the \texttt{name} attribute of the action is not needed as it is never shown. The lua code is run in the \textbf{interactions} scope.
+The water example shows how to make a tile impassible. All that needs to be done is to set the \texttt{impassable} attribute to true.
+
+If there is only one action, it will be automatically run when the player clicks on it. The name attribute is not needed in this case. The lua code is run in the \textbf{interactions} scope.
 
 Another trick that you can use with interactions is the use of conditionals, when there are multiple interactions, you can create an expression that, if true, the option will appear. This is done with the \texttt{if} attribute.
 
 \begin{xml}
 <tile name="appleTree">
 	<action name="chop">giveAndDestroy("Wood", 3)</action>
-	<action name="pick">inventory:giveItem("Apple")</action>
-	<action name="smash" if="player:getClass() == 'Hulk'">Arena:destroyTile(x, y)</action>
+	<action name="pick">me.giveItem("Apple")</action>
+	<action name="smash" if="me.getClass() == 'Hulk'">Arena:destroyTile(x, y)</action>
 </tile>
 \end{xml}
 
-The movable tag at the top is for convenience, this tag lists all the tiles, seperated by semicolons, that can be walked on.
+The movable tag at the top is for convenience, this tag lists all the tiles, separated by semicolons, that can be walked on.
 
 \section{Players}
 The Players XML file is where all the playable character classes are listed. Here is an example of the file:
 
+\texttt{Base/script/xml/player/Birdfoot.xml}
 \begin{xml}
 <class name="Birdfoot">
 	<movement>
@@ -616,18 +584,6 @@ The Players XML file is where all the playable character classes are listed. Her
 	</movement>
 	<description>
 	Birdfoot is coolz
-	</description>
-</class>
-
-<class name="Rat Man">
-	<movement>
-		<leftIdle>Rat Man Left Idle</leftIdle>
-		<rightIdle>Rat Man Right Idle</rightIdle>
-		<left>Rat Man Left</left>
-		<right>Rat Man Right</right>
-	</movement>
-	<description>
-	I do it 4 da cheez
 	</description>
 </class>
 \end{xml}
@@ -645,6 +601,8 @@ Birdfoot is a good example of a bad character class. This is because all the spr
 \section{Creatures}
 The creatures XML file contains creatures that can be spawned into the game, here is an example of the creatures XML file:
 
+
+\texttt{Base/script/xml/creatures/rats/Rat.xml}
 \begin{xml}
 <creature name="Rat" ai="Rat" speed="2">
 	<movement>
@@ -652,15 +610,6 @@ The creatures XML file contains creatures that can be spawned into the game, her
 		<right>Rat Right</right>
 		<leftIdle>Rat Left Idle</leftIdle>
 		<rightIdle>Rat Right Idle</rightIdle>
-	</movement>
-</creature>
-
-<creature name="Big Rat" ai="Rat" speed="3">
-	<movement>
-		<left>Big Rat Left</left>
-		<right>Big Rat Right</right>
-		<leftIdle>Big Rat Left Idle</leftIdle>
-		<rightIdle>Big Rat Right Idle</rightIdle>
 	</movement>
 </creature>
 \end{xml}
@@ -672,6 +621,7 @@ The only known child of the creature tag is the movement tag, which is the same 
 \section{Map generation}
 Map generation was the first XML file to be added to the game and is by far the most complicated. Here is an example of the Map generation XML file:
 
+\texttt{Base/script/xml/map/standard.xml (clipped)}
 \begin{xml}
 <map width="1500" height="1500" name="standard">
 	<layer name="bottom">
@@ -803,6 +753,7 @@ Finally, the tile tag is a single sprite for a tile. The \texttt{name} attribute
 \section{Schematics}
 Schematics are a feature in map generation. It is possible to create a pre-defined structure that can be placed many times throughout the map. These structures are called schematics. For example, this is the Apple Circle schematic found in the game:
 
+\texttt{Base/script/xml/schematics/Apple Cirle.xml}
 \begin{xml}
 <schem name="Apple Circle" width = "3" height="3">
 	<top>
