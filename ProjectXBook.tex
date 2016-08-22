@@ -266,7 +266,7 @@ skipSplashes: true
 	\section{Sprites}
 	The sprites XML file is not necessarily the easiest to learn but is required by the other scripts.
 
-	The sprites XML file contains all the different sprites that will be used in various other aspects of the game, those aspects being players, tiles, creatures and items. Here is an example of a sprites XML file.
+	The sprites XML file contains all the different sprites that will be used in various other aspects of the game, those aspects being players, tiles, creatures and items.
 
 \begin{xml}
 <items>
@@ -1033,12 +1033,11 @@ More interestingly though, are the giveAndDestroy functions, these are not defin
 
 \begin{lua}
 function giveAndDestroy(itemName, quantity)
-	me.giveItem(itemName, quantity);
-	tile(tilePos).destroy();
+	collect(itemName, quantity, tilePos, 1);
 end
 \end{lua}
 
-This function is found in  a script inside the interactions lua folder. The function does exactly what the name suggests, gives the player an item then destroys the tile so that it cannot be used again. If you wanted to, you could define what all actions do inside the xml interactions file, but sometimes, like this giveAndDestroy, it is more practical to write a function for it then to write the code 4 times.
+This function is found in  a script inside the interactions lua folder. The function collects the object from the ground, the collect function waits for the given amount of time (last argument in seconds) and then destroys the tile and gives the player the item. If you wanted to, you could define what all actions do inside the xml interactions file, but sometimes, like this giveAndDestroy, it is more practical to write a function for it then to write the code 4 times.
 
 The interactions lua file has a few new variables that can be used, namely, \texttt{player} and \texttt{tilePos}. \texttt{player} is the player interacting with the tile and \texttt{tilePos} is the coordinates of the tile of the tile.
 
@@ -1211,7 +1210,7 @@ Overloads:
 \begin{ulist}
 	\item string vector.toString()
 \end{ulist}
-Returns a string representation of the creature.
+Returns a string representation of the vector.
 
 \subsubsection{vector.dot}
 Overloads:
@@ -1633,6 +1632,15 @@ Despawns the creature.
 \texttt{me} is the current player.
 
 \section{Tile Actions}
+
+\subsubsection{collect}
+Overloads:
+\begin{ulist}
+	\item nil collect(string itemName, int itemQuantity, vector tilePos, int time)
+\end{ulist}
+Waits the given amount of seconds, then destroys the tile given and gives the players the item.
+
+
 \texttt{tilePos} is the coordinates of the tile that is being clicked on.
 
 \section{Item Uses}
